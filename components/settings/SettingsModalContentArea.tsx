@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useProject } from '../../contexts/ProjectContext';
+import { useApp } from '../../contexts/AppContext';
 import ToggleSwitch from '../elements/ToggleSwitch';
 import Input from '../elements/Input';
 import Button from '../elements/Button';
@@ -13,8 +13,8 @@ interface SettingsModalContentAreaProps {
 }
 
 const SettingsModalContentArea: React.FC<SettingsModalContentAreaProps> = ({ activeCategory }) => {
-  const { projectState, dispatch } = useProject();
-  const { settings, isLoading } = projectState;
+  const { appState, dispatch } = useApp();
+  const { settings, isLoading } = appState;
 
   const [apiUrlInput, setApiUrlInput] = useState(settings.remoteApiUrl || '');
   const [testConnectionStatus, setTestConnectionStatus] = useState<{

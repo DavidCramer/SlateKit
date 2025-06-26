@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import FieldBase from './FieldBase';
 import { classConstants } from '../../constants/constants';
-import { useProject } from '../../contexts/ProjectContext'; // Added import
+import { useApp } from '../../contexts/AppContext'; // Added import
 
 interface ToggleSwitchProps {
   id: string;
@@ -30,8 +30,8 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
   switchClassName = '',
   errorClassName = '',
 }) => {
-  const { projectState } = useProject(); // Added hook
-  const theme = projectState.settings.theme; // Get theme
+  const { appState } = useApp(); // Added hook
+  const theme = appState.settings.theme; // Get theme
   const toggleSwitchThemeClasses = classConstants[theme].toggleSwitch; // Use themed classes
 
   const [isFocused, setIsFocused] = useState(false);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useProject, ProjectDetails } from '../contexts/ProjectContext'; 
+import { useApp, AppDetails } from '../contexts/AppContext';
 import { MdLogout, MdWorkspaces, MdList, MdSettings, MdInfo } from 'react-icons/md';
 import Button from './elements/Button';
 import { List, ListItem } from './list';
@@ -12,24 +12,20 @@ interface SidebarProps {
 }
 
 /**
- * Sidebar component for the ProjectWorkspace.
+ * Sidebar component for the AppWorkspace.
  * It displays the project title, navigation links, and action buttons.
  * @param {SidebarProps} props - The props for the component.
  * @returns {React.ReactElement | null} The rendered Sidebar component, or null if no project is loaded.
  */
 const Sidebar: React.FC<SidebarProps> = ({ onViewSettings }) => {
-  const { projectState, dispatch } = useProject();
+  const { appState, unLoadItem } = useApp();
 
-  if (!projectState.currentProject) {
-    return null; 
+  if (!appState.currentApp) {
+    return null;
   }
 
-  const project: ProjectDetails = projectState.currentProject;
-  const { name: projectName } = project; 
-
-  const handleCloseProject = () => {
-    dispatch({ type: 'UNLOAD_PROJECT' });
-  };
+  const project: AppDetails = appState.currentApp;
+  const { name: projectName } = project;
 
   const handleNavLinkClick = (featureName: string) => {
     alert(`${featureName} feature coming soon!`);
@@ -76,9 +72,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onViewSettings }) => {
             {projectName}
           </h1>
         </div>
-        
+
         <nav aria-labelledby="project-navigation-heading" className="mb-6">
-          <h2 id="project-navigation-heading" className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-3">Project Menu</h2>
+          <h2 id="project-navigation-heading" className="text-xs text-slate-500 uppercase tracking-wider font-semibold mb-3">App Menu</h2>
           <List
             items={projectNavItems}
             ulClassName="space-y-1"
@@ -97,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onViewSettings }) => {
           />
         </nav>
       </div>
-      
+
       <div>
         <Button
             variant="link"
@@ -113,10 +109,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onViewSettings }) => {
           variant="danger"
           fullWidth
           icon={MdLogout}
-          onClick={handleCloseProject}
+          onClick={unLoadItem}
           aria-label="Close current project"
         >
-          Close Project
+          Close App
         </Button>
       </div>
     </aside>

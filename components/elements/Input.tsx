@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, InputHTMLAttributes } from 'react';
 import FieldBase from './FieldBase';
 import { classConstants } from '../../constants/constants';
-import { useProject } from '../../contexts/ProjectContext'; // Added import
+import { useApp } from '../../contexts/AppContext'; // Added import
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'className'> {
   id: string;
@@ -32,8 +32,8 @@ const Input: React.FC<InputProps> = ({
   errorClassName = '',
   ...props
 }) => {
-  const { projectState } = useProject(); // Added hook
-  const theme = projectState.settings.theme; // Get theme
+  const { appState } = useApp(); // Added hook
+  const theme = appState.settings.theme; // Get theme
   const formFieldThemeClasses = classConstants[theme].formField; // Use themed classes
 
   const inputRef = useRef<HTMLInputElement>(null);

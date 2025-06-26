@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { MdCheck } from 'react-icons/md';
 import FieldBase from './FieldBase';
 import { classConstants } from '../../constants/constants';
-import { useProject } from '../../contexts/ProjectContext'; // Added import
+import { useApp } from '../../contexts/AppContext'; // Added import
 
 interface CheckboxProps {
   id: string;
@@ -29,8 +29,8 @@ const Checkbox: React.FC<CheckboxProps> = ({
   checkboxClassName = '',
   errorClassName = '',
 }) => {
-  const { projectState } = useProject(); // Added hook
-  const theme = projectState.settings.theme; // Get theme
+  const { appState } = useApp(); // Added hook
+  const theme = appState.settings.theme; // Get theme
   const checkboxThemeClasses = classConstants[theme].checkbox; // Use themed classes
 
   const [isFocused, setIsFocused] = useState(false);

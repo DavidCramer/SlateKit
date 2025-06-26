@@ -1,46 +1,46 @@
 
-import { ProjectState, ProjectDetails, AvailableProject, AppSettings, defaultAppSettings } from '../contexts/ProjectContext';
+import { AppState, AppDetails, AvailableApp, AppSettings, defaultAppSettings } from '../contexts/AppContext';
 
 /**
  * Key used for storing and retrieving the project state from localStorage.
  */
-const LOCAL_STORAGE_KEY = 'slateKitProjectState';
+const LOCAL_STORAGE_KEY = 'slateKitAppState';
 
-// Default AppSettings from ProjectContext is the source of truth for defaults.
+// Default AppSettings from AppContext is the source of truth for defaults.
 // This ensures consistency when merging stored settings.
 
 /**
  * Loads the entire project state from localStorage.
- * It retrieves and validates the persisted ProjectState, including currentProject, availableProjects, settings, and isLoading.
- * @returns {ProjectState | null} The stored project state if found and valid, otherwise null.
+ * It retrieves and validates the persisted AppState, including currentApp, availableApps, settings, and isLoading.
+ * @returns {AppState | null} The stored project state if found and valid, otherwise null.
  */
-export const loadProjectStateFromStorage = (): Partial<ProjectState> | null => { // Return Partial for flexibility before merging with defaults
+export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Return Partial for flexibility before merging with defaults
   try {
     const storedStateString = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedStateString) {
-      const parsedState = JSON.parse(storedStateString) as Partial<ProjectState>;
+      const parsedState = JSON.parse(storedStateString) as Partial<AppState>;
       
-      let validCurrentProject: ProjectDetails | null = null;
-      if (parsedState.currentProject === null) {
-        validCurrentProject = null;
-      } else if (parsedState.currentProject && typeof parsedState.currentProject === 'object') {
-        const cp = parsedState.currentProject as Partial<ProjectDetails>;
+      let validCurrentApp: AppDetails | null = null;
+      if (parsedState.currentApp === null) {
+        validCurrentApp = null;
+      } else if (parsedState.currentApp && typeof parsedState.currentApp === 'object') {
+        const cp = parsedState.currentApp as Partial<AppDetails>;
         if (
           typeof cp.id === 'string' &&
           typeof cp.name === 'string' &&
           typeof cp.dateCreated === 'string' &&
           typeof cp.lastUpdated === 'string'
         ) {
-          validCurrentProject = cp as ProjectDetails;
+          validCurrentApp = cp as AppDetails;
         } else {
-            console.warn("Stored currentProject has invalid structure, discarding.", cp);
-            // keep validCurrentProject as null
+            console.warn("Stored currentApp has invalid structure, discarding.", cp);
+            // keep validCurrentApp as null
         }
       }
 
-      let validAvailableProjects: AvailableProject[] = [];
-      if (Array.isArray(parsedState.availableProjects)) {
-        validAvailableProjects = parsedState.availableProjects.filter(p => {
+      let validAvailableApps: AvailableApp[] = [];
+      if (Array.isArray(parsedState.availableApps)) {
+        validAvailableApps = parsedState.availableApps.filter(p => {
           if (p && typeof p === 'object' &&
               typeof p.id === 'string' &&
               typeof p.name === 'string' &&
@@ -48,13 +48,13 @@ export const loadProjectStateFromStorage = (): Partial<ProjectState> | null => {
               typeof p.lastUpdated === 'string') {
             return true;
           }
-          console.warn("An item in stored availableProjects has invalid structure, discarding.", p);
+          console.warn("An item in stored availableApps has invalid structure, discarding.", p);
           return false;
-        }) as AvailableProject[];
+        }) as AvailableApp[];
       }
       
       // Validate settings
-      let validSettings: AppSettings = { ...defaultAppSettings }; // Start with default from ProjectContext
+      let validSettings: AppSettings = { ...defaultAppSettings }; // Start with default from AppContext
       if (parsedState.settings && typeof parsedState.settings === 'object') {
          // Merge stored settings with defaults to ensure all keys are present and new keys get defaults
         validSettings = { ...defaultAppSettings, ...parsedState.settings };
@@ -73,8 +73,8 @@ export const loadProjectStateFromStorage = (): Partial<ProjectState> | null => {
       const validIsLoading = typeof parsedState.isLoading === 'boolean' ? parsedState.isLoading : false;
 
       return {
-        currentProject: validCurrentProject,
-        availableProjects: validAvailableProjects,
+        currentApp: validCurrentApp,
+        availableApps: validAvailableApps,
         settings: validSettings,
         isLoading: validIsLoading,
       };
@@ -87,12 +87,12 @@ export const loadProjectStateFromStorage = (): Partial<ProjectState> | null => {
 
 /**
  * Saves the entire project state to localStorage.
- * @param {ProjectState} state - The project state object to save.
+ * @param {AppState} state - The project state object to save.
  */
-export const saveProjectStateToStorage = (state: ProjectState): void => {
+export const saveAppStateToStorage = (state: AppState): void => {
   try {
     // Ensure settings object is well-formed and includes all default fields before saving
-    const stateToSave: ProjectState = {
+    const stateToSave: AppState = {
       ...state,
       settings: state.settings ? { ...defaultAppSettings, ...state.settings } : { ...defaultAppSettings },
       isLoading: typeof state.isLoading === 'boolean' ? state.isLoading : false,

@@ -1,5 +1,5 @@
 
-import { AppSettings, AvailableProject, ProjectDetails } from '../contexts/ProjectContext';
+import { AppSettings, AvailableApp, AppDetails } from '../contexts/AppContext';
 
 // This should ideally come from environment variables or a more robust config system.
 // For now, it's the fallback if not set in AppSettings.
@@ -59,30 +59,30 @@ async function fetchRemote<T>(endpoint: string, options: RequestInit = {}, curre
   }
 }
 
-// --- Project Endpoints (Boilerplate - Not yet integrated into app logic) ---
+// --- App Endpoints (Boilerplate - Not yet integrated into app logic) ---
 
-export const getProjectList = async (settings?: AppSettings): Promise<AvailableProject[]> => {
-  console.warn('[RemoteStorageService] getProjectList called. NOTE: This is a placeholder and not yet integrated.');
-  // Example: return fetchRemote<AvailableProject[]>('/projects', { method: 'GET' }, settings);
+export const getAppList = async (settings?: AppSettings): Promise<AvailableApp[]> => {
+  console.warn('[RemoteStorageService] getAppList called. NOTE: This is a placeholder and not yet integrated.');
+  // Example: return fetchRemote<AvailableApp[]>('/projects', { method: 'GET' }, settings);
   
   // Placeholder implementation:
   await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
   return Promise.resolve([
-    { id: 'remote-proj-001', name: 'Cloud Project Alpha (Remote)', dateCreated: new Date(Date.now() - 86400000*2).toISOString(), lastUpdated: new Date().toISOString() },
-    { id: 'remote-proj-002', name: 'Sky Project Beta (Remote)', dateCreated: new Date(Date.now() - 86400000).toISOString(), lastUpdated: new Date(Date.now() - 3600000).toISOString() },
+    { id: 'remote-proj-001', name: 'Cloud App Alpha (Remote)', dateCreated: new Date(Date.now() - 86400000*2).toISOString(), lastUpdated: new Date().toISOString() },
+    { id: 'remote-proj-002', name: 'Sky App Beta (Remote)', dateCreated: new Date(Date.now() - 86400000).toISOString(), lastUpdated: new Date(Date.now() - 3600000).toISOString() },
   ]);
 };
 
-export const loadProjectDetails = async (projectId: string, settings?: AppSettings): Promise<ProjectDetails | null> => {
-  console.warn(`[RemoteStorageService] loadProjectDetails for ${projectId}. NOTE: Placeholder, not integrated.`);
-  // Example: return fetchRemote<ProjectDetails | null>(`/projects/${projectId}`, { method: 'GET' }, settings);
+export const loadAppDetails = async (projectId: string, settings?: AppSettings): Promise<AppDetails | null> => {
+  console.warn(`[RemoteStorageService] loadAppDetails for ${projectId}. NOTE: Placeholder, not integrated.`);
+  // Example: return fetchRemote<AppDetails | null>(`/projects/${projectId}`, { method: 'GET' }, settings);
 
   // Placeholder implementation:
   await new Promise(resolve => setTimeout(resolve, 500));
   if (projectId === 'remote-proj-001') {
     return Promise.resolve({
       id: 'remote-proj-001',
-      name: 'Cloud Project Alpha (Loaded Remotely)',
+      name: 'Cloud App Alpha (Loaded Remotely)',
       dateCreated: new Date(Date.now() - 86400000*2).toISOString(),
       lastUpdated: new Date().toISOString(),
       // any other project-specific details here
@@ -91,21 +91,21 @@ export const loadProjectDetails = async (projectId: string, settings?: AppSettin
   return Promise.resolve(null);
 };
 
-export const saveProject = async (projectDetails: ProjectDetails, settings?: AppSettings): Promise<ProjectDetails> => {
-  console.warn(`[RemoteStorageService] saveProject for ${projectDetails.id}. NOTE: Placeholder, not integrated.`);
+export const saveApp = async (projectDetails: AppDetails, settings?: AppSettings): Promise<AppDetails> => {
+  console.warn(`[RemoteStorageService] saveApp for ${projectDetails.id}. NOTE: Placeholder, not integrated.`);
   // Example:
   // const isNew = projectDetails.dateCreated === projectDetails.lastUpdated; // Simplistic check
   // const method = isNew ? 'POST' : 'PUT';
   // const endpoint = isNew ? '/projects' : `/projects/${projectDetails.id}`;
-  // return fetchRemote<ProjectDetails>(endpoint, { method, body: JSON.stringify(projectDetails) }, settings);
+  // return fetchRemote<AppDetails>(endpoint, { method, body: JSON.stringify(projectDetails) }, settings);
 
   // Placeholder implementation:
   await new Promise(resolve => setTimeout(resolve, 500));
   return Promise.resolve({ ...projectDetails, name: `${projectDetails.name} (Remotely Updated)`, lastUpdated: new Date().toISOString() });
 };
 
-export const deleteProject = async (projectId: string, settings?: AppSettings): Promise<void> => {
-  console.warn(`[RemoteStorageService] deleteProject for ${projectId}. NOTE: Placeholder, not integrated.`);
+export const deleteApp = async (projectId: string, settings?: AppSettings): Promise<void> => {
+  console.warn(`[RemoteStorageService] deleteApp for ${projectId}. NOTE: Placeholder, not integrated.`);
   // Example: return fetchRemote<void>(`/projects/${projectId}`, { method: 'DELETE' }, settings);
   
   // Placeholder implementation:

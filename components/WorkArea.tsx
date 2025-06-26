@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useProject, ProjectDetails } from '../contexts/ProjectContext';
+import { useApp, AppDetails } from '../contexts/AppContext';
 import { MdDateRange, MdUpdate, MdInfoOutline, MdTune, MdCloud, MdComputer, MdLightbulb } from 'react-icons/md';
 import Input from './elements/Input';
 import Textarea from './elements/Textarea';
@@ -9,13 +9,13 @@ import ToggleSwitch from './elements/ToggleSwitch';
 import Select, { SelectOption } from './elements/Select';
 
 /**
- * WorkArea component for the ProjectWorkspace.
+ * WorkArea component for the AppWorkspace.
  * This is the main content area where project-specific information and features are displayed.
- * It consumes ProjectContext directly to get project information.
+ * It consumes AppContext directly to get project information.
  * @returns {React.ReactElement | null} The rendered WorkArea component, or null if no project is loaded.
  */
 const WorkArea: React.FC = () => {
-  const { projectState } = useProject();
+  const { appState } = useApp();
 
   // Demo Form Element States
   const [textInputValue, setTextInputValue] = useState('Hello SlateKit!');
@@ -33,13 +33,13 @@ const WorkArea: React.FC = () => {
   ];
 
 
-  if (!projectState.currentProject) {
+  if (!appState.currentApp) {
     // This should ideally not happen if WorkArea is only rendered when a project is active,
     // but it's a good safeguard.
     return null;
   }
   
-  const project: ProjectDetails = projectState.currentProject;
+  const project: AppDetails = appState.currentApp;
 
   /**
    * Formats an ISO date string into a more readable locale-specific string.
@@ -63,7 +63,7 @@ const WorkArea: React.FC = () => {
           Workspace: <span className="text-sky-400">{project.name}</span>
         </h2>
         <div className="text-sm text-slate-400 mt-2 space-x-4">
-          <span className="inline-flex items-center" aria-label={`Project ID: ${project.id}`}>
+          <span className="inline-flex items-center" aria-label={`App ID: ${project.id}`}>
             {/* ID is not typically displayed but available: project.id */}
           </span>
           <span className="inline-flex items-center">
@@ -80,7 +80,7 @@ const WorkArea: React.FC = () => {
       <div className="bg-slate-800 p-6 rounded-xl shadow-xl mb-8">
         <h3 className="text-2xl font-semibold text-white mb-4 flex items-center">
             <MdInfoOutline className="text-sky-400 mr-2" aria-hidden="true" />
-            Project Overview (ID: {project.id})
+            App Overview (ID: {project.id})
         </h3>
         <div className="prose prose-invert max-w-none text-slate-300">
           <p>

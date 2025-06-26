@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { ProjectProvider } from './contexts/ProjectContext';
+import { AppProvider } from './contexts/AppContext';
 
 /**
  * The root element ID in the HTML where the React application will be mounted.
@@ -22,12 +22,12 @@ const root = ReactDOM.createRoot(rootElement);
 /**
  * Renders the main application component tree.
  * The application is wrapped in React.StrictMode for highlighting potential problems
- * and ProjectProvider to make project state available throughout the app.
+ * and AppProvider to make project state available throughout the app.
  */
 root.render(
   <React.StrictMode>
-    <ProjectProvider>
+    <AppProvider>
       <App />
-    </ProjectProvider>
+    </AppProvider>
   </React.StrictMode>
 );

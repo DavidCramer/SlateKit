@@ -1,6 +1,6 @@
 import React, { ElementType, ReactNode } from 'react';
 import { classConstants } from '../../constants/constants';
-import { useProject } from '../../contexts/ProjectContext'; // Added import
+import { useApp } from '../../contexts/AppContext'; // Added import
 
 export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'item' | 'link';
 
@@ -21,8 +21,8 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  const { projectState } = useProject(); // Added hook
-  const theme = projectState.settings.theme; // Get theme
+  const { appState } = useApp(); // Added hook
+  const theme = appState.settings.theme; // Get theme
   const buttonThemeClasses = classConstants[theme].button; // Use themed classes
 
   let selectedVariantClasses: string;

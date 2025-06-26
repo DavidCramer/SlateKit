@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { classConstants } from '../../constants/constants';
-import { useProject } from '../../contexts/ProjectContext'; // Added import
+import { useApp } from '../../contexts/AppContext'; // Added import
 
 interface FieldBaseProps {
   id: string;
@@ -29,8 +29,8 @@ const FieldBase: React.FC<FieldBaseProps> = ({
   fieldWrapperClassName = '',
   reserveErrorSpace = true,
 }) => {
-  const { projectState } = useProject(); // Added hook
-  const theme = projectState.settings.theme; // Get theme
+  const { appState } = useApp(); // Added hook
+  const theme = appState.settings.theme; // Get theme
   const fieldBaseThemeClasses = classConstants[theme].fieldBase; // Use themed classes
 
   const errorId = error ? `${id}-error` : undefined;

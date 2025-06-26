@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { useProject } from '../../contexts/ProjectContext';
-import { classConstants } from '../../constants/constants';
+import { useApp } from '@/contexts/AppContext';
+import { classConstants } from '@/constants/constants.ts';
 
 interface SidebarLayoutProps {
   sidebarContent: ReactNode;
@@ -21,8 +21,8 @@ const SidebarLayout: React.FC<SidebarLayoutProps> = ({
   sidebarAriaLabel = 'Sidebar', // Default ARIA label
   mainAriaLabel = 'Main content', // Default ARIA label
 }) => {
-  const { projectState } = useProject();
-  const theme = projectState.settings.theme;
+  const { appState } = useApp();
+  const theme = appState.settings.theme;
   const layoutClasses = classConstants[theme].sidebarLayout;
 
   return (

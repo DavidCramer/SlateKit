@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, KeyboardEvent, ElementType } from '
 import { MdExpandMore, MdCheck } from 'react-icons/md';
 import FieldBase from './FieldBase';
 import { classConstants } from '../../constants/constants';
-import { useProject } from '../../contexts/ProjectContext'; // Added import
+import { useApp } from '../../contexts/AppContext'; // Added import
 
 export interface SelectOption {
   value: string | number;
@@ -48,8 +48,8 @@ const Select: React.FC<SelectProps> = ({
   required = false,
   htmlForOverride,
 }) => {
-  const { projectState } = useProject(); // Added hook
-  const theme = projectState.settings.theme; // Get theme
+  const { appState } = useApp(); // Added hook
+  const theme = appState.settings.theme; // Get theme
   const selectThemeClasses = classConstants[theme].select; // Use themed classes
 
   const [isOpen, setIsOpen] = useState(false);

@@ -1,7 +1,7 @@
 import React, { TextareaHTMLAttributes } from 'react';
 import FieldBase from './FieldBase';
 import { classConstants } from '../../constants/constants';
-import { useProject } from '../../contexts/ProjectContext'; // Added import
+import { useApp } from '../../contexts/AppContext'; // Added import
 
 interface TextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange' | 'value' | 'className'> {
   id: string;
@@ -31,8 +31,8 @@ const Textarea: React.FC<TextareaProps> = ({
   errorClassName = '',
   ...props
 }) => {
-  const { projectState } = useProject(); // Added hook
-  const theme = projectState.settings.theme; // Get theme
+  const { appState } = useApp(); // Added hook
+  const theme = appState.settings.theme; // Get theme
   const formFieldThemeClasses = classConstants[theme].formField; // Use themed classes
 
   const errorId = error ? `${id}-error` : undefined;

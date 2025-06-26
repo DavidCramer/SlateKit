@@ -1,58 +1,50 @@
 import React, { useState } from 'react';
-import { useProject, AvailableProject } from '../contexts/ProjectContext';
-import CreateProjectModal from './modal/CreateProjectModal'; 
+import { useApp, AvailableApp } from '../contexts/AppContext';
+import CreateItemModal from './modal/CreateItemModal.tsx';
 import { MdOutlineWorkspaces, MdChevronRight, MdAddCircle, MdSettings } from 'react-icons/md';
 import Button from './elements/Button';
 import { List, ListItem } from './list';
+import {coreItem} from "@/constants/constants.ts";
 
 /**
- * Props for the ProjectSelector component.
+ * Props for the ItemSelector component.
  */
-interface ProjectSelectorProps {
+interface ItemSelectorProps {
   onViewSettings: () => void; // This will now open the SettingsModal
 }
 
 /**
- * ProjectSelector component.
- * This component is displayed when no project is currently loaded.
- * It allows users to select a project from the list of available projects,
+ * ItemSelector component.
+ * This component is displayed when no item is currently loaded.
+ * It allows users to select a item from the list of available items,
  * create a new one, or navigate to global application settings.
- * @param {ProjectSelectorProps} props - The props for the component.
- * @returns {React.ReactElement} The rendered ProjectSelector component.
+ * @param {ItemSelectorProps} props - The props for the component.
+ * @returns {React.ReactElement} The rendered ItemSelector component.
  */
-const ProjectSelector: React.FC<ProjectSelectorProps> = ({ onViewSettings }) => {
-  const { projectState, dispatch } = useProject();
-  
-  const { availableProjects } = projectState;
+const ItemSelector: React.FC<ItemSelectorProps> = ({ onViewSettings }) => {
+  const { appState, loadItem } = useApp();
+
+  const { availableApps } = appState;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   /**
-   * Handles the click event for a project button.
-   * Dispatches the 'LOAD_PROJECT' action with the selected project's name.
-   * @param {string} projectName - The name of the project to load.
+   * Handles the creation of a new item from the modal.
+   * @param {string} itemName - The name of the new item.
    */
-  const handleLoadProject = (projectName: string) => {
-    dispatch({ type: 'LOAD_PROJECT', payload: projectName });
-  };
-
-  /**
-   * Handles the creation of a new project from the modal.
-   * @param {string} projectName - The name of the new project.
-   */
-  const handleCreateProject = (projectName: string) => {
-    if (projectName.trim()) {
-      dispatch({ type: 'LOAD_PROJECT', payload: projectName.trim() });
+  const handleCreateApp = (itemName: string) => {
+    if (itemName.trim()) {
+      loadItem( itemName.trim() );
       setIsModalOpen(false);
     } else {
-      alert("Project name cannot be empty.");
+      alert(`${coreItem.singular} name cannot be empty.`);
     }
   };
 
-  const projectListItems: ListItem[] = availableProjects.map((project: AvailableProject) => ({
-    id: project.id,
-    content: project.name,
-    onClick: () => handleLoadProject(project.name),
-    ariaLabel: `Load ${project.name}`,
+  const itemListItems: ListItem[] = availableApps.map((item: AvailableApp) => ({
+    id: item.id,
+    content: item.name,
+    onClick: () => loadItem(item.name),
+    ariaLabel: `Load ${item.name}`,
     suffix: <MdChevronRight className="w-5 h-5" aria-hidden="true" />,
   }));
 
@@ -63,16 +55,15 @@ const ProjectSelector: React.FC<ProjectSelectorProps> = ({ onViewSettings }) => 
           <div className="w-full max-w-md p-8 bg-slate-800 rounded-xl shadow-2xl">
             <div className="flex flex-col items-center mb-6">
               <MdOutlineWorkspaces className="w-16 h-16 text-sky-400 mb-3" aria-hidden="true" />
-              <h2 className="text-3xl font-bold text-white" id="select-project-heading">Select or Create Project</h2>
-              <p className="text-slate-400 mt-1">Choose an existing project or create a new one to get started.</p>
+              <h2 className="text-3xl font-bold text-white" id="select-item-heading">{`Select or Create ${coreItem.singular}`}</h2>
             </div>
 
-            {availableProjects.length > 0 ? (
+            {availableApps.length > 0 ? (
               <>
                 <List
-                  items={projectListItems}
+                  items={itemListItems}
                   ulClassName="space-y-3"
-                  ariaLabelledby="select-project-heading"
+                  ariaLabelledby="select-item-heading"
                   defaultButtonVariant="item"
                   defaultFullWidthButton={true}
                 />
@@ -82,9 +73,9 @@ const ProjectSelector: React.FC<ProjectSelectorProps> = ({ onViewSettings }) => 
                     fullWidth
                     icon={MdAddCircle}
                     onClick={() => setIsModalOpen(true)}
-                    aria-label="Create a new project"
+                    aria-label="Create a new item"
                   >
-                    Create New Project
+                    Create New App
                   </Button>
                   <Button
                     variant="secondary"
@@ -100,19 +91,16 @@ const ProjectSelector: React.FC<ProjectSelectorProps> = ({ onViewSettings }) => 
             ) : (
               <div className="text-center py-6 space-y-4">
                 <div>
-                  <p className="text-slate-400 text-lg mb-2">No projects found.</p>
-                  <p className="text-slate-500 text-sm mb-4">
-                    Get started by creating your first project.
-                  </p>
+                  <p className="text-slate-400 text-lg mb-2">No items found.</p>
                 </div>
                 <Button
                   variant="primary"
                   fullWidth
                   icon={MdAddCircle}
                   onClick={() => setIsModalOpen(true)}
-                  aria-label="Create your first project"
+                  aria-label="Create your first item"
                 >
-                  Create New Project
+                  {`Create New ${coreItem.singular}`}
                 </Button>
                 <Button
                   variant="secondary"
@@ -125,20 +113,16 @@ const ProjectSelector: React.FC<ProjectSelectorProps> = ({ onViewSettings }) => 
                 </Button>
               </div>
             )}
-            
-            <p className="text-xs text-slate-500 mt-6 text-center">
-              Projects are saved in your browser's local storage.
-            </p>
           </div>
         </main>
       </div>
-      <CreateProjectModal
+      <CreateItemModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onCreate={handleCreateProject}
+        onCreate={handleCreateApp}
       />
     </>
   );
 };
 
-export default ProjectSelector;
+export default ItemSelector;
