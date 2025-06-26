@@ -3,7 +3,7 @@ import {MdAddCircleOutline} from 'react-icons/md';
 import {Modal} from './Modal';
 import type {ActionButtonProps} from './Modal';
 import Input from '../elements/Input'; // Import the new Input component
-import {coreItem} from '@/constants/constants';
+import {coreItem} from '../../constants/constants';
 
 /**
  * Props for the CreateItemModal component.

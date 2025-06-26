@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { useApp } from '@/contexts/AppContext';
-import { classConstants } from '@/constants/constants.ts';
+import { useApp } from '../../contexts/AppContext';
+import { classConstants } from '../../constants/constants.ts';
 
 interface SidebarLayoutProps {
   sidebarContent: ReactNode;

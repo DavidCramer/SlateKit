@@ -7,6 +7,7 @@ import Textarea from './elements/Textarea';
 import Checkbox from './elements/Checkbox';
 import ToggleSwitch from './elements/ToggleSwitch';
 import Select, { SelectOption } from './elements/Select';
+import { Panel } from './panels'; // Import the new Panel component
 
 /**
  * WorkArea component for the AppWorkspace.
@@ -77,11 +78,13 @@ const WorkArea: React.FC = () => {
         </div>
       </header>
 
-      <div className="bg-slate-800 p-6 rounded-xl shadow-xl mb-8">
-        <h3 className="text-2xl font-semibold text-white mb-4 flex items-center">
-            <MdInfoOutline className="text-sky-400 mr-2" aria-hidden="true" />
-            App Overview (ID: {project.id})
-        </h3>
+      <Panel
+        variant="card"
+        title={`App Overview (ID: ${project.id})`}
+        icon={MdInfoOutline}
+        className="mb-8"
+        titleId="app-overview-title"
+      >
         <div className="prose prose-invert max-w-none text-slate-300">
           <p>
             This is the main content area for <strong className="font-semibold text-sky-300">{project.name}</strong>. 
@@ -92,18 +95,13 @@ const WorkArea: React.FC = () => {
             The sidebar provides navigation and global project actions.
           </p>
         </div>
-      </div>
+      </Panel>
 
       {/* Form Element Showcase */}
-      <div className="bg-slate-800 p-6 rounded-xl shadow-xl">
-        <h3 className="text-2xl font-semibold text-white mb-6 flex items-center">
-            <MdTune className="text-sky-400 mr-2" aria-hidden="true" />
-            Form Element Showcase
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-          {/* Input Examples */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-medium text-slate-200 mb-2 border-b border-slate-700 pb-1">Input Fields</h4>
+      <Panel variant="card" title="Form Element Showcase" icon={MdTune} titleId="form-elements-title">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6"> {/* Increased gap-y slightly */}
+          
+          <Panel variant="default" title="Input Fields" titleId="input-fields-subtitle">
             <Input
               id="demo-text-input"
               label="Standard Text Input"
@@ -138,11 +136,9 @@ const WorkArea: React.FC = () => {
               onChange={() => {}}
               placeholder="Enter password"
             />
-          </div>
+          </Panel>
 
-          {/* Textarea Example */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-medium text-slate-200 mb-2 border-b border-slate-700 pb-1">Textarea</h4>
+          <Panel variant="default" title="Textarea" titleId="textarea-subtitle">
             <Textarea
               id="demo-textarea"
               label="Message Area"
@@ -159,11 +155,9 @@ const WorkArea: React.FC = () => {
               rows={3}
               disabled
             />
-          </div>
+          </Panel>
 
-          {/* Checkbox Examples */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-medium text-slate-200 mb-2 border-b border-slate-700 pb-1">Checkboxes</h4>
+          <Panel variant="default" title="Checkboxes" titleId="checkboxes-subtitle">
             <Checkbox
               id="demo-checkbox"
               label="Enable Feature X"
@@ -191,11 +185,9 @@ const WorkArea: React.FC = () => {
               onChange={() => {}}
               error="This selection is required."
             />
-          </div>
-
-          {/* ToggleSwitch Examples */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-medium text-slate-200 mb-2 border-b border-slate-700 pb-1">Toggle Switches</h4>
+          </Panel>
+          
+          <Panel variant="default" title="Toggle Switches" titleId="toggles-subtitle">
             <ToggleSwitch
               id="demo-toggle"
               label="Activate Notifications"
@@ -224,11 +216,9 @@ const WorkArea: React.FC = () => {
               onChange={() => {}}
               disabled
             />
-          </div>
+          </Panel>
           
-          {/* Select Examples */}
-          <div className="space-y-4 md:col-span-2"> {/* Span across two columns for more space */}
-            <h4 className="text-lg font-medium text-slate-200 mb-2 border-b border-slate-700 pb-1">Select Dropdowns</h4>
+          <Panel variant="default" title="Select Dropdowns" className="md:col-span-2" titleId="selects-subtitle"> {/* Span across two columns for more space */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
               <Select
                 id="demo-select"
@@ -267,9 +257,9 @@ const WorkArea: React.FC = () => {
                 placeholder="No items"
               />
             </div>
-          </div>
+          </Panel>
         </div>
-      </div>
+      </Panel>
       
       <footer className="mt-12 text-center text-xs text-slate-500">
         <p>All changes are persisted in local storage. Current project: {project.name} (ID: {project.id}).</p>

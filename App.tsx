@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {useApp} from '@/contexts/AppContext';
-import ItemSelector from '@/components/ItemSelector.tsx';
-import ItemWorkspace from '@/components/ItemWorkspace.tsx';
-import SettingsModal from '@/components/settings/SettingsModal'; // Updated import
+import {useApp} from './contexts/AppContext';
+import ItemSelector from './components/ItemSelector.tsx';
+import ItemWorkspace from './components/ItemWorkspace.tsx';
+import SettingsModal from './components/settings/SettingsModal'; // Updated import
 
 /**
  * The main application.

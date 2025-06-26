@@ -4,7 +4,7 @@ import CreateItemModal from './modal/CreateItemModal.tsx';
 import { MdOutlineWorkspaces, MdChevronRight, MdAddCircle, MdSettings } from 'react-icons/md';
 import Button from './elements/Button';
 import { List, ListItem } from './list';
-import {coreItem} from "@/constants/constants.ts";
+import {coreItem} from "../constants/constants.ts";
 
 /**
  * Props for the ItemSelector component.
