@@ -33,7 +33,7 @@ const Textarea: React.FC<TextareaProps> = ({
 }) => {
   const { appState } = useApp(); // Added hook
   const theme = appState.settings.theme; // Get theme
-  const formFieldThemeClasses = classConstants[theme].formField; // Use themed classes
+  const formFieldThemeClasses = classConstants(theme).formField; // Use themed classes
 
   const errorId = error ? `${id}-error` : undefined;
 

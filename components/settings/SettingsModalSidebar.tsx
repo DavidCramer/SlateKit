@@ -39,8 +39,8 @@ const SettingsModalSidebar: React.FC<SettingsModalSidebarProps> = ({ activeCateg
     {
       id: 'settings-account',
       content: 'Account (Soon)',
-      onClick: () => { 
-        onSelectCategory('account'); 
+      onClick: () => {
+        onSelectCategory('account');
         alert('Account settings coming soon!');
       },
       icon: MdAccountCircle,
@@ -63,18 +63,16 @@ const SettingsModalSidebar: React.FC<SettingsModalSidebarProps> = ({ activeCateg
   ];
 
   return (
-    <aside className="w-56 sm:w-60 bg-slate-800 pr-4 sm:pr-5 flex flex-col border-r border-slate-700">
       <nav aria-label="Settings categories">
         <h2 className="sr-only" id="settings-categories-heading">Settings Categories</h2>
         <List
           items={navItems}
-          ulClassName="space-y-1"
+          ulClassName="space-y-1 ml-0 pl-0"
           defaultButtonVariant="link"
           defaultFullWidthButton={true}
           ariaLabelledby="settings-categories-heading"
         />
       </nav>
-    </aside>
   );
 };
 

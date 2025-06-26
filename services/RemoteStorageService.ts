@@ -1,5 +1,5 @@
 
-import { AppSettings, AvailableApp, AppDetails } from '../contexts/AppContext';
+import { AppSettings, AvailableItem, ItemDetails } from '../contexts/AppContext';
 
 // This should ideally come from environment variables or a more robust config system.
 // For now, it's the fallback if not set in AppSettings.
@@ -61,9 +61,9 @@ async function fetchRemote<T>(endpoint: string, options: RequestInit = {}, curre
 
 // --- App Endpoints (Boilerplate - Not yet integrated into app logic) ---
 
-export const getAppList = async (settings?: AppSettings): Promise<AvailableApp[]> => {
+export const getAppList = async (settings?: AppSettings): Promise<AvailableItem[]> => {
   console.warn('[RemoteStorageService] getAppList called. NOTE: This is a placeholder and not yet integrated.');
-  // Example: return fetchRemote<AvailableApp[]>('/projects', { method: 'GET' }, settings);
+  // Example: return fetchRemote<AvailableItem[]>('/projects', { method: 'GET' }, settings);
   
   // Placeholder implementation:
   await new Promise(resolve => setTimeout(resolve, 500)); // Simulate network delay
@@ -73,9 +73,9 @@ export const getAppList = async (settings?: AppSettings): Promise<AvailableApp[]
   ]);
 };
 
-export const loadAppDetails = async (projectId: string, settings?: AppSettings): Promise<AppDetails | null> => {
-  console.warn(`[RemoteStorageService] loadAppDetails for ${projectId}. NOTE: Placeholder, not integrated.`);
-  // Example: return fetchRemote<AppDetails | null>(`/projects/${projectId}`, { method: 'GET' }, settings);
+export const loadItemDetails = async (projectId: string, settings?: AppSettings): Promise<ItemDetails | null> => {
+  console.warn(`[RemoteStorageService] loadItemDetails for ${projectId}. NOTE: Placeholder, not integrated.`);
+  // Example: return fetchRemote<ItemDetails | null>(`/projects/${projectId}`, { method: 'GET' }, settings);
 
   // Placeholder implementation:
   await new Promise(resolve => setTimeout(resolve, 500));
@@ -91,13 +91,13 @@ export const loadAppDetails = async (projectId: string, settings?: AppSettings):
   return Promise.resolve(null);
 };
 
-export const saveApp = async (projectDetails: AppDetails, settings?: AppSettings): Promise<AppDetails> => {
+export const saveApp = async (projectDetails: ItemDetails, settings?: AppSettings): Promise<ItemDetails> => {
   console.warn(`[RemoteStorageService] saveApp for ${projectDetails.id}. NOTE: Placeholder, not integrated.`);
   // Example:
   // const isNew = projectDetails.dateCreated === projectDetails.lastUpdated; // Simplistic check
   // const method = isNew ? 'POST' : 'PUT';
   // const endpoint = isNew ? '/projects' : `/projects/${projectDetails.id}`;
-  // return fetchRemote<AppDetails>(endpoint, { method, body: JSON.stringify(projectDetails) }, settings);
+  // return fetchRemote<ItemDetails>(endpoint, { method, body: JSON.stringify(projectDetails) }, settings);
 
   // Placeholder implementation:
   await new Promise(resolve => setTimeout(resolve, 500));

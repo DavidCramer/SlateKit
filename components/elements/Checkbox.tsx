@@ -31,7 +31,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 }) => {
   const { appState } = useApp(); // Added hook
   const theme = appState.settings.theme; // Get theme
-  const checkboxThemeClasses = classConstants[theme].checkbox; // Use themed classes
+  const checkboxThemeClasses = classConstants(theme).checkbox; // Use themed classes
 
   const [isFocused, setIsFocused] = useState(false);
   const errorId = error ? `${id}-error` : undefined;

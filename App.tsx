@@ -24,7 +24,7 @@ const App: React.FC = () => {
 
     return (
         <>
-            {appState.currentApp ?
+            {appState.currentItem ?
                 <ItemWorkspace onViewSettings={handleOpenSettingsModal}/>
                 :
                 <ItemSelector onViewSettings={handleOpenSettingsModal}/>

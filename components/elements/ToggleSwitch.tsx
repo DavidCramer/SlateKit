@@ -32,7 +32,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 }) => {
   const { appState } = useApp(); // Added hook
   const theme = appState.settings.theme; // Get theme
-  const toggleSwitchThemeClasses = classConstants[theme].toggleSwitch; // Use themed classes
+  const toggleSwitchThemeClasses = classConstants(theme).toggleSwitch; // Use themed classes
 
   const [isFocused, setIsFocused] = useState(false);
   const errorId = error ? `${id}-error` : undefined;

@@ -50,7 +50,7 @@ const Select: React.FC<SelectProps> = ({
 }) => {
   const { appState } = useApp(); // Added hook
   const theme = appState.settings.theme; // Get theme
-  const selectThemeClasses = classConstants[theme].select; // Use themed classes
+  const selectThemeClasses = classConstants(theme).select; // Use themed classes
 
   const [isOpen, setIsOpen] = useState(false);
   const [focusedOptionIndex, setFocusedOptionIndex] = useState<number>(-1);

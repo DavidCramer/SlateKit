@@ -1,5 +1,5 @@
 
-import { AppState, AppDetails, AvailableApp, AppSettings, defaultAppSettings } from '../contexts/AppContext';
+import { AppState, ItemDetails, AvailableItem, AppSettings, defaultAppSettings } from '../contexts/AppContext';
 
 /**
  * Key used for storing and retrieving the project state from localStorage.
@@ -11,7 +11,7 @@ const LOCAL_STORAGE_KEY = 'slateKitAppState';
 
 /**
  * Loads the entire project state from localStorage.
- * It retrieves and validates the persisted AppState, including currentApp, availableApps, settings, and isLoading.
+ * It retrieves and validates the persisted AppState, including currentItem, availableItems, settings, and isLoading.
  * @returns {AppState | null} The stored project state if found and valid, otherwise null.
  */
 export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Return Partial for flexibility before merging with defaults
@@ -20,27 +20,27 @@ export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Retu
     if (storedStateString) {
       const parsedState = JSON.parse(storedStateString) as Partial<AppState>;
       
-      let validCurrentApp: AppDetails | null = null;
-      if (parsedState.currentApp === null) {
+      let validCurrentApp: ItemDetails | null = null;
+      if (parsedState.currentItem === null) {
         validCurrentApp = null;
-      } else if (parsedState.currentApp && typeof parsedState.currentApp === 'object') {
-        const cp = parsedState.currentApp as Partial<AppDetails>;
+      } else if (parsedState.currentItem && typeof parsedState.currentItem === 'object') {
+        const cp = parsedState.currentItem as Partial<ItemDetails>;
         if (
           typeof cp.id === 'string' &&
           typeof cp.name === 'string' &&
           typeof cp.dateCreated === 'string' &&
           typeof cp.lastUpdated === 'string'
         ) {
-          validCurrentApp = cp as AppDetails;
+          validCurrentApp = cp as ItemDetails;
         } else {
-            console.warn("Stored currentApp has invalid structure, discarding.", cp);
+            console.warn("Stored currentItem has invalid structure, discarding.", cp);
             // keep validCurrentApp as null
         }
       }
 
-      let validAvailableApps: AvailableApp[] = [];
-      if (Array.isArray(parsedState.availableApps)) {
-        validAvailableApps = parsedState.availableApps.filter(p => {
+      let validAvailableItems: AvailableItem[] = [];
+      if (Array.isArray(parsedState.availableItems)) {
+        validAvailableItems = parsedState.availableItems.filter(p => {
           if (p && typeof p === 'object' &&
               typeof p.id === 'string' &&
               typeof p.name === 'string' &&
@@ -48,9 +48,9 @@ export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Retu
               typeof p.lastUpdated === 'string') {
             return true;
           }
-          console.warn("An item in stored availableApps has invalid structure, discarding.", p);
+          console.warn("An item in stored availableItems has invalid structure, discarding.", p);
           return false;
-        }) as AvailableApp[];
+        }) as AvailableItem[];
       }
       
       // Validate settings
@@ -73,8 +73,8 @@ export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Retu
       const validIsLoading = typeof parsedState.isLoading === 'boolean' ? parsedState.isLoading : false;
 
       return {
-        currentApp: validCurrentApp,
-        availableApps: validAvailableApps,
+        currentItem: validCurrentApp,
+        availableItems: validAvailableItems,
         settings: validSettings,
         isLoading: validIsLoading,
       };

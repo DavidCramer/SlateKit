@@ -34,7 +34,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const { appState } = useApp(); // Added hook
   const theme = appState.settings.theme; // Get theme
-  const formFieldThemeClasses = classConstants[theme].formField; // Use themed classes
+  const formFieldThemeClasses = classConstants(theme).formField; // Use themed classes
 
   const inputRef = useRef<HTMLInputElement>(null);
   const errorId = error ? `${id}-error` : undefined;

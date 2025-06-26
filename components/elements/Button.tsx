@@ -1,5 +1,4 @@
 import React, { ElementType, ReactNode } from 'react';
-import { classConstants } from '../../constants/constants';
 import { useApp } from '../../contexts/AppContext'; // Added import
 
 export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'item' | 'link';
@@ -21,9 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   ...props
 }) => {
-  const { appState } = useApp(); // Added hook
-  const theme = appState.settings.theme; // Get theme
-  const buttonThemeClasses = classConstants[theme].button; // Use themed classes
+  const { themeClasses: {button:buttonThemeClasses} } = useApp(); // Added hook
 
   let selectedVariantClasses: string;
   let applyDefaultLayout = true;
@@ -37,11 +34,11 @@ const Button: React.FC<ButtonProps> = ({
       break;
     case 'item':
       selectedVariantClasses = buttonThemeClasses.item;
-      applyDefaultLayout = false; 
+      applyDefaultLayout = false;
       break;
     case 'link':
       selectedVariantClasses = buttonThemeClasses.link;
-      applyDefaultLayout = false; 
+      applyDefaultLayout = false;
       break;
     case 'secondary':
     default:
@@ -54,7 +51,7 @@ const Button: React.FC<ButtonProps> = ({
     selectedVariantClasses,
     applyDefaultLayout ? buttonThemeClasses.defaultLayout : '',
     fullWidth ? 'w-full' : '',
-    className, 
+    className,
   ].filter(Boolean).join(' ');
 
   const iconMarkup = IconComponent ? (

@@ -1,5 +1,7 @@
 import React, {createContext, useReducer, useContext, ReactNode, useEffect, Dispatch} from 'react';
 import {loadAppStateFromStorage, saveAppStateToStorage} from '../services/StorageService';
+import {makeComponentTemplates, TemplateSet} from "../templates/componentTemplate";
+import {colors} from "@/constants/constants.ts";
 
 // --- 1. Define State and Action Types ---
 
@@ -7,7 +9,7 @@ import {loadAppStateFromStorage, saveAppStateToStorage} from '../services/Storag
  * Interface representing application-level settings.
  */
 export interface AppSettings {
-    theme: 'dark' | 'light';
+    theme: keyof typeof colors;
     remoteStorageEnabled?: boolean; // New: Flag to enable/disable remote storage
     remoteApiUrl?: string;         // New: Base URL for the remote API
     // Future settings can be added here
@@ -16,7 +18,7 @@ export interface AppSettings {
 /**
  * Interface representing the detailed structure of an available project in the list.
  */
-export interface AvailableApp {
+export interface AvailableItem {
     /** The unique identifier of the project (currently same as name). */
     id: string;
     /** The unique name of the project. */
@@ -29,9 +31,9 @@ export interface AvailableApp {
 
 /**
  * Interface representing the detailed structure of the currently loaded project.
- * It includes all fields from AvailableApp.
+ * It includes all fields from AvailableItem.
  */
-export interface AppDetails extends AvailableApp {
+export interface ItemDetails extends AvailableItem {
 }
 
 /**
@@ -39,9 +41,9 @@ export interface AppDetails extends AvailableApp {
  */
 export interface AppState {
     /** The currently active project's details, or null if no project is loaded. */
-    currentApp: AppDetails | null;
+    currentItem: ItemDetails | null;
     /** A list of all known projects. */
-    availableApps: AvailableApp[];
+    availableItems: AvailableItem[];
     /** Application-wide settings. */
     settings: AppSettings;
     /** Indicates if the application is currently in a loading state. */
@@ -68,10 +70,12 @@ interface AppContextType {
     appState: AppState;
     /** The loadItem function */
     loadItem: (id: string) => void;
-    /** The unLoadItem function */
-    unLoadItem: () => void;
+    /** The unloadItem function */
+    unloadItem: () => void;
     /** The dispatch function to send actions to the reducer. */
     dispatch: Dispatch<Action>;
+    /** Holds the theme templates */
+    themeClasses: TemplateSet;
 }
 
 /**
@@ -96,8 +100,8 @@ export const defaultAppSettings: AppSettings = { // Exported for use in StorageS
  * or if no state is found by the StorageService.
  */
 const initialState: AppState = {
-    currentApp: null,
-    availableApps: [],
+    currentItem: null,
+    availableItems: [],
     settings: defaultAppSettings,
     isLoading: false,
 };
@@ -141,41 +145,41 @@ const projectReducer = (state: AppState, action: Action): AppState => {
             const projectNameToLoad = action.payload;
             const projectIdToLoad = toKebabCase(projectNameToLoad); // Convert name to kebab-case for ID
 
-            let projectDetailsToLoad: AppDetails;
-            let updatedAvailableApps = [...state.availableApps];
+            let projectDetailsToLoad: ItemDetails;
+            let updatedAvailableItems = [...state.availableItems];
 
-            const existingAppIndex = updatedAvailableApps.findIndex(p => p.id === projectIdToLoad);
+            const existingAppIndex = updatedAvailableItems.findIndex(p => p.id === projectIdToLoad);
 
             if (existingAppIndex > -1) {
                 // App exists, update its lastUpdated
-                const existingApp = updatedAvailableApps[existingAppIndex];
+                const existingApp = updatedAvailableItems[existingAppIndex];
                 projectDetailsToLoad = {
                     ...existingApp,
                     name: projectNameToLoad, // Ensure name is also updated if it changed casing/spacing but resulted in same ID
                     lastUpdated: now
                 };
-                updatedAvailableApps[existingAppIndex] = projectDetailsToLoad;
+                updatedAvailableItems[existingAppIndex] = projectDetailsToLoad;
             } else {
-                // App does not exist, create new and add to availableApps
+                // App does not exist, create new and add to availableItems
                 projectDetailsToLoad = {
                     id: projectIdToLoad,
                     name: projectNameToLoad, // Use the original name for display
                     dateCreated: now, // New project, so dateCreated is now
                     lastUpdated: now,
                 };
-                updatedAvailableApps.push(projectDetailsToLoad);
+                updatedAvailableItems.push(projectDetailsToLoad);
             }
 
             return {
                 ...state,
-                currentApp: projectDetailsToLoad,
-                availableApps: updatedAvailableApps,
+                currentItem: projectDetailsToLoad,
+                availableItems: updatedAvailableItems,
                 isLoading: false, // Ensure isLoading is reset if it was true
             };
         case 'UNLOAD_ITEM':
             return {
                 ...state,
-                currentApp: null, // availableApps remains unchanged
+                currentItem: null, // availableItems remains unchanged
                 isLoading: false,
             };
         case 'SET_SETTINGS':
@@ -227,8 +231,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({children}) => {
             return {
                 ...initialState, // Provides defaults (like settings, isLoading)
                 ...storedState,   // Overrides with loaded state
-                availableApps: storedState.availableApps || [],
-                currentApp: storedState.currentApp || null,
+                availableItems: storedState.availableItems || [],
+                currentItem: storedState.currentItem || null,
                 // Ensure settings are merged or defaulted
                 settings: storedState.settings ? {...defaultAppSettings, ...storedState.settings} : defaultAppSettings,
                 isLoading: typeof storedState.isLoading === 'boolean' ? storedState.isLoading : false,
@@ -245,7 +249,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({children}) => {
     }
 
     // Unload function.
-    const unLoadItem = () => {
+    const unloadItem = () => {
         dispatch({type: 'UNLOAD_ITEM'});
     }
 
@@ -254,11 +258,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({children}) => {
         saveAppStateToStorage(appState);
     }, [appState]);
 
+    const themeClasses = makeComponentTemplates( appState.settings.theme );
+
     const app = {
         appState,
         loadItem,
-        unLoadItem,
-        dispatch
+        unloadItem,
+        dispatch,
+        themeClasses
     }
 
     return (

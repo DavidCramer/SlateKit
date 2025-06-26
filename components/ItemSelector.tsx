@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useApp, AvailableApp } from '../contexts/AppContext';
+import { useApp, AvailableItem } from '../contexts/AppContext';
 import CreateItemModal from './modal/CreateItemModal.tsx';
 import { MdOutlineWorkspaces, MdChevronRight, MdAddCircle, MdSettings } from 'react-icons/md';
 import Button from './elements/Button';
@@ -22,9 +22,9 @@ interface ItemSelectorProps {
  * @returns {React.ReactElement} The rendered ItemSelector component.
  */
 const ItemSelector: React.FC<ItemSelectorProps> = ({ onViewSettings }) => {
-  const { appState, loadItem } = useApp();
+  const { appState, loadItem, themeClasses: {frontPanel} } = useApp();
 
-  const { availableApps } = appState;
+  const { availableItems } = appState;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   /**
@@ -40,7 +40,7 @@ const ItemSelector: React.FC<ItemSelectorProps> = ({ onViewSettings }) => {
     }
   };
 
-  const itemListItems: ListItem[] = availableApps.map((item: AvailableApp) => ({
+  const itemListItems: ListItem[] = availableItems.map((item: AvailableItem) => ({
     id: item.id,
     content: item.name,
     onClick: () => loadItem(item.name),
@@ -50,15 +50,15 @@ const ItemSelector: React.FC<ItemSelectorProps> = ({ onViewSettings }) => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-700 text-white p-4 transition-all duration-500 ease-in-out">
+      <div className={`${frontPanel.container}`}>
         <main className="w-full flex justify-center" role="main">
-          <div className="w-full max-w-md p-8 bg-slate-800 rounded-xl shadow-2xl">
+          <div className={`${frontPanel.contentBox}`}>
             <div className="flex flex-col items-center mb-6">
-              <MdOutlineWorkspaces className="w-16 h-16 text-sky-400 mb-3" aria-hidden="true" />
-              <h2 className="text-3xl font-bold text-white" id="select-item-heading">{`Select or Create ${coreItem.singular}`}</h2>
+              <MdOutlineWorkspaces className={`${frontPanel.icon}`} aria-hidden="true" />
+              <h2 className={`${frontPanel.title}`} id="select-item-heading">{`Select or Create ${coreItem.singular}`}</h2>
             </div>
 
-            {availableApps.length > 0 ? (
+            {availableItems.length > 0 ? (
               <>
                 <List
                   items={itemListItems}

@@ -1,4 +1,5 @@
 // constants/constants.ts
+import {makeComponentTemplates} from '../templates/componentTemplate';
 
 /**
  * Core Item identifier. This is the core config items the app creates.
@@ -11,192 +12,374 @@ export const coreItem = {
     pluralLower: 'notebooks'
 }
 
+interface ColorTheme {
+    [string: string]: ColorScheme;
+}
+
+export interface ColorScheme {
+    _themeLabel: string;
+    text: string;
+    textAlt: string;
+    textEmphasis: string;
+    textHover: string;
+    textMuted: string;
+    textMutedAlt: string;
+    textInverted: string;
+    textDanger: string;
+    textPrimary: string;
+    textPrimaryEmphasis: string;
+    bg: string;
+    bgAlt: string;
+    bgComponent: string;
+    bgComponentHover: string;
+    bgComponentAltHover: string;
+    bgMuted: string;
+    bgMutedHover: string;
+    bgPrimary: string;
+    bgPrimaryHover: string;
+    bgDanger: string;
+    bgDangerHover: string;
+    bgBackdrop: string;
+    bgInverted: string;
+    border: string;
+    borderAlt: string;
+    borderHover: string;
+    borderPrimary: string;
+    borderPrimaryHover: string;
+    borderFocus: string;
+    borderError: string;
+    borderErrorFocus: string;
+    ring: string;
+    ringError: string;
+    ringOffset: string;
+    ringOffsetAlt: string;
+    placeholder: string;
+}
+
+/**
+ * Holds the reusable colors based on theme.
+ * These are Tailwind CSS class strings, organized by theme, to promote
+ * consistency and ease of maintenance.
+ */
+export const colors: ColorTheme = {
+    dark: <ColorScheme>{
+        _themeLabel: 'Dark (default)',
+        // Text
+        text: 'text-slate-300',
+        textAlt: 'text-slate-200',
+        textEmphasis: 'text-white',
+        textHover: 'hover:text-white',
+        textMuted: 'text-slate-400',
+        textMutedAlt: 'text-slate-500',
+        textInverted: 'text-white',
+        textDanger: 'text-red-400',
+        textPrimary: 'text-sky-400',
+        textPrimaryEmphasis: 'text-sky-600',
+
+        // Background
+        bg: 'bg-slate-900',
+        bgAlt: 'bg-slate-800',
+        bgComponent: 'bg-slate-700',
+        bgComponentHover: 'hover:bg-slate-600',
+        bgComponentAltHover: 'hover:bg-slate-700',
+        bgMuted: 'bg-slate-600',
+        bgMutedHover: 'hover:bg-slate-500',
+        bgPrimary: 'bg-sky-600',
+        bgPrimaryHover: 'hover:bg-sky-500',
+        bgDanger: 'bg-rose-500',
+        bgDangerHover: 'hover:bg-rose-600',
+        bgBackdrop: 'bg-slate-900',
+        bgInverted: 'bg-white',
+
+        // Border
+        border: 'border-slate-600',
+        borderAlt: 'border-slate-700',
+        borderHover: 'hover:border-slate-500',
+        borderPrimary: 'border-sky-600',
+        borderPrimaryHover: 'hover:border-sky-500',
+        borderFocus: 'border-sky-500',
+        borderError: 'border-red-500',
+        borderErrorFocus: 'border-red-500',
+
+        // Ring
+        ring: 'ring-sky-500',
+        ringError: 'ring-red-500',
+        ringOffset: 'ring-offset-slate-900',
+        ringOffsetAlt: 'ring-offset-slate-800',
+
+        // Placeholder
+        placeholder: 'placeholder-slate-400',
+    },
+    light: <ColorScheme>{
+        _themeLabel: 'Light (default)',
+        // Text
+        text: 'text-slate-800',
+        textAlt: 'text-slate-700',
+        textEmphasis: 'text-black',
+        textHover: 'hover:text-black',
+        textMuted: 'text-slate-500',
+        textMutedAlt: 'text-slate-400',
+        textInverted: 'text-white',
+        textDanger: 'text-red-600',
+        textPrimary: 'text-sky-600',
+        textPrimaryEmphasis: 'text-sky-800',
+
+        // Background
+        bg: 'bg-white',
+        bgAlt: 'bg-slate-100',
+        bgComponent: 'bg-slate-200',
+        bgComponentHover: 'hover:bg-slate-300',
+        bgComponentAltHover: 'hover:bg-slate-200',
+        bgMuted: 'bg-slate-300',
+        bgMutedHover: 'hover:bg-slate-400',
+        bgPrimary: 'bg-sky-500',
+        bgPrimaryHover: 'hover:bg-sky-600',
+        bgDanger: 'bg-rose-500',
+        bgDangerHover: 'hover:bg-rose-600',
+        bgBackdrop: 'bg-white',
+        bgInverted: 'bg-slate-900',
+
+        // Border
+        border: 'border-slate-300',
+        borderAlt: 'border-slate-200',
+        borderHover: 'hover:border-slate-400',
+        borderPrimary: 'border-sky-500',
+        borderPrimaryHover: 'hover:border-sky-600',
+        borderFocus: 'border-sky-600',
+        borderError: 'border-red-600',
+        borderErrorFocus: 'border-red-600',
+
+        // Ring
+        ring: 'ring-sky-600',
+        ringError: 'ring-red-600',
+        ringOffset: 'ring-offset-white',
+        ringOffsetAlt: 'ring-offset-slate-100',
+
+        // Placeholder
+        placeholder: 'placeholder-slate-500',
+    },
+    ocean: <ColorScheme>{
+        _themeLabel: 'Ocean',
+        text: 'text-slate-800',
+        textAlt: 'text-slate-700',
+        textEmphasis: 'text-slate-900',
+        textHover: 'hover:text-slate-900',
+        textMuted: 'text-slate-500',
+        textMutedAlt: 'text-slate-400',
+        textInverted: 'text-white',
+        textDanger: 'text-rose-600',
+        textPrimary: 'text-cyan-600',
+        textPrimaryEmphasis: 'text-cyan-800',
+
+        bg: 'bg-cyan-50',
+        bgAlt: 'bg-cyan-100',
+        bgComponent: 'bg-white',
+        bgComponentHover: 'hover:bg-cyan-100',
+        bgComponentAltHover: 'hover:bg-cyan-200',
+        bgMuted: 'bg-cyan-100',
+        bgMutedHover: 'hover:bg-cyan-200',
+        bgPrimary: 'bg-cyan-600',
+        bgPrimaryHover: 'hover:bg-cyan-700',
+        bgDanger: 'bg-rose-600',
+        bgDangerHover: 'hover:bg-rose-700',
+        bgBackdrop: 'bg-cyan-100',
+        bgInverted: 'bg-slate-900',
+
+        border: 'border-cyan-200',
+        borderAlt: 'border-cyan-300',
+        borderHover: 'hover:border-cyan-400',
+        borderPrimary: 'border-cyan-600',
+        borderPrimaryHover: 'hover:border-cyan-700',
+        borderFocus: 'border-cyan-700',
+        borderError: 'border-rose-600',
+        borderErrorFocus: 'border-rose-700',
+
+        ring: 'ring-cyan-600',
+        ringError: 'ring-rose-600',
+        ringOffset: 'ring-offset-cyan-50',
+        ringOffsetAlt: 'ring-offset-cyan-100',
+
+        placeholder: 'placeholder-cyan-400',
+    },
+    sandstorm: <ColorScheme>{
+        _themeLabel: 'Sandstorm',
+        text: 'text-yellow-900',
+        textAlt: 'text-yellow-800',
+        textEmphasis: 'text-amber-900',
+        textHover: 'hover:text-amber-900',
+        textMuted: 'text-yellow-600',
+        textMutedAlt: 'text-yellow-500',
+        textInverted: 'text-white',
+        textDanger: 'text-red-700',
+        textPrimary: 'text-amber-600',
+        textPrimaryEmphasis: 'text-amber-800',
+
+        bg: 'bg-amber-50',
+        bgAlt: 'bg-yellow-100',
+        bgComponent: 'bg-white',
+        bgComponentHover: 'hover:bg-amber-100',
+        bgComponentAltHover: 'hover:bg-amber-200',
+        bgMuted: 'bg-yellow-100',
+        bgMutedHover: 'hover:bg-yellow-200',
+        bgPrimary: 'bg-amber-600',
+        bgPrimaryHover: 'hover:bg-amber-700',
+        bgDanger: 'bg-red-600',
+        bgDangerHover: 'hover:bg-red-700',
+        bgBackdrop: 'bg-yellow-100',
+        bgInverted: 'bg-yellow-900',
+
+        border: 'border-amber-300',
+        borderAlt: 'border-yellow-300',
+        borderHover: 'hover:border-amber-400',
+        borderPrimary: 'border-amber-600',
+        borderPrimaryHover: 'hover:border-amber-700',
+        borderFocus: 'border-amber-700',
+        borderError: 'border-red-600',
+        borderErrorFocus: 'border-red-700',
+
+        ring: 'ring-amber-600',
+        ringError: 'ring-red-600',
+        ringOffset: 'ring-offset-amber-50',
+        ringOffsetAlt: 'ring-offset-yellow-100',
+
+        placeholder: 'placeholder-yellow-400',
+    },
+    midnight: <ColorScheme>{
+        _themeLabel: 'Midnight',
+        text: 'text-gray-300',
+        textAlt: 'text-gray-400',
+        textEmphasis: 'text-white',
+        textHover: 'hover:text-white',
+        textMuted: 'text-gray-500',
+        textMutedAlt: 'text-gray-600',
+        textInverted: 'text-white',
+        textDanger: 'text-red-400',
+        textPrimary: 'text-indigo-400',
+        textPrimaryEmphasis: 'text-indigo-600',
+
+        bg: 'bg-gray-900',
+        bgAlt: 'bg-gray-800',
+        bgComponent: 'bg-gray-700',
+        bgComponentHover: 'hover:bg-gray-600',
+        bgComponentAltHover: 'hover:bg-gray-700',
+        bgMuted: 'bg-gray-600',
+        bgMutedHover: 'hover:bg-gray-500',
+        bgPrimary: 'bg-indigo-600',
+        bgPrimaryHover: 'hover:bg-indigo-500',
+        bgDanger: 'bg-rose-500',
+        bgDangerHover: 'hover:bg-rose-600',
+        bgBackdrop: 'bg-gray-900',
+        bgInverted: 'bg-white',
+
+        border: 'border-gray-600',
+        borderAlt: 'border-gray-700',
+        borderHover: 'hover:border-gray-500',
+        borderPrimary: 'border-indigo-600',
+        borderPrimaryHover: 'hover:border-indigo-500',
+        borderFocus: 'border-indigo-500',
+        borderError: 'border-red-500',
+        borderErrorFocus: 'border-red-500',
+
+        ring: 'ring-indigo-500',
+        ringError: 'ring-red-500',
+        ringOffset: 'ring-offset-gray-900',
+        ringOffsetAlt: 'ring-offset-gray-800',
+
+        placeholder: 'placeholder-gray-400',
+    },
+    cyberpunk: <ColorScheme>{
+        _themeLabel: 'Cyberpunk',
+        text: 'text-pink-200',
+        textAlt: 'text-fuchsia-300',
+        textEmphasis: 'text-white',
+        textHover: 'hover:text-white',
+        textMuted: 'text-purple-400',
+        textMutedAlt: 'text-fuchsia-400',
+        textInverted: 'text-black',
+        textDanger: 'text-red-400',
+        textPrimary: 'text-cyan-400',
+        textPrimaryEmphasis: 'text-teal-500',
+
+        bg: 'bg-gray-950',
+        bgAlt: 'bg-gray-900',
+        bgComponent: 'bg-fuchsia-900',
+        bgComponentHover: 'hover:bg-fuchsia-800',
+        bgComponentAltHover: 'hover:bg-purple-800',
+        bgMuted: 'bg-gray-800',
+        bgMutedHover: 'hover:bg-purple-700',
+        bgPrimary: 'bg-cyan-500',
+        bgPrimaryHover: 'hover:bg-teal-500',
+        bgDanger: 'bg-red-600',
+        bgDangerHover: 'hover:bg-red-700',
+        bgBackdrop: 'bg-black',
+        bgInverted: 'bg-white',
+
+        border: 'border-fuchsia-700',
+        borderAlt: 'border-fuchsia-800',
+        borderHover: 'hover:border-fuchsia-500',
+        borderPrimary: 'border-cyan-500',
+        borderPrimaryHover: 'hover:border-teal-500',
+        borderFocus: 'border-cyan-500',
+        borderError: 'border-red-500',
+        borderErrorFocus: 'border-red-500',
+
+        ring: 'ring-cyan-400',
+        ringError: 'ring-red-500',
+        ringOffset: 'ring-offset-black',
+        ringOffsetAlt: 'ring-offset-gray-900',
+
+        placeholder: 'placeholder-fuchsia-400',
+    },
+    cyberpunkLight: <ColorScheme>{
+        _themeLabel: 'Cyberpunk (Light)',
+        text: 'text-gray-800',
+        textAlt: 'text-fuchsia-700',
+        textEmphasis: 'text-black',
+        textHover: 'hover:text-black',
+        textMuted: 'text-purple-500',
+        textMutedAlt: 'text-fuchsia-500',
+        textInverted: 'text-white',
+        textDanger: 'text-red-600',
+        textPrimary: 'text-cyan-600',
+        textPrimaryEmphasis: 'text-teal-700',
+
+        bg: 'bg-white',
+        bgAlt: 'bg-fuchsia-100',
+        bgComponent: 'bg-purple-100',
+        bgComponentHover: 'hover:bg-fuchsia-200',
+        bgComponentAltHover: 'hover:bg-purple-200',
+        bgMuted: 'bg-gray-100',
+        bgMutedHover: 'hover:bg-gray-200',
+        bgPrimary: 'bg-cyan-500',
+        bgPrimaryHover: 'hover:bg-teal-500',
+        bgDanger: 'bg-red-500',
+        bgDangerHover: 'hover:bg-red-600',
+        bgBackdrop: 'bg-white',
+        bgInverted: 'bg-gray-900',
+
+        border: 'border-fuchsia-400',
+        borderAlt: 'border-purple-300',
+        borderHover: 'hover:border-fuchsia-500',
+        borderPrimary: 'border-cyan-500',
+        borderPrimaryHover: 'hover:border-teal-500',
+        borderFocus: 'border-cyan-600',
+        borderError: 'border-red-500',
+        borderErrorFocus: 'border-red-600',
+
+        ring: 'ring-cyan-500',
+        ringError: 'ring-red-500',
+        ringOffset: 'ring-offset-white',
+        ringOffsetAlt: 'ring-offset-fuchsia-100',
+
+        placeholder: 'placeholder-fuchsia-400',
+    }
+
+
+};
+
 /**
  * A centralized object for storing Tailwind CSS class string constants
  * used across various UI elements, supporting dark and light themes.
- * This promotes consistency and ease of maintenance.
+ * This promotes consistency and ease of maintenance by referencing the `colors` object.
  */
-export const classConstants = {
-    dark: {
-        button: {
-            base: 'inline-flex items-center px-4 py-2.5 text-sm font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-sky-500 transition-all duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed',
-            defaultLayout: 'justify-center',
-            primary: 'border border-transparent text-white bg-sky-600 hover:bg-sky-500',
-            danger: 'border border-transparent text-white bg-rose-500 hover:bg-rose-600',
-            item: 'justify-between bg-slate-700 hover:bg-slate-600 text-white font-semibold',
-            link: 'bg-transparent hover:bg-slate-700 text-slate-300 hover:text-white shadow-none px-2 py-2 font-normal justify-start',
-            secondary: 'border border-slate-600 hover:bg-slate-700 text-slate-300',
-            iconBase: 'w-5 h-5',
-            iconMarginLeft: 'mr-2',
-            iconMarginRight: 'ml-2',
-        },
-        formField: {
-            base: 'w-full px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-shadow disabled:opacity-70 disabled:cursor-not-allowed',
-            error: 'border-red-500 focus:ring-red-500 focus:border-red-500',
-        },
-        fieldBase: {
-            label: 'block text-sm font-medium text-slate-300 mb-1',
-            requiredAsterisk: 'text-red-400 ml-1',
-            errorText: 'mt-1.5 text-xs text-red-400',
-            errorPlaceholder: 'mt-1.5 text-xs text-transparent select-none',
-        },
-        toggleSwitch: {
-            base: 'relative inline-flex items-center h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
-            focus: 'ring-2 ring-sky-500 ring-offset-2 ring-offset-slate-800',
-            checked: 'bg-sky-600',
-            unchecked: 'bg-slate-600',
-            disabled: 'opacity-50 cursor-not-allowed',
-            enabledUncheckedHover: 'hover:bg-slate-500',
-            error: 'border-red-500',
-            thumbBase: 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-            thumbChecked: 'translate-x-5',
-            thumbUnchecked: 'translate-x-0',
-            labelBase: 'text-sm font-medium text-slate-300 select-none',
-            labelDisabled: 'cursor-not-allowed opacity-70',
-            labelEnabled: 'cursor-pointer',
-            labelSpacingLeft: 'mr-3',
-            labelSpacingRight: 'ml-3',
-            errorPaddingLeftLabel: 'pl-10 sm:pl-12',
-        },
-        checkbox: {
-            visualBase: 'h-5 w-5 flex-shrink-0 inline-flex items-center justify-center border rounded mr-2 transition-all duration-150 ease-in-out',
-            focus: 'ring-2 ring-sky-500 ring-offset-2 ring-offset-slate-800',
-            checked: 'bg-sky-600 border-sky-600',
-            unchecked: 'bg-slate-700 border-slate-600',
-            hoverChecked: 'hover:bg-sky-500 hover:border-sky-500',
-            hoverUnchecked: 'hover:border-slate-500',
-            disabled: 'opacity-60 cursor-not-allowed',
-            errorUnchecked: 'border-red-500',
-            labelBase: 'text-sm font-medium text-slate-300 select-none',
-            labelDisabled: 'cursor-not-allowed opacity-70',
-            labelEnabled: 'cursor-pointer',
-            checkIcon: 'w-4 h-4 text-white',
-            errorPaddingLeft: 'pl-7',
-        },
-        select: {
-            buttonBase: 'w-full flex items-center justify-between px-3 py-2.5 bg-slate-700 border border-slate-600 rounded-md text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-shadow disabled:opacity-70 disabled:cursor-not-allowed text-left',
-            buttonError: 'border-red-500 focus:ring-red-500 focus:border-red-500',
-            dropdownUl: 'absolute z-10 w-full mt-1 bg-slate-700 border border-slate-600 rounded-md shadow-lg max-h-60 overflow-y-auto focus:outline-none',
-            optionBase: 'px-3 py-2 text-sm flex items-center justify-between cursor-pointer',
-            optionDisabled: 'text-slate-500 cursor-not-allowed',
-            optionEnabled: 'text-slate-200 hover:bg-slate-600',
-            optionFocusedEnabled: 'bg-slate-600',
-            noOptionsLi: 'px-3 py-2 text-slate-400 text-sm',
-            expandIcon: 'w-5 h-5 text-slate-400 transform transition-transform duration-200',
-            expandIconOpenState: 'rotate-180',
-            placeholderText: 'text-slate-400',
-            optionLeadingIcon: 'w-5 h-5 mr-2 text-slate-400 flex-shrink-0',
-            optionSelectedCheckIcon: 'w-5 h-5 text-sky-400 flex-shrink-0',
-        },
-        sidebarLayout: {
-            container: 'flex',
-            sidebar: 'flex-shrink-0 bg-slate-800 text-white',
-            main: 'flex-grow bg-slate-900 text-white overflow-y-auto',
-        },
-        panel: {
-            // Default variant (used for sub-sections like "Input Fields")
-            defaultContainer: '', 
-            defaultHeader: 'flex items-center border-b border-slate-700 pb-1 mb-2',
-            defaultTitle: 'text-lg font-medium text-slate-200',
-            defaultIcon: 'w-5 h-5 mr-1.5 text-sky-400',
-            defaultContent: 'space-y-4',
-        
-            // Card variant (used for "App Overview", "Form Element Showcase")
-            cardContainer: 'bg-slate-800 p-6 rounded-xl shadow-xl',
-            cardHeader: 'flex items-center border-b border-slate-700 pb-3 mb-6', 
-            cardTitle: 'text-2xl font-semibold text-white',
-            cardIcon: 'w-6 h-6 mr-2 text-sky-400', 
-            cardContent: '', 
-        }
-    },
-    light: {
-        button: {
-            base: 'inline-flex items-center px-4 py-2.5 text-sm font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-sky-500 transition-all duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed',
-            defaultLayout: 'justify-center',
-            primary: 'border border-transparent text-white bg-sky-600 hover:bg-sky-700',
-            danger: 'border border-transparent text-white bg-rose-500 hover:bg-rose-600',
-            item: 'justify-between bg-gray-100 hover:bg-gray-200 text-slate-800 font-semibold',
-            link: 'bg-transparent hover:bg-gray-100 text-sky-700 hover:text-sky-800 shadow-none px-2 py-2 font-normal justify-start',
-            secondary: 'bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 hover:text-slate-800',
-            iconBase: 'w-5 h-5',
-            iconMarginLeft: 'mr-2',
-            iconMarginRight: 'ml-2',
-        },
-        formField: {
-            base: 'w-full px-3 py-2.5 bg-white border-gray-300 rounded-md text-slate-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-shadow disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed',
-            error: 'border-red-500 text-red-700 placeholder-red-400 focus:ring-red-500 focus:border-red-500',
-        },
-        fieldBase: {
-            label: 'block text-sm font-medium text-slate-700 mb-1',
-            requiredAsterisk: 'text-red-500 ml-1',
-            errorText: 'mt-1.5 text-xs text-red-600',
-            errorPlaceholder: 'mt-1.5 text-xs text-transparent select-none',
-        },
-        toggleSwitch: {
-            base: 'relative inline-flex items-center h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
-            focus: 'ring-2 ring-sky-500 ring-offset-2 ring-offset-white',
-            checked: 'bg-sky-600',
-            unchecked: 'bg-gray-300',
-            disabled: 'opacity-50 cursor-not-allowed',
-            enabledUncheckedHover: 'hover:bg-gray-400',
-            error: 'border-red-500',
-            thumbBase: 'pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
-            thumbChecked: 'translate-x-5',
-            thumbUnchecked: 'translate-x-0',
-            labelBase: 'text-sm font-medium text-slate-700 select-none',
-            labelDisabled: 'cursor-not-allowed opacity-70 text-gray-500',
-            labelEnabled: 'cursor-pointer text-slate-700',
-            labelSpacingLeft: 'mr-3',
-            labelSpacingRight: 'ml-3',
-            errorPaddingLeftLabel: 'pl-10 sm:pl-12',
-        },
-        checkbox: {
-            visualBase: 'h-5 w-5 flex-shrink-0 inline-flex items-center justify-center border rounded mr-2 transition-all duration-150 ease-in-out',
-            focus: 'ring-2 ring-sky-500 ring-offset-2 ring-offset-white',
-            checked: 'bg-sky-600 border-sky-600',
-            unchecked: 'bg-white border-gray-400',
-            hoverChecked: 'hover:bg-sky-500 hover:border-sky-500',
-            hoverUnchecked: 'hover:border-gray-500',
-            disabled: 'opacity-60 cursor-not-allowed',
-            errorUnchecked: 'border-red-500',
-            labelBase: 'text-sm font-medium text-slate-700 select-none',
-            labelDisabled: 'cursor-not-allowed opacity-70 text-gray-500',
-            labelEnabled: 'cursor-pointer text-slate-700',
-            checkIcon: 'w-4 h-4 text-white',
-            errorPaddingLeft: 'pl-7',
-        },
-        select: {
-            buttonBase: 'w-full flex items-center justify-between px-3 py-2.5 bg-white border-gray-300 rounded-md text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-shadow disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed text-left',
-            buttonError: 'border-red-500 text-red-700 focus:ring-red-500 focus:border-red-500',
-            dropdownUl: 'absolute z-10 w-full mt-1 bg-white border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto focus:outline-none',
-            optionBase: 'px-3 py-2 text-sm flex items-center justify-between cursor-pointer',
-            optionDisabled: 'text-gray-400 cursor-not-allowed bg-white',
-            optionEnabled: 'text-slate-800 hover:bg-gray-100',
-            optionFocusedEnabled: 'bg-gray-100 text-slate-900',
-            noOptionsLi: 'px-3 py-2 text-gray-500 text-sm',
-            expandIcon: 'w-5 h-5 text-gray-500 transform transition-transform duration-200',
-            expandIconOpenState: 'rotate-180',
-            placeholderText: 'text-gray-400',
-            optionLeadingIcon: 'w-5 h-5 mr-2 text-gray-500 flex-shrink-0',
-            optionSelectedCheckIcon: 'w-5 h-5 text-sky-600 flex-shrink-0',
-        },
-        sidebarLayout: {
-            container: 'flex',
-            sidebar: 'flex-shrink-0 bg-gray-100 text-slate-900 border-r border-gray-200',
-            main: 'flex-grow bg-white text-slate-900 overflow-y-auto',
-        },
-        panel: {
-            defaultContainer: '',
-            defaultHeader: 'flex items-center border-b border-gray-300 pb-1 mb-2',
-            defaultTitle: 'text-lg font-medium text-slate-700',
-            defaultIcon: 'w-5 h-5 mr-1.5 text-sky-600',
-            defaultContent: 'space-y-4',
-        
-            cardContainer: 'bg-white p-6 rounded-xl shadow-lg border border-gray-200',
-            cardHeader: 'flex items-center border-b border-gray-300 pb-3 mb-6',
-            cardTitle: 'text-2xl font-semibold text-slate-800',
-            cardIcon: 'w-6 h-6 mr-2 text-sky-600',
-            cardContent: '',
-        }
-    }
-};
+export const classConstants = (theme: keyof typeof colors = 'dark') => makeComponentTemplates(theme);

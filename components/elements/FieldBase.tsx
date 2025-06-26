@@ -31,7 +31,7 @@ const FieldBase: React.FC<FieldBaseProps> = ({
 }) => {
   const { appState } = useApp(); // Added hook
   const theme = appState.settings.theme; // Get theme
-  const fieldBaseThemeClasses = classConstants[theme].fieldBase; // Use themed classes
+  const fieldBaseThemeClasses = classConstants(theme).fieldBase; // Use themed classes
 
   const errorId = error ? `${id}-error` : undefined;
 
