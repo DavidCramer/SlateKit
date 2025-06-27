@@ -18,7 +18,7 @@ const SettingsModalSidebar: React.FC<SettingsModalSidebarProps> = ({ activeCateg
       onClick: () => onSelectCategory('appearance'),
       icon: MdPalette,
       isActive: activeCategory === 'appearance',
-      buttonClassName: 'justify-start !py-2.5',
+      buttonClassName: 'justify-start py-2.5!',
     },
     {
       id: 'settings-general',
@@ -26,7 +26,7 @@ const SettingsModalSidebar: React.FC<SettingsModalSidebarProps> = ({ activeCateg
       onClick: () => onSelectCategory('general'),
       icon: MdTune,
       isActive: activeCategory === 'general',
-      buttonClassName: 'justify-start !py-2.5',
+      buttonClassName: 'justify-start py-2.5!',
     },
     {
       id: 'settings-remote-storage',
@@ -34,7 +34,7 @@ const SettingsModalSidebar: React.FC<SettingsModalSidebarProps> = ({ activeCateg
       onClick: () => onSelectCategory('remoteStorage'),
       icon: MdCloudQueue,
       isActive: activeCategory === 'remoteStorage',
-      buttonClassName: 'justify-start !py-2.5',
+      buttonClassName: 'justify-start py-2.5!',
     },
     {
       id: 'settings-account',
@@ -45,7 +45,7 @@ const SettingsModalSidebar: React.FC<SettingsModalSidebarProps> = ({ activeCateg
       },
       icon: MdAccountCircle,
       isActive: activeCategory === 'account',
-      buttonClassName: 'justify-start !py-2.5',
+      buttonClassName: 'justify-start py-2.5!',
       disabled: false, // Set to true to actually disable
     },
      {
@@ -57,7 +57,7 @@ const SettingsModalSidebar: React.FC<SettingsModalSidebarProps> = ({ activeCateg
       },
       icon: MdStorage,
       isActive: activeCategory === 'data',
-      buttonClassName: 'justify-start !py-2.5',
+      buttonClassName: 'justify-start py-2.5!',
       disabled: false, // Set to true to actually disable
     },
   ];

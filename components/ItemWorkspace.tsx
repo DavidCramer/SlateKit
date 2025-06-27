@@ -49,7 +49,7 @@ const ItemWorkspace: React.FC<AppWorkspaceProps> = ({onViewSettings}) => {
                     icon={MdInfo}
                     onClick={() => alert('SlateKit v1.0.0 - Your Awesome App Environment!')}
                     aria-label="About SlateKit"
-                    className="text-xs text-slate-500 hover:text-slate-400 justify-start !py-1 mb-2"
+                    className="text-xs text-slate-500 hover:text-slate-400 justify-start py-1! mb-2"
                 >
                     About
                 </Button>
