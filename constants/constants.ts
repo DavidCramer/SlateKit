@@ -41,6 +41,8 @@ export interface ColorScheme {
     bgDangerHover: string;
     bgBackdrop: string;
     bgInverted: string;
+    bgGradientFrom: string;
+    bgGradientTo: string;
     border: string;
     borderAlt: string;
     borderHover: string;
@@ -90,6 +92,8 @@ export const colors: ColorTheme = {
         bgDangerHover: 'hover:bg-rose-600',
         bgBackdrop: 'bg-slate-900',
         bgInverted: 'bg-white',
+        bgGradientFrom: 'bg-slate-900',
+        bgGradientTo: 'bg-slate-400',
 
         // Border
         border: 'border-slate-600',
@@ -102,8 +106,8 @@ export const colors: ColorTheme = {
         borderErrorFocus: 'border-red-500',
 
         // Ring
-        ring: 'ring-sky-500',
-        ringError: 'ring-red-500',
+        ring: 'ring-3 ring-sky-500',
+        ringError: 'ring-3 ring-red-500',
         ringOffset: 'ring-offset-slate-900',
         ringOffsetAlt: 'ring-offset-slate-800',
 
@@ -138,6 +142,8 @@ export const colors: ColorTheme = {
         bgDangerHover: 'hover:bg-rose-600',
         bgBackdrop: 'bg-white',
         bgInverted: 'bg-slate-900',
+        bgGradientFrom: 'bg-white',
+        bgGradientTo: 'bg-slate-100',
 
         // Border
         border: 'border-slate-300',
@@ -150,7 +156,7 @@ export const colors: ColorTheme = {
         borderErrorFocus: 'border-red-600',
 
         // Ring
-        ring: 'ring-sky-600',
+        ring: 'ring-3 ring-sky-600',
         ringError: 'ring-red-600',
         ringOffset: 'ring-offset-white',
         ringOffsetAlt: 'ring-offset-slate-100',
@@ -184,6 +190,8 @@ export const colors: ColorTheme = {
         bgDangerHover: 'hover:bg-rose-700',
         bgBackdrop: 'bg-cyan-100',
         bgInverted: 'bg-slate-900',
+        bgGradientFrom: 'bg-cyan-50',
+        bgGradientTo: 'bg-cyan-800',
 
         border: 'border-cyan-200',
         borderAlt: 'border-cyan-300',
@@ -194,8 +202,8 @@ export const colors: ColorTheme = {
         borderError: 'border-rose-600',
         borderErrorFocus: 'border-rose-700',
 
-        ring: 'ring-cyan-600',
-        ringError: 'ring-rose-600',
+        ring: 'ring-3 ring-cyan-600',
+        ringError: 'ring-3 ring-rose-600',
         ringOffset: 'ring-offset-cyan-50',
         ringOffsetAlt: 'ring-offset-cyan-100',
 
@@ -227,6 +235,8 @@ export const colors: ColorTheme = {
         bgDangerHover: 'hover:bg-red-700',
         bgBackdrop: 'bg-yellow-100',
         bgInverted: 'bg-yellow-900',
+        bgGradientFrom: 'bg-amber-50',
+        bgGradientTo: 'bg-yellow-200',
 
         border: 'border-amber-300',
         borderAlt: 'border-yellow-300',
@@ -237,7 +247,7 @@ export const colors: ColorTheme = {
         borderError: 'border-red-600',
         borderErrorFocus: 'border-red-700',
 
-        ring: 'ring-amber-600',
+        ring: 'ring-3 ring-amber-600',
         ringError: 'ring-red-600',
         ringOffset: 'ring-offset-amber-50',
         ringOffsetAlt: 'ring-offset-yellow-100',
@@ -270,6 +280,8 @@ export const colors: ColorTheme = {
         bgDangerHover: 'hover:bg-rose-600',
         bgBackdrop: 'bg-gray-900',
         bgInverted: 'bg-white',
+        bgGradientFrom: 'bg-gray-900',
+        bgGradientTo: 'bg-gray-700',
 
         border: 'border-gray-600',
         borderAlt: 'border-gray-700',
@@ -280,8 +292,8 @@ export const colors: ColorTheme = {
         borderError: 'border-red-500',
         borderErrorFocus: 'border-red-500',
 
-        ring: 'ring-indigo-500',
-        ringError: 'ring-red-500',
+        ring: 'ring-3 ring-indigo-500',
+        ringError: 'ring-3 ring-red-500',
         ringOffset: 'ring-offset-gray-900',
         ringOffsetAlt: 'ring-offset-gray-800',
 
@@ -313,6 +325,8 @@ export const colors: ColorTheme = {
         bgDangerHover: 'hover:bg-red-700',
         bgBackdrop: 'bg-black',
         bgInverted: 'bg-white',
+        bgGradientFrom: 'bg-gray-950',
+        bgGradientTo: 'bg-fuchsia-900',
 
         border: 'border-fuchsia-700',
         borderAlt: 'border-fuchsia-800',
@@ -323,8 +337,8 @@ export const colors: ColorTheme = {
         borderError: 'border-red-500',
         borderErrorFocus: 'border-red-500',
 
-        ring: 'ring-cyan-400',
-        ringError: 'ring-red-500',
+        ring: 'ring-3 ring-cyan-400',
+        ringError: 'ring-3 ring-red-500',
         ringOffset: 'ring-offset-black',
         ringOffsetAlt: 'ring-offset-gray-900',
 
@@ -356,6 +370,8 @@ export const colors: ColorTheme = {
         bgDangerHover: 'hover:bg-red-600',
         bgBackdrop: 'bg-white',
         bgInverted: 'bg-gray-900',
+        bgGradientFrom: 'bg-white',
+        bgGradientTo: 'bg-fuchsia-100',
 
         border: 'border-fuchsia-400',
         borderAlt: 'border-purple-300',
@@ -366,8 +382,8 @@ export const colors: ColorTheme = {
         borderError: 'border-red-500',
         borderErrorFocus: 'border-red-600',
 
-        ring: 'ring-cyan-500',
-        ringError: 'ring-red-500',
+        ring: 'ring-3 ring-cyan-500',
+        ringError: 'ring-3 ring-red-500',
         ringOffset: 'ring-offset-white',
         ringOffsetAlt: 'ring-offset-fuchsia-100',
 

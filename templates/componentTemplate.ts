@@ -18,8 +18,8 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
     const scheme:ColorScheme = colors[theme];
     return {
         frontPanel: {
-            container: `min-h-screen flex flex-col items-center justify-center bg-gradient-to-br ${scheme.bg.replace('bg-', 'from-')} ${scheme.bgComponent.replace('bg-', 'to-')} ${scheme.text} p-4 transition-all duration-500 ease-in-out`,
-            contentBox:`w-full max-w-md p-8 ${scheme.bgAlt} rounded-xl shadow-lg`,
+            container: `min-h-screen flex flex-col items-center justify-center bg-gradient-to-br ${scheme.bgGradientFrom} ${scheme.bgGradientTo} ${scheme.text} p-4 transition-all duration-500 ease-in-out`,
+            contentBox:`w-full max-w-md p-8 ${scheme.bgAlt} rounded-xl shadow-sm`,
             icon:`w-16 h-16 ${scheme.textPrimary} mb-3`,
             title:`text-3xl font-bold ${scheme.text}`
         },
@@ -34,7 +34,7 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             backdrop: `fixed inset-0 z-50 flex items-center justify-center ${scheme.bgBackdrop} bg-opacity-75 backdrop-blur-sm transition-opacity duration-300 ease-in-out`
         },
         button: {
-            base: `inline-flex items-center px-4 py-2.5 text-sm font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:${scheme.ringOffset} focus:${scheme.ring} transition-all duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed`,
+            base: `inline-flex items-center px-4 py-2.5 text-sm font-semibold rounded-sm focus:outline-hidden focus:ring-3 focus:ring-offset-2 focus:${scheme.ringOffset} focus:${scheme.ring} transition-all duration-150 ease-in-out disabled:opacity-60 disabled:cursor-not-allowed`,
             defaultLayout: 'justify-center',
             primary: `border border-transparent ${scheme.textInverted} ${scheme.bgPrimary} ${scheme.bgPrimaryHover}`,
             danger: `border border-transparent ${scheme.textInverted} ${scheme.bgDanger} ${scheme.bgDangerHover}`,
@@ -47,7 +47,7 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             iconMarginRight: 'ml-2',
         },
         formField: {
-            base: `w-full px-3 py-2.5 ${scheme.bgComponent} border ${scheme.border} rounded-md ${scheme.textEmphasis} ${scheme.placeholder} focus:outline-none focus:ring-2 focus:${scheme.ring} focus:${scheme.borderFocus} transition-shadow disabled:opacity-70 disabled:cursor-not-allowed`,
+            base: `w-full px-3 py-2.5 ${scheme.bgComponent} border ${scheme.border} rounded-sm ${scheme.textEmphasis} ${scheme.placeholder} focus:outline-hidden focus:ring-3 focus:${scheme.ring} focus:${scheme.borderFocus} transition-shadow disabled:opacity-70 disabled:cursor-not-allowed`,
             error: `${scheme.borderError} focus:${scheme.ringError} focus:${scheme.borderErrorFocus}`,
         },
         fieldBase: {
@@ -57,8 +57,8 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             errorPlaceholder: 'mt-1.5 text-xs text-transparent select-none',
         },
         toggleSwitch: {
-            base: 'relative inline-flex items-center h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none',
-            focus: `ring-2 ${scheme.ring} ring-offset-2 ${scheme.ringOffsetAlt}`,
+            base: 'relative inline-flex items-center h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-hidden',
+            focus: `ring-3 ${scheme.ring} ring-offset-2 ${scheme.ringOffsetAlt}`,
             checked: `${scheme.bgPrimary}`,
             unchecked: `${scheme.bgMuted}`,
             disabled: 'opacity-50 cursor-not-allowed',
@@ -75,8 +75,8 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             errorPaddingLeftLabel: 'pl-10 sm:pl-12',
         },
         checkbox: {
-            visualBase: 'h-5 w-5 flex-shrink-0 inline-flex items-center justify-center border rounded mr-2 transition-all duration-150 ease-in-out',
-            focus: `ring-2 ${scheme.ring} ring-offset-2 ${scheme.ringOffsetAlt}`,
+            visualBase: 'h-5 w-5 flex-shrink-0 inline-flex items-center justify-center border rounded-xs mr-2 transition-all duration-150 ease-in-out',
+            focus: `ring-3 ${scheme.ring} ring-offset-2 ${scheme.ringOffsetAlt}`,
             checked: `${scheme.bgPrimary} ${scheme.borderPrimary}`,
             unchecked: `${scheme.bgComponent} ${scheme.border}`,
             hoverChecked: `${scheme.bgPrimaryHover} ${scheme.borderPrimaryHover}`,
@@ -90,9 +90,9 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             errorPaddingLeft: 'pl-7',
         },
         select: {
-            buttonBase: `w-full flex items-center justify-between px-3 py-2.5 ${scheme.bgComponent} border ${scheme.border} rounded-md ${scheme.textEmphasis} ${scheme.placeholder} focus:outline-none focus:ring-2 focus:${scheme.ring} focus:${scheme.borderFocus} transition-shadow disabled:opacity-70 disabled:cursor-not-allowed text-left`,
+            buttonBase: `w-full flex items-center justify-between px-3 py-2.5 ${scheme.bgComponent} border ${scheme.border} rounded-sm ${scheme.textEmphasis} ${scheme.placeholder} focus:outline-hidden focus:ring-3 focus:${scheme.ring} focus:${scheme.borderFocus} transition-shadow disabled:opacity-70 disabled:cursor-not-allowed text-left`,
             buttonError: `${scheme.borderError} focus:${scheme.ringError} focus:${scheme.borderErrorFocus}`,
-            dropdownUl: `absolute z-10 w-full mt-1 ${scheme.bgComponent} border ${scheme.border} rounded-md shadow-lg max-h-60 overflow-y-auto focus:outline-none`,
+            dropdownUl: `absolute z-10 w-full mt-1 ${scheme.bgComponent} border ${scheme.border} rounded-sm shadow-sm max-h-60 overflow-y-auto focus:outline-hidden`,
             optionBase: 'px-3 py-2 text-sm flex items-center justify-between cursor-pointer',
             optionDisabled: `${scheme.textMutedAlt} cursor-not-allowed`,
             optionEnabled: `${scheme.textAlt} ${scheme.bgComponentHover}`,
