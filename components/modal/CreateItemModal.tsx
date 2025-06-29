@@ -43,8 +43,8 @@ const CreateItemModal: React.FC<CreateItemModalProps> = ({isOpen, onClose, onCre
         }
     };
 
-    const handleItemNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setItemName(e.target.value);
+    const handleItemNameChange = (value:string) => {
+        setItemName(value);
     };
 
     const footerActions: ActionButtonProps[] = [

@@ -23,10 +23,10 @@ const SettingsModal: React.FC<SettingsModalProps> = ({isOpen, onClose}) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="5xl">
             <Modal.Header title="Application Settings" icon={MdSettings}/>
-            <Modal.Content className="!p-0 !mb-0"> {/* Override default padding and margin for Modal.Content */}
+            <Modal.Content className="p-0! mb-0!"> {/* Override default padding and margin for Modal.Content */}
                 <SidebarLayout
                     containerClassName={layoutHeightClasses}
-                    sidebarWrapperClassName={'pl-0 !mb-0 pr-6'}
+                    sidebarWrapperClassName={'pl-0 mb-0! pr-6'}
                     sidebarContent={
                         <SettingsModalSidebar
                             activeCategory={activeCategory}

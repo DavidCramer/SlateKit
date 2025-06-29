@@ -54,7 +54,7 @@ const ModalHeader: React.FC<ModalHeaderProps> = ({
 
     return (
         <header className={`${themeModalClasses.header} ${className}`}>
-            <div className="flex items-center flex-grow min-w-0"> {/* min-w-0 for proper truncation if title is long */}
+            <div className="flex items-center grow min-w-0"> {/* min-w-0 for proper truncation if title is long */}
                 {IconComponent &&
 					<IconComponent className={themeModalClasses.icon} aria-hidden="true"/>}
                 <h2 id={titleId} className={themeModalClasses.title}>
