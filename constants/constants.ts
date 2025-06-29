@@ -58,6 +58,155 @@ export interface ColorScheme {
     placeholder: string;
 }
 
+export interface SizeScheme {
+    // Panel Card sizing
+    panelCard: {
+        padding: string;
+        borderRadius: string;
+        shadow: string;
+        headerPadding: string;
+        headerMargin: string;
+        contentMargin: string;
+    };
+
+    // Button sizing
+    button: {
+        padding: string;
+        fontSize: string;
+        borderRadius: string;
+        iconSize: string;
+        iconMargin: string;
+        focusRing: string;
+        focusRingOffset: string;
+        linkPadding: string;
+    };
+
+    // Form field sizing
+    formField: {
+        padding: string;
+        borderRadius: string;
+        focusRing: string;
+        fontSize: string;
+        labelFontSize: string;
+        errorFontSize: string;
+        errorMarginTop: string;
+    };
+
+    // Toggle switch sizing
+    toggleSwitch: {
+        dimensions: string;
+        thumbSize: string;
+        thumbTranslate: string;
+        borderWidth: string;
+        focusRing: string;
+        focusRingOffset: string;
+        labelFontSize: string;
+        labelSpacing: string;
+        errorPadding: string;
+    };
+
+    // Checkbox sizing
+    checkbox: {
+        size: string;
+        borderRadius: string;
+        marginRight: string;
+        iconSize: string;
+        focusRing: string;
+        focusRingOffset: string;
+        labelFontSize: string;
+        errorPadding: string;
+    };
+
+    // Select sizing
+    select: {
+        padding: string;
+        borderRadius: string;
+        focusRing: string;
+        fontSize: string;
+        iconSize: string;
+        dropdownMarginTop: string;
+        dropdownMaxHeight: string;
+        optionPadding: string;
+        optionFontSize: string;
+        optionIconSize: string;
+        optionIconMargin: string;
+    };
+
+    // Modal sizing
+    modal: {
+        padding: string;
+        borderRadius: string;
+        shadow: string;
+        maxWidth: string;
+        headerMargin: string;
+        contentMargin: string;
+        titleFontSize: string;
+        iconSize: string;
+        iconMargin: string;
+        closeButtonPadding: string;
+        footerSpacing: string;
+    };
+
+    // Front panel sizing
+    frontPanel: {
+        padding: string;
+        maxWidth: string;
+        contentPadding: string;
+        borderRadius: string;
+        shadow: string;
+        iconSize: string;
+        iconMargin: string;
+        titleFontSize: string;
+    };
+
+    // Sidebar layout sizing
+    sidebarLayout: {
+        sidebarMinWidth: string;
+        sidebarPadding: string;
+        mainPadding: string;
+    };
+
+    // Panel sizing variations
+    panel: {
+        default: {
+            headerPadding: string;
+            headerMargin: string;
+            titleFontSize: string;
+            iconSize: string;
+            iconMargin: string;
+            contentSpacing: string;
+        };
+        aside: {
+            width: string;
+            padding: string;
+            headerPadding: string;
+            headerMargin: string;
+            titleFontSize: string;
+            iconSize: string;
+            iconMargin: string;
+            contentSpacing: string;
+        };
+        card: {
+            padding: string;
+            margin: string;
+            borderRadius: string;
+            shadow: string;
+            headerPadding: string;
+            headerMargin: string;
+            titleFontSize: string;
+            iconSize: string;
+            iconMargin: string;
+        };
+        main: {
+            padding: string;
+            headerMargin: string;
+            titleFontSize: string;
+            iconSize: string;
+            iconMargin: string;
+        };
+    };
+}
+
 /**
  * Holds the reusable colors based on theme.
  * These are Tailwind CSS class strings, organized by theme, to promote
@@ -90,7 +239,7 @@ export const colors: ColorTheme = {
         bgPrimaryHover: 'hover:bg-sky-500',
         bgDanger: 'bg-rose-500',
         bgDangerHover: 'hover:bg-rose-600',
-        bgBackdrop: 'bg-slate-900',
+        bgBackdrop: 'bg-slate-900/50',
         bgInverted: 'bg-white',
         bgGradientFrom: 'bg-slate-900',
         bgGradientTo: 'bg-slate-400',
@@ -106,8 +255,8 @@ export const colors: ColorTheme = {
         borderErrorFocus: 'border-red-500',
 
         // Ring
-        ring: 'ring-3 ring-sky-500',
-        ringError: 'ring-3 ring-red-500',
+        ring: 'ring-sky-500',
+        ringError: 'ring-red-500',
         ringOffset: 'ring-offset-slate-900',
         ringOffsetAlt: 'ring-offset-slate-800',
 
@@ -140,7 +289,7 @@ export const colors: ColorTheme = {
         bgPrimaryHover: 'hover:bg-sky-600',
         bgDanger: 'bg-rose-500',
         bgDangerHover: 'hover:bg-rose-600',
-        bgBackdrop: 'bg-white',
+        bgBackdrop: 'bg-white/50',
         bgInverted: 'bg-slate-900',
         bgGradientFrom: 'bg-white',
         bgGradientTo: 'bg-slate-100',
@@ -156,241 +305,160 @@ export const colors: ColorTheme = {
         borderErrorFocus: 'border-red-600',
 
         // Ring
-        ring: 'ring-3 ring-sky-600',
+        ring: 'ring-sky-600',
         ringError: 'ring-red-600',
         ringOffset: 'ring-offset-white',
         ringOffsetAlt: 'ring-offset-slate-100',
 
         // Placeholder
         placeholder: 'placeholder-slate-500',
-    },
-    ocean: <ColorScheme>{
-        _themeLabel: 'Ocean',
-        text: 'text-slate-800',
-        textAlt: 'text-slate-700',
-        textEmphasis: 'text-slate-900',
-        textHover: 'hover:text-slate-900',
-        textMuted: 'text-slate-500',
-        textMutedAlt: 'text-slate-400',
-        textInverted: 'text-white',
-        textDanger: 'text-rose-600',
-        textPrimary: 'text-cyan-600',
-        textPrimaryEmphasis: 'text-cyan-800',
-
-        bg: 'bg-cyan-50',
-        bgAlt: 'bg-cyan-100',
-        bgComponent: 'bg-white',
-        bgComponentHover: 'hover:bg-cyan-100',
-        bgComponentAltHover: 'hover:bg-cyan-200',
-        bgMuted: 'bg-cyan-100',
-        bgMutedHover: 'hover:bg-cyan-200',
-        bgPrimary: 'bg-cyan-600',
-        bgPrimaryHover: 'hover:bg-cyan-700',
-        bgDanger: 'bg-rose-600',
-        bgDangerHover: 'hover:bg-rose-700',
-        bgBackdrop: 'bg-cyan-100',
-        bgInverted: 'bg-slate-900',
-        bgGradientFrom: 'bg-cyan-50',
-        bgGradientTo: 'bg-cyan-800',
-
-        border: 'border-cyan-200',
-        borderAlt: 'border-cyan-300',
-        borderHover: 'hover:border-cyan-400',
-        borderPrimary: 'border-cyan-600',
-        borderPrimaryHover: 'hover:border-cyan-700',
-        borderFocus: 'border-cyan-700',
-        borderError: 'border-rose-600',
-        borderErrorFocus: 'border-rose-700',
-
-        ring: 'ring-3 ring-cyan-600',
-        ringError: 'ring-3 ring-rose-600',
-        ringOffset: 'ring-offset-cyan-50',
-        ringOffsetAlt: 'ring-offset-cyan-100',
-
-        placeholder: 'placeholder-cyan-400',
-    },
-    sandstorm: <ColorScheme>{
-        _themeLabel: 'Sandstorm',
-        text: 'text-yellow-900',
-        textAlt: 'text-yellow-800',
-        textEmphasis: 'text-amber-900',
-        textHover: 'hover:text-amber-900',
-        textMuted: 'text-yellow-600',
-        textMutedAlt: 'text-yellow-500',
-        textInverted: 'text-white',
-        textDanger: 'text-red-700',
-        textPrimary: 'text-amber-600',
-        textPrimaryEmphasis: 'text-amber-800',
-
-        bg: 'bg-amber-50',
-        bgAlt: 'bg-yellow-100',
-        bgComponent: 'bg-white',
-        bgComponentHover: 'hover:bg-amber-100',
-        bgComponentAltHover: 'hover:bg-amber-200',
-        bgMuted: 'bg-yellow-100',
-        bgMutedHover: 'hover:bg-yellow-200',
-        bgPrimary: 'bg-amber-600',
-        bgPrimaryHover: 'hover:bg-amber-700',
-        bgDanger: 'bg-red-600',
-        bgDangerHover: 'hover:bg-red-700',
-        bgBackdrop: 'bg-yellow-100',
-        bgInverted: 'bg-yellow-900',
-        bgGradientFrom: 'bg-amber-50',
-        bgGradientTo: 'bg-yellow-200',
-
-        border: 'border-amber-300',
-        borderAlt: 'border-yellow-300',
-        borderHover: 'hover:border-amber-400',
-        borderPrimary: 'border-amber-600',
-        borderPrimaryHover: 'hover:border-amber-700',
-        borderFocus: 'border-amber-700',
-        borderError: 'border-red-600',
-        borderErrorFocus: 'border-red-700',
-
-        ring: 'ring-3 ring-amber-600',
-        ringError: 'ring-red-600',
-        ringOffset: 'ring-offset-amber-50',
-        ringOffsetAlt: 'ring-offset-yellow-100',
-
-        placeholder: 'placeholder-yellow-400',
-    },
-    midnight: <ColorScheme>{
-        _themeLabel: 'Midnight',
-        text: 'text-gray-300',
-        textAlt: 'text-gray-400',
-        textEmphasis: 'text-white',
-        textHover: 'hover:text-white',
-        textMuted: 'text-gray-500',
-        textMutedAlt: 'text-gray-600',
-        textInverted: 'text-white',
-        textDanger: 'text-red-400',
-        textPrimary: 'text-indigo-400',
-        textPrimaryEmphasis: 'text-indigo-600',
-
-        bg: 'bg-gray-900',
-        bgAlt: 'bg-gray-800',
-        bgComponent: 'bg-gray-700',
-        bgComponentHover: 'hover:bg-gray-600',
-        bgComponentAltHover: 'hover:bg-gray-700',
-        bgMuted: 'bg-gray-600',
-        bgMutedHover: 'hover:bg-gray-500',
-        bgPrimary: 'bg-indigo-600',
-        bgPrimaryHover: 'hover:bg-indigo-500',
-        bgDanger: 'bg-rose-500',
-        bgDangerHover: 'hover:bg-rose-600',
-        bgBackdrop: 'bg-gray-900',
-        bgInverted: 'bg-white',
-        bgGradientFrom: 'bg-gray-900',
-        bgGradientTo: 'bg-gray-700',
-
-        border: 'border-gray-600',
-        borderAlt: 'border-gray-700',
-        borderHover: 'hover:border-gray-500',
-        borderPrimary: 'border-indigo-600',
-        borderPrimaryHover: 'hover:border-indigo-500',
-        borderFocus: 'border-indigo-500',
-        borderError: 'border-red-500',
-        borderErrorFocus: 'border-red-500',
-
-        ring: 'ring-3 ring-indigo-500',
-        ringError: 'ring-3 ring-red-500',
-        ringOffset: 'ring-offset-gray-900',
-        ringOffsetAlt: 'ring-offset-gray-800',
-
-        placeholder: 'placeholder-gray-400',
-    },
-    cyberpunk: <ColorScheme>{
-        _themeLabel: 'Cyberpunk',
-        text: 'text-pink-200',
-        textAlt: 'text-fuchsia-300',
-        textEmphasis: 'text-white',
-        textHover: 'hover:text-white',
-        textMuted: 'text-purple-400',
-        textMutedAlt: 'text-fuchsia-400',
-        textInverted: 'text-black',
-        textDanger: 'text-red-400',
-        textPrimary: 'text-cyan-400',
-        textPrimaryEmphasis: 'text-teal-500',
-
-        bg: 'bg-gray-950',
-        bgAlt: 'bg-gray-900',
-        bgComponent: 'bg-fuchsia-900',
-        bgComponentHover: 'hover:bg-fuchsia-800',
-        bgComponentAltHover: 'hover:bg-purple-800',
-        bgMuted: 'bg-gray-800',
-        bgMutedHover: 'hover:bg-purple-700',
-        bgPrimary: 'bg-cyan-500',
-        bgPrimaryHover: 'hover:bg-teal-500',
-        bgDanger: 'bg-red-600',
-        bgDangerHover: 'hover:bg-red-700',
-        bgBackdrop: 'bg-black',
-        bgInverted: 'bg-white',
-        bgGradientFrom: 'bg-gray-950',
-        bgGradientTo: 'bg-fuchsia-900',
-
-        border: 'border-fuchsia-700',
-        borderAlt: 'border-fuchsia-800',
-        borderHover: 'hover:border-fuchsia-500',
-        borderPrimary: 'border-cyan-500',
-        borderPrimaryHover: 'hover:border-teal-500',
-        borderFocus: 'border-cyan-500',
-        borderError: 'border-red-500',
-        borderErrorFocus: 'border-red-500',
-
-        ring: 'ring-3 ring-cyan-400',
-        ringError: 'ring-3 ring-red-500',
-        ringOffset: 'ring-offset-black',
-        ringOffsetAlt: 'ring-offset-gray-900',
-
-        placeholder: 'placeholder-fuchsia-400',
-    },
-    cyberpunkLight: <ColorScheme>{
-        _themeLabel: 'Cyberpunk (Light)',
-        text: 'text-gray-800',
-        textAlt: 'text-fuchsia-700',
-        textEmphasis: 'text-black',
-        textHover: 'hover:text-black',
-        textMuted: 'text-purple-500',
-        textMutedAlt: 'text-fuchsia-500',
-        textInverted: 'text-white',
-        textDanger: 'text-red-600',
-        textPrimary: 'text-cyan-600',
-        textPrimaryEmphasis: 'text-teal-700',
-
-        bg: 'bg-white',
-        bgAlt: 'bg-fuchsia-100',
-        bgComponent: 'bg-purple-100',
-        bgComponentHover: 'hover:bg-fuchsia-200',
-        bgComponentAltHover: 'hover:bg-purple-200',
-        bgMuted: 'bg-gray-100',
-        bgMutedHover: 'hover:bg-gray-200',
-        bgPrimary: 'bg-cyan-500',
-        bgPrimaryHover: 'hover:bg-teal-500',
-        bgDanger: 'bg-red-500',
-        bgDangerHover: 'hover:bg-red-600',
-        bgBackdrop: 'bg-white',
-        bgInverted: 'bg-gray-900',
-        bgGradientFrom: 'bg-white',
-        bgGradientTo: 'bg-fuchsia-100',
-
-        border: 'border-fuchsia-400',
-        borderAlt: 'border-purple-300',
-        borderHover: 'hover:border-fuchsia-500',
-        borderPrimary: 'border-cyan-500',
-        borderPrimaryHover: 'hover:border-teal-500',
-        borderFocus: 'border-cyan-600',
-        borderError: 'border-red-500',
-        borderErrorFocus: 'border-red-600',
-
-        ring: 'ring-3 ring-cyan-500',
-        ringError: 'ring-3 ring-red-500',
-        ringOffset: 'ring-offset-white',
-        ringOffsetAlt: 'ring-offset-fuchsia-100',
-
-        placeholder: 'placeholder-fuchsia-400',
     }
+};
 
+const generalRing = 'ring-2';
+const generalRingOffset = 'ring-offset-1';
 
+/**
+ * Holds reusable sizing values for consistent component styling.
+ * These are Tailwind CSS class strings organized by component type.
+ */
+export const sizes: SizeScheme = {
+    panelCard: {
+        padding: 'p-4',
+        borderRadius: 'rounded-sm',
+        shadow: 'shadow-xl',
+        headerPadding: 'pb-3',
+        headerMargin: 'mb-3',
+        contentMargin: 'mb-3',
+    },
+
+    button: {
+        padding: 'p-2',
+        fontSize: 'text-xs',
+        borderRadius: 'rounded-sm',
+        iconSize: 'w-5 h-5',
+        iconMargin: 'mr-2',
+        focusRing: generalRing,
+        focusRingOffset: generalRingOffset,
+        linkPadding: 'px-2 py-2',
+    },
+
+    formField: {
+        padding: 'px-3 py-2.5',
+        borderRadius: 'rounded-sm',
+        focusRing: generalRing,
+        fontSize: 'text-base',
+        labelFontSize: 'text-sm',
+        errorFontSize: 'text-xs',
+        errorMarginTop: 'mt-1.5',
+    },
+
+    toggleSwitch: {
+        dimensions: 'h-6 w-11',
+        thumbSize: 'h-5 w-5',
+        thumbTranslate: 'translate-x-5',
+        borderWidth: 'border-2',
+        focusRing: generalRing,
+        focusRingOffset: generalRingOffset,
+        labelFontSize: 'text-sm',
+        labelSpacing: 'mr-3',
+        errorPadding: 'pl-10 sm:pl-12',
+    },
+
+    checkbox: {
+        size: 'h-5 w-5',
+        borderRadius: 'rounded-xs',
+        marginRight: 'mr-2',
+        iconSize: 'w-4 h-4',
+        focusRing: generalRing,
+        focusRingOffset: generalRingOffset,
+        labelFontSize: 'text-sm',
+        errorPadding: 'pl-7',
+    },
+
+    select: {
+        padding: 'px-3 py-2.5',
+        borderRadius: 'rounded-sm',
+        focusRing: generalRing,
+        fontSize: 'text-base',
+        iconSize: 'w-5 h-5',
+        dropdownMarginTop: 'mt-1',
+        dropdownMaxHeight: 'max-h-60',
+        optionPadding: 'px-3 py-2',
+        optionFontSize: 'text-sm',
+        optionIconSize: 'w-5 h-5',
+        optionIconMargin: 'mr-2',
+    },
+
+    modal: {
+        padding: 'p-6 sm:p-8',
+        borderRadius: 'rounded-md',
+        shadow: 'shadow-lg',
+        maxWidth: 'max-w-md',
+        headerMargin: 'mb-4 sm:mb-6',
+        contentMargin: 'mb-6 sm:mb-8',
+        titleFontSize: 'text-xl sm:text-2xl',
+        iconSize: 'w-6 h-6',
+        iconMargin: 'mr-2',
+        closeButtonPadding: '!p-0',
+        footerSpacing: 'space-y-3 sm:space-y-0 sm:space-x-3 sm:space-x-reverse',
+    },
+
+    frontPanel: {
+        padding: 'p-4',
+        maxWidth: 'max-w-xs',
+        contentPadding: 'p-8',
+        borderRadius: 'rounded-md',
+        shadow: 'shadow-sm',
+        iconSize: 'w-14 h-14',
+        iconMargin: 'mb-2',
+        titleFontSize: 'text-lg',
+    },
+
+    sidebarLayout: {
+        sidebarMinWidth: 'min-w-64',
+        sidebarPadding: 'p-5',
+        mainPadding: 'p-8',
+    },
+
+    panel: {
+        default: {
+            headerPadding: 'pb-1',
+            headerMargin: 'mb-2',
+            titleFontSize: 'text-lg',
+            iconSize: 'w-5 h-5',
+            iconMargin: 'mr-1.5',
+            contentSpacing: 'space-y-4',
+        },
+        aside: {
+            width: 'min-w-64 max-w-80',
+            padding: 'p-4',
+            headerPadding: 'pb-4',
+            headerMargin: 'mb-4',
+            titleFontSize: 'text-xl',
+            iconSize: 'w-8 h-8',
+            iconMargin: 'mr-2',
+            contentSpacing: 'space-y-4',
+        },
+        card: {
+            padding: 'p-3',
+            margin: 'mb-8',
+            borderRadius: 'rounded-md',
+            shadow: 'shadow-xl',
+            headerPadding: 'pb-2',
+            headerMargin: 'mb-3',
+            titleFontSize: 'text-lg',
+            iconSize: 'w-6 h-6',
+            iconMargin: 'mr-2',
+        },
+        main: {
+            padding: 'p-4',
+            headerMargin: 'mb-4',
+            titleFontSize: 'text-xl',
+            iconSize: 'w-6 h-6',
+            iconMargin: 'mr-2',
+        },
+    },
 };
 
 /**

@@ -75,6 +75,7 @@ const ItemWorkspace: React.FC<AppWorkspaceProps> = ({onViewSettings}) => {
             sidebarAriaLabel="App navigation and actions"
             mainAriaLabel={`App workspace for ${appState.currentItem.name}`}
             sidebarFooter={<SidebarFooter/>}
+            mainContentHeading={'Demo'}
         />
     );
 };

@@ -3,6 +3,10 @@ import {useApp, ItemDetails} from '../contexts/AppContext';
 import {MdDateRange, MdUpdate, MdInfoOutline} from 'react-icons/md';
 import {Panel} from './panels';
 import FormElementShowcase from '../demo/FormElementShowcase';
+import SchemaRenderer from "../renderer/SchemaRenderer.tsx";
+
+// Example Schema.
+import schema from '../schemas/example.json';
 
 /**
  * WorkArea component for the AppWorkspace.
@@ -38,51 +42,14 @@ const WorkArea: React.FC = () => {
     };
 
     return (
+        <SchemaRenderer schema={schema} basePath={'currentItem'} />
+    )
+
+    return (
 
         <div>
-            <h2 className="text-4xl font-extrabold tracking-tight" id="workarea-title">
-                Workspace: <span className="text-sky-400">{project.name}</span>
-            </h2>
-            <div className="text-sm text-slate-400 mt-2 space-x-4">
-                    <span className="inline-flex items-center" aria-label={`App ID: ${project.id}`}>
-                        {/* ID is not typically displayed but available: project.id */}
-                    </span>
-                <span className="inline-flex items-center">
-                        <MdDateRange className="mr-1.5 text-slate-500" aria-hidden="true"/>
-                        Created: {formatDate(project.dateCreated)}
-                    </span>
-                <span className="inline-flex items-center">
-                        <MdUpdate className="mr-1.5 text-slate-500" aria-hidden="true"/>
-                        Last Updated: {formatDate(project.lastUpdated)}
-                    </span>
-            </div>
-
-            <Panel
-                variant="card"
-                title={`App Overview (ID: ${project.id})`}
-                icon={MdInfoOutline}
-                className="mb-8"
-                titleId="app-overview-title"
-            >
-                <div className="prose prose-invert max-w-none text-slate-300">
-                    <p>
-                        This is the main content area for <strong
-                        className="font-semibold text-sky-300">{project.name}</strong>.
-                        All project-specific components, data visualizations, and interactive features will be displayed here.
-                    </p>
-                    <p>
-                        Start building your amazing application by adding new components and functionalities related to this project.
-                        The sidebar provides navigation and global project actions.
-                    </p>
-                </div>
-            </Panel>
-
             {/* Form Element Showcase - Demo Component */}
-            <FormElementShowcase />
-
-            <footer className="mt-12 text-center text-xs text-slate-500">
-                <p>All changes are persisted in local storage. Current project: {project.name} (ID: {project.id}).</p>
-            </footer>
+            <FormElementShowcase/>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import React, {createContext, useReducer, useContext, ReactNode, useEffect, Dispatch} from 'react';
 import {loadAppStateFromStorage, saveAppStateToStorage} from '../services/StorageService';
 import {makeComponentTemplates, TemplateSet} from "../templates/componentTemplate";
+import _ from "lodash";
 import {colors} from "@/constants/constants.ts";
 
 // --- 1. Define State and Action Types ---
@@ -59,7 +60,8 @@ type Action =
     /** Action to unload the currently active project. */
     | { type: 'UNLOAD_ITEM' }
     /** Action to set application settings. Payload is a partial AppSettings object. */
-    | { type: 'SET_SETTINGS'; payload: Partial<AppSettings> };
+    | { type: 'SET_SETTINGS'; payload: Partial<AppSettings> }
+    | { type: 'SET_VALUE'; payload: Partial<ItemDetails> | null };
 
 /**
  * Interface defining the shape of the AppContext.
@@ -76,6 +78,10 @@ interface AppContextType {
     dispatch: Dispatch<Action>;
     /** Holds the theme templates */
     themeClasses: TemplateSet;
+    /** SetValue */
+    setValue: (value: any) => void;
+    /** GetValue */
+    getValue: (id: string) => void;
 }
 
 /**
@@ -191,6 +197,11 @@ const projectReducer = (state: AppState, action: Action): AppState => {
                 },
                 isLoading: false, // Assume setting settings is a quick operation
             };
+        case "SET_VALUE": {
+            const updated = _.cloneDeep(state);
+            _.set(updated, action.path, action.value);
+            return updated;
+        }
         default:
             // This case should ideally not be reached if TypeScript is used correctly with discriminated unions.
             // However, to satisfy linters or JavaScript environments, ensure all paths return a state.
@@ -253,19 +264,38 @@ export const AppProvider: React.FC<AppProviderProps> = ({children}) => {
         dispatch({type: 'UNLOAD_ITEM'});
     }
 
+    const setValue = (path, value) => {
+        dispatch({type: "SET_VALUE", path, value});
+    };
+
+    const getValue = (...paths) => {
+        if (paths.length === 0) {
+            return appState;
+        }
+        if (paths.length === 1) {
+            const value = _.get(appState, paths[0])??''
+            console.log( paths[0], value);
+            return value??null;
+        }
+
+        return paths.map((p) => _.get(appState, p)??null);
+    };
+
     // Effect to save state using StorageService whenever appState changes.
     useEffect(() => {
         saveAppStateToStorage(appState);
     }, [appState]);
 
-    const themeClasses = makeComponentTemplates( appState.settings.theme );
+    const themeClasses = makeComponentTemplates(appState.settings.theme);
 
     const app = {
         appState,
         loadItem,
         unloadItem,
         dispatch,
-        themeClasses
+        themeClasses,
+        setValue,
+        getValue,
     }
 
     return (

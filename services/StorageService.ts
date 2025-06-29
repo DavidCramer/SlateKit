@@ -4,7 +4,7 @@ import { AppState, ItemDetails, AvailableItem, AppSettings, defaultAppSettings }
 /**
  * Key used for storing and retrieving the project state from localStorage.
  */
-const LOCAL_STORAGE_KEY = 'slateKitAppState';
+const LOCAL_STORAGE_KEY = 'slateKitAppState_v1';
 
 // Default AppSettings from AppContext is the source of truth for defaults.
 // This ensures consistency when merging stored settings.
@@ -19,7 +19,7 @@ export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Retu
     const storedStateString = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (storedStateString) {
       const parsedState = JSON.parse(storedStateString) as Partial<AppState>;
-      
+
       let validCurrentApp: ItemDetails | null = null;
       if (parsedState.currentItem === null) {
         validCurrentApp = null;
@@ -52,7 +52,7 @@ export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Retu
           return false;
         }) as AvailableItem[];
       }
-      
+
       // Validate settings
       let validSettings: AppSettings = { ...defaultAppSettings }; // Start with default from AppContext
       if (parsedState.settings && typeof parsedState.settings === 'object') {
@@ -69,7 +69,7 @@ export const loadAppStateFromStorage = (): Partial<AppState> | null => { // Retu
         // If settings exists but is not a valid object, log warning and use defaults
         console.warn("Stored settings are invalid, using default settings.");
       }
-      
+
       const validIsLoading = typeof parsedState.isLoading === 'boolean' ? parsedState.isLoading : false;
 
       return {

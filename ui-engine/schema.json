@@ -1,0 +1,37 @@
+{
+  "outerPanel": {
+    "type": "Panel",
+    "title": "Outer Panel",
+    "description": "This is the top-level panel",
+    "children": {
+      "enablePanel": {
+        "type": "Toggle",
+        "label": "Show Hidden Panel",
+        "description": "Toggle to emit an event",
+        "emits": {
+          "onClick": "showHiddenPanel"
+        }
+      },
+      "middlePanel": {
+        "type": "Triggered",
+        "title": "Middle Panel",
+        "triggeredBy": "outerPanel.enablePanel.showHiddenPanel",
+        "description": "Nested inside the outer panel",
+        "children": {
+          "innerPanel": {
+            "type": "Panel",
+            "title": "Inner Panel",
+            "description": "Deepest panel in the chain",
+            "children": {
+              "message": {
+                "type": "Text",
+                "label": "Deep Thought",
+                "description": "You’ve reached the core."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
