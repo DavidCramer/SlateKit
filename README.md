@@ -1,6 +1,6 @@
 # SlateKit
 
-A boilerplate React application built with Vite and TypeScript.
+A boilerplate React application built with Vite and TypeScript, that implements a minimal, flexible runtime for building dynamic React UIs purely from JSON schemas.
 
 ## Getting Started
 
@@ -66,6 +66,9 @@ slatekit/
 │   └── settings/        # Components related to settings UI
 ├── constants/           # Application-wide constants
 ├── contexts/            # React context providers (e.g., AppContext)
+├── renderer/            # The core SchemaRenderer logic
+├── utils/               # Shared utility functions (e.g., logic checks, helpers)
+├── schemas/             # JSON schema definitions for dynamic UIs
 ├── index.html           # Main HTML entry point
 ├── index.tsx            # Main application entry point (React) - typically in src/
 ├── App.tsx              # Root React component - typically in src/
@@ -77,6 +80,7 @@ slatekit/
 ├── tsconfig.json        # TypeScript compiler configuration
 └── vite.config.ts       # Vite build tool configuration
 ```
+
 *(Note: While `index.tsx` and `App.tsx` are at the root in this boilerplate, they are commonly found within a `src/` directory in many React projects.)*
 
 Key files and directories:
@@ -108,14 +112,14 @@ This project is built with the following core technologies:
 
 ## Configuration
 
-Environment variables are managed by Vite. The configuration in `vite.config.ts` shows an example of how variables like `GEMINI_API_KEY` are loaded from `.env` files.
+Environment variables are managed by Vite. The configuration in `vite.config.ts` shows an example of how variables like `API_KEY` are loaded from `.env` files.
 
 To set up your local environment variables:
 
 1.  Create a `.env` file in the root of the project (e.g., by copying `.env.example` if it exists, or creating it from scratch).
 2.  Add your environment-specific keys to this file, for example:
     ```env
-    GEMINI_API_KEY=your_actual_api_key_here
+    API_KEY=your_actual_api_key_here
     ```
 
 These variables will be available in your application via `process.env`. Remember to add `.env` to your `.gitignore` file if it's not already there to avoid committing sensitive keys.
@@ -139,6 +143,231 @@ npm run preview
 ```
 
 This will start a local static web server that serves the files from the `dist/` directory. It's useful for checking the final build before deployment.
+
+## Schema-Driven Dynamic UI
+
+SlateKit's SchemaRenderer is a tiny, powerful system for building dynamic React UIs entirely from **JSON schemas**.
+
+Your **schema** defines:
+
+- *What* components render
+- *How* they look (`props`)
+- *How* they’re laid out (`children`)
+- *Where* they store data (`path` + `bind`)
+- *What events they emit* (`emits`)
+
+---
+
+## 🧩 Key Concepts
+
+### ✅ `type`
+
+Each node declares *which* React component to render.
+
+```json
+{ "type": "Input" }
+```
+
+---
+
+### ✅ `props`
+
+**All real component props** live under `props` to avoid conflicts with schema logic.
+
+```json
+{
+  "type": "Input",
+  "props": {
+    "label": "First Name",
+    "placeholder": "John Doe"
+  }
+}
+```
+
+---
+
+### ✅ `children`
+
+Defines nested schema blocks.
+
+**Two modes:**
+
+**A)** If `children` is an **object**, its keys extend the **data path**.
+
+```json
+{
+  "type": "Panel",
+  "children": {
+    "name": { "type": "Input" }
+  }
+}
+```
+
+**Result:** Data → `{ panel: { name } }`
+
+**B)** If `children` is an **array**, they **do not** extend the path. Perfect for layout-only containers.
+
+```json
+{
+  "type": "Columns",
+  "children": [
+    { "type": "Input", "bind": "username" },
+    { "type": "Input", "bind": "email" }
+  ]
+}
+```
+
+**Result:** Data → `{ username, email }`
+
+---
+
+### ✅ `bind`
+
+Overrides the auto path, letting you choose where data lives.
+
+```json
+{
+  "type": "Input",
+  "bind": "profile.firstName"
+}
+```
+
+No matter how deeply nested, the value lands at `profile.firstName`.
+
+---
+
+### ✅ `emits`
+
+Defines events the component can emit.
+
+```json
+{
+  "type": "Button",
+  "props": { "label": "Save" },
+  "emits": { "onClick": "saveTriggered" }
+}
+```
+
+The final event emitted: `<path>.saveTriggered`
+
+---
+
+### ✅ `conditions`
+
+Controls whether a node renders, using form state.
+
+```json
+{
+  "conditions": {
+    "showIf": { "path": "account.type", "equals": "admin" }
+  }
+}
+```
+
+---
+
+## ⚙️ Path Logic
+
+- **Default:** built by `children` keys (object).
+- **Array children:** do not add path segments.
+- `` always overrides path.
+
+---
+
+## 🔌 Events
+
+Subscribe to events with the `EventBus`:
+
+```ts
+eventBus.on("profilePage.saveBtn.saveTriggered", handler);
+```
+
+---
+
+## 🧩 Putting It Together
+
+**Example Schema:**
+
+```json
+{
+  "profilePage": {
+    "type": "Panel",
+    "props": {
+      "title": "Profile",
+      "description": "Manage your info"
+    },
+    "children": {
+      "personal": {
+        "type": "Panel",
+        "props": { "title": "Personal Info" },
+        "children": {
+          "name": { "type": "Input", "props": { "label": "Name" } },
+          "bio": { "type": "Textarea", "props": { "label": "Bio" } }
+        }
+      },
+      "layout": {
+        "type": "Columns",
+        "children": [
+          {
+            "type": "Input",
+            "props": { "label": "Username" },
+            "bind": "username"
+          },
+          {
+            "type": "Input",
+            "props": { "label": "Email" },
+            "bind": "email"
+          }
+        ]
+      },
+      "saveBtn": {
+        "type": "Button",
+        "props": { "label": "Save" },
+        "emits": { "onClick": "profileSaved" }
+      }
+    }
+  }
+}
+```
+
+**Resulting Data:**
+
+```json
+{
+  "personal": { "name": "", "bio": "" },
+  "username": "",
+  "email": ""
+}
+```
+
+---
+
+## ✅ Extension Principles
+
+- New UI element → add to `typeToComponent`
+- New layout → `children` as arrays
+- Custom data shape → use `bind`
+- Events → `emits` + `EventBus`
+
+---
+
+## ✅ Design Goals
+
+- **Tiny:** minimal runtime logic.
+- **Explicit:** no hidden magic.
+- **Flexible:** layout ≠ state.
+
+---
+
+## 🤖 AI Guidance
+
+- Use `props` for component props only.
+- Use `bind` to control output shape.
+- Use `children` type (object or array) wisely.
+- Keep `path` clear and explicit.
+- For events, always namespace and resolve paths properly.
+
+---
 
 ## License
 

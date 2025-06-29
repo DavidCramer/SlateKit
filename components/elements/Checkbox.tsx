@@ -6,21 +6,21 @@ import { useApp } from '../../contexts/AppContext'; // Added import
 
 interface CheckboxProps {
   id: string;
-  label: string; 
-  checked: boolean;
-  onChange: (checked: boolean) => void;
+  label: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
   disabled?: boolean;
   error?: string | null;
-  className?: string; 
-  labelClassName?: string; 
-  checkboxClassName?: string; 
-  errorClassName?: string; 
+  className?: string;
+  labelClassName?: string;
+  checkboxClassName?: string;
+  errorClassName?: string;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
   id,
   label,
-  checked,
+  value: checked,
   onChange,
   disabled = false,
   error = null,
@@ -49,7 +49,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
       onChange(!checked);
     }
   };
-  
+
   const handleButtonKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
      if (!disabled && (event.key === ' ' || event.key === 'Enter')) {
       event.preventDefault();
@@ -77,7 +77,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
       id={id}
       error={error}
       className={className}
-      errorClassName={`${checkboxThemeClasses.errorPaddingLeft} ${errorClassName}`} 
+      errorClassName={`${checkboxThemeClasses.errorPaddingLeft} ${errorClassName}`}
       reserveErrorSpace={true}
     >
       <div className="flex items-center">

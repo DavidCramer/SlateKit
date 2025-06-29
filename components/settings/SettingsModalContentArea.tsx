@@ -136,16 +136,16 @@ const SettingsModalContentArea: React.FC<SettingsModalContentAreaProps> = ({acti
                 </Button>
             </div>
             {testConnectionStatus.message && (
-                <div className={`flex items-center text-sm p-3 rounded-md ${
+                <div className={`flex items-center text-sm p-3 ${
                     testConnectionStatus.success === true ? 'bg-green-600/20 text-green-300 border border-green-500/30' :
                         testConnectionStatus.success === false ? 'bg-red-600/20 text-red-300 border border-red-500/30' :
                             'bg-sky-600/20 text-sky-300 border border-sky-500/30' // Neutral for "Testing..."
                 }`}>
                     {testConnectionStatus.success === true &&
-						<MdCheckCircleOutline className="w-5 h-5 mr-2 flex-shrink-0 text-green-400"/>}
+						<MdCheckCircleOutline className="w-5 h-5 mr-2 shrink-0 text-green-400"/>}
                     {testConnectionStatus.success === false &&
-						<MdErrorOutline className="w-5 h-5 mr-2 flex-shrink-0 text-red-400"/>}
-                    <p className="flex-grow break-words">{testConnectionStatus.message}</p>
+						<MdErrorOutline className="w-5 h-5 mr-2 shrink-0 text-red-400"/>}
+                    <p className="grow break-words">{testConnectionStatus.message}</p>
                 </div>
             )}
             <p className="text-xs text-slate-500">

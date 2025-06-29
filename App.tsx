@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useApp} from './contexts/AppContext';
 import ItemSelector from './components/ItemSelector.tsx';
 import ItemWorkspace from './components/ItemWorkspace.tsx';
-import SettingsModal from './components/settings/SettingsModal'; // Updated import
+import SettingsModal from './components/settings/SettingsModal';
 
 /**
  * The main application.

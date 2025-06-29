@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onViewSettings }) => {
       content: 'Dashboard (Soon)',
       onClick: () => handleNavLinkClick('Dashboard'),
       icon: MdList, // Replace with appropriate icon if available e.g. MdDashboard
-      buttonClassName: 'justify-start !py-2',
+      buttonClassName: 'justify-start py-2!',
       isActive: currentPage === 'Dashboard',
     },
     {
@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onViewSettings }) => {
       content: 'Tasks (Soon)',
       onClick: () => handleNavLinkClick('Tasks'),
       icon: MdList, // Replace with MdFormatListBulleted or similar
-      buttonClassName: 'justify-start !py-2',
+      buttonClassName: 'justify-start py-2!',
       isActive: currentPage === 'Tasks',
     },
     // Add more project-specific navigation items here
@@ -49,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onViewSettings }) => {
       content: 'App Settings',
       onClick: onViewSettings, // This now opens the SettingsModal via App.tsx
       icon: MdSettings,
-      buttonClassName: 'justify-start !py-2',
+      buttonClassName: 'justify-start py-2!',
     },
   ];
 

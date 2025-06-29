@@ -26,6 +26,7 @@ const SidebarLayout: React.FC<SidebarLayoutProps> = ({
                                                          mainAriaLabel = 'Main content', // Default ARIA label
                                                          sidebarFooter,
                                                          sidebarHeader,
+                                                         mainContentHeading
                                                      }) => {
     const {appState} = useApp();
     const theme = appState.settings.theme;
@@ -44,6 +45,7 @@ const SidebarLayout: React.FC<SidebarLayoutProps> = ({
             </Panel>
             <Panel
                 variant={'main'}
+                title={mainContentHeading}
                 className={`${layoutClasses.main} ${mainWrapperClassName}`}
                 aria-label={mainAriaLabel}
             >

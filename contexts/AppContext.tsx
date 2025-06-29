@@ -1,6 +1,7 @@
 import React, {createContext, useReducer, useContext, ReactNode, useEffect, Dispatch} from 'react';
 import {loadAppStateFromStorage, saveAppStateToStorage} from '../services/StorageService';
 import {makeComponentTemplates, TemplateSet} from "../templates/componentTemplate";
+import _ from "lodash";
 import {colors} from "@/constants/constants.ts";
 
 // --- 1. Define State and Action Types ---
@@ -59,7 +60,8 @@ type Action =
     /** Action to unload the currently active project. */
     | { type: 'UNLOAD_ITEM' }
     /** Action to set application settings. Payload is a partial AppSettings object. */
-    | { type: 'SET_SETTINGS'; payload: Partial<AppSettings> };
+    | { type: 'SET_SETTINGS'; payload: Partial<AppSettings> }
+    | { type: 'SET_VALUE'; path: string; value: any };
 
 /**
  * Interface defining the shape of the AppContext.
@@ -76,6 +78,10 @@ interface AppContextType {
     dispatch: Dispatch<Action>;
     /** Holds the theme templates */
     themeClasses: TemplateSet;
+    /** SetValue */
+    setValue: (path: string, value: any) => void;
+    /** GetValue */
+    getValue: (id: string) => void;
 }
 
 /**
@@ -191,6 +197,11 @@ const projectReducer = (state: AppState, action: Action): AppState => {
                 },
                 isLoading: false, // Assume setting settings is a quick operation
             };
+        case "SET_VALUE": {
+            const updated = _.cloneDeep(state);
+            _.set(updated, action.path, action.value);
+            return updated;
+        }
         default:
             // This case should ideally not be reached if TypeScript is used correctly with discriminated unions.
             // However, to satisfy linters or JavaScript environments, ensure all paths return a state.
@@ -253,19 +264,59 @@ export const AppProvider: React.FC<AppProviderProps> = ({children}) => {
         dispatch({type: 'UNLOAD_ITEM'});
     }
 
+
+    /**
+     * setValue
+     * Sets a value in the AppContext state dynamically at any path.
+     * Used by the SchemaRenderer to write user inputs.
+     * The schema's `path` or `bind` determines the target key.
+     *
+     * Example: setValue("profile.name", "David") → appState.profile.name = "David"
+     */
+
+    const setValue = (path: string, value: any) => {
+        dispatch({type: "SET_VALUE", path, value});
+    };
+
+    /**
+     * getValue
+     * Retrieves one or more values from the AppContext state.
+     * If no paths are provided, returns the entire appState.
+     * If one path is provided, returns that single value.
+     * If multiple paths are provided, returns an array.
+     *
+     * Example: getValue("profile.name") → "David"
+     *          getValue("settings.theme", "profile.name") → ["dark", "David"]
+     */
+
+    const getValue = (...paths: string[]) => {
+        if (paths.length === 0) {
+            return appState;
+        }
+
+        if (paths.length === 1) {
+            return _.get(appState, paths[0]) ?? '';
+        }
+
+        return paths.map((p) => _.get(appState, p) ?? null);
+    };
+
+
     // Effect to save state using StorageService whenever appState changes.
     useEffect(() => {
         saveAppStateToStorage(appState);
     }, [appState]);
 
-    const themeClasses = makeComponentTemplates( appState.settings.theme );
+    const themeClasses = makeComponentTemplates(appState.settings.theme);
 
     const app = {
         appState,
         loadItem,
         unloadItem,
         dispatch,
-        themeClasses
+        themeClasses,
+        setValue,
+        getValue,
     }
 
     return (

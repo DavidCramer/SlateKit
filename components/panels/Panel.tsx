@@ -29,7 +29,7 @@ const Panel: React.FC<PanelProps> = ({
                                          footer,
                                      }) => {
 
-    const {themeClasses: {panel:{[variant]:themePanelClasses}}} = useApp();
+    const {themeClasses: {panel: {[variant]: themePanelClasses}}} = useApp();
 
 
     const containerBaseClass = themePanelClasses.container;
