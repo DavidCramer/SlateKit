@@ -1,14 +1,22 @@
 {
-  "name": "SlateKit",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "name": "slatekit",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "build": "tsc"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-icons": "^5.0.1"
+  },
   "devDependencies": {
-    "typescript": "^5.5.3"
-  },
-  "private": true
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.1.8",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  }
 }
