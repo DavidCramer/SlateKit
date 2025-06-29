@@ -1,3 +1,4 @@
+// SchemaRenderer.jsx
 import React, {useCallback} from "react";
 import {useApp} from "../contexts/AppContext.tsx";
 import {checkConditions} from "../utils/logicUtils";
@@ -24,51 +25,54 @@ const typeToComponent = {
 
 const SchemaRenderer = ({schema, basePath = ""}) => {
     const {appState, getValue, setValue} = useApp();
+    const {emit} = useEventBus();
 
     return Object.entries(schema).map(([key, config]) => {
+        if (!config) return null;
         const path = basePath ? `${basePath}.${key}` : key;
         const Component = typeToComponent[config.type];
+        if (!Component) return null;
 
-        if (!Component || !config) return null;
         if (config.conditions && !checkConditions(config.conditions, appState)) return null;
 
-        const {triggeredBy, emits} = config;
+        const {emits, bind} = config;
 
-        const children = config.children ? (
-            <SchemaRenderer schema={config.children} basePath={path}/>
-        ) : null;
+        const finalPath = bind || path;
+        const value = getValue(finalPath);
 
-        const {emit} = useEventBus();
-        const value = getValue(path) ?? false;
+        const emitAction = useCallback(
+            (action, payload) => {
+                if (emits && emits[action]) {
+                    const event = emits[action];
+                    validateEventName(event);
+                    emit(`${path}.${event}`, payload);
+                }
+            },
+            [emits, path]
+        );
 
-        const emitAction = useCallback((action) => {
-            if (!emits) return;
-
-            if (emits[action]) {
-                const event = emits[action];
-                validateEventName(event);
-                emit(`${path}.${event}`, value);
+        const events = {
+            onChange: (val) => {
+                setValue(finalPath, val);
+                emitAction("onChange", val);
             }
-        }, [emits])
-
-        // Default action.
-        const onChange = (value) => {
-            setValue(path, value);
-            emitAction(value);
         };
 
-        // Setup the events.
-        const events = {
-            onChange
-        }
-
-        // Add emits to events.
         if (emits) {
             Object.keys(emits).forEach((action) => {
-                if (!events[action]) {
-                    events[action] = () => emitAction(action);
+                if (action !== "onChange" && !events[action]) {
+                    events[action] = () => emitAction(action, value);
                 }
             });
+        }
+
+        let children = null;
+        if (Array.isArray(config.children)) {
+            children = config.children.map((child, i) => (
+                <SchemaRenderer key={i} schema={{child}} basePath={basePath}/>
+            ));
+        } else if (typeof config.children === "object" && config.children !== null) {
+            children = <SchemaRenderer schema={config.children} basePath={path}/>;
         }
 
         return (
@@ -76,8 +80,8 @@ const SchemaRenderer = ({schema, basePath = ""}) => {
                 key={path}
                 {...(config.props || {})}
                 {...events}
-                path={path}
-                emits={config.emits}
+                path={finalPath}
+                emits={emits}
             >
                 {children}
             </Component>

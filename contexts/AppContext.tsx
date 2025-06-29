@@ -61,7 +61,7 @@ type Action =
     | { type: 'UNLOAD_ITEM' }
     /** Action to set application settings. Payload is a partial AppSettings object. */
     | { type: 'SET_SETTINGS'; payload: Partial<AppSettings> }
-    | { type: 'SET_VALUE'; payload: Partial<ItemDetails> | null };
+    | { type: 'SET_VALUE'; path: string; value: any };
 
 /**
  * Interface defining the shape of the AppContext.
@@ -79,7 +79,7 @@ interface AppContextType {
     /** Holds the theme templates */
     themeClasses: TemplateSet;
     /** SetValue */
-    setValue: (value: any) => void;
+    setValue: (path: string, value: any) => void;
     /** GetValue */
     getValue: (id: string) => void;
 }
@@ -264,22 +264,43 @@ export const AppProvider: React.FC<AppProviderProps> = ({children}) => {
         dispatch({type: 'UNLOAD_ITEM'});
     }
 
-    const setValue = (path, value) => {
+
+    /**
+     * setValue
+     * Sets a value in the AppContext state dynamically at any path.
+     * Used by the SchemaRenderer to write user inputs.
+     * The schema's `path` or `bind` determines the target key.
+     *
+     * Example: setValue("profile.name", "David") → appState.profile.name = "David"
+     */
+
+    const setValue = (path: string, value: any) => {
         dispatch({type: "SET_VALUE", path, value});
     };
 
-    const getValue = (...paths) => {
+    /**
+     * getValue
+     * Retrieves one or more values from the AppContext state.
+     * If no paths are provided, returns the entire appState.
+     * If one path is provided, returns that single value.
+     * If multiple paths are provided, returns an array.
+     *
+     * Example: getValue("profile.name") → "David"
+     *          getValue("settings.theme", "profile.name") → ["dark", "David"]
+     */
+
+    const getValue = (...paths: string[]) => {
         if (paths.length === 0) {
             return appState;
         }
+
         if (paths.length === 1) {
-            const value = _.get(appState, paths[0])??''
-            console.log( paths[0], value);
-            return value??null;
+            return _.get(appState, paths[0]) ?? '';
         }
 
-        return paths.map((p) => _.get(appState, p)??null);
+        return paths.map((p) => _.get(appState, p) ?? null);
     };
+
 
     // Effect to save state using StorageService whenever appState changes.
     useEffect(() => {
