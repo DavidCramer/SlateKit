@@ -20,15 +20,6 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "Panel",
-            "Select",
-            "ToggleSwitch",
-            "Input",
-            "Button",
-            "Textarea",
-            "Checkbox"
-          ],
           "description": "The React component to render. Must match a registered component name."
         },
         "props": {
