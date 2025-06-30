@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://yourdomain.com/schemas/slatekit-ui-schema.json",
+  "$id": "https://raw.githubusercontent.com/DavidCramer/SlateKit/develop/json/slatekit-ui.json",
   "title": "SlateKit UI Schema",
   "description": "Schema definition for SlateKit dynamic UI schemas. Each node describes a UI component and its configuration.",
   "type": "object",
@@ -20,16 +20,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "Panel",
-            "Select",
-            "ToggleSwitch",
-            "Input",
-            "Button",
-            "Textarea",
-            "Checkbox"
-          ],
-          "description": "The React component to render. Must match a registered component name."
+          "description": "The React component to render. Must match a registered component name.(Button, Checkbox, FieldBase, Input, List, Modal, NavBar, Panel, PanelHeader, Select, Textarea, ToggleSwitch)"
         },
         "props": {
           "type": "object",

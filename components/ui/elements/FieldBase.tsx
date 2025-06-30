@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { classConstants } from '../../constants/constants';
-import { useApp } from '../../contexts/AppContext'; // Added import
+import { classConstants } from '../../../constants/constants';
+import { useApp } from '../../../contexts/AppContext'; // Added import
 
 interface FieldBaseProps {
   id: string;

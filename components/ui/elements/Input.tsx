@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, InputHTMLAttributes, ChangeEvent} from 'react';
 import FieldBase from './FieldBase';
-import {classConstants} from '../../constants/constants';
-import {useApp} from '../../contexts/AppContext'; // Added import
+import {classConstants} from '../../../constants/constants';
+import {useApp} from '../../../contexts/AppContext'; // Added import
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value' | 'className'> {
     id: string;

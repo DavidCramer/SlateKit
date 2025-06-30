@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdList, MdSettings } from 'react-icons/md';
-import { List, ListItem } from './list';
+import { List, ListItem } from './ui/list';
 
 /**
  * Props for the Sidebar component.

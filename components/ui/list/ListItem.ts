@@ -1,5 +1,5 @@
 import { ElementType, ReactNode } from 'react';
-import type { ButtonVariant } from '../elements/Button';
+import type { ButtonVariant } from '@/components/ui';
 
 /**
  * Interface for individual items within the List component.

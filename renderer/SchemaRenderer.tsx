@@ -1,34 +1,29 @@
 // SchemaRenderer.jsx
-import React, {useCallback} from "react";
-import {useApp} from "../contexts/AppContext.tsx";
-import {checkConditions} from "../utils/logicUtils";
-import {Panel} from "../components/panels";
-import Select from "../components/elements/Select";
-import Button from "../components/elements/Button";
-import ToggleSwitch from "../components/elements/ToggleSwitch";
-import Input from "../components/elements/Input";
-import Textarea from "../components/elements/Textarea";
-import Checkbox from "../components/elements/Checkbox";
-import {useEventBus, validateEventName} from "../contexts/EventContext";
+import {checkConditions} from "@/utils/logicUtils";
+import * as typeToComponent from "@/components/ui";
+import {useApp, useEventBus, validateEventName} from "@/contexts";
+import {UISchema, UISchemaItem} from "@/json/UISchema";
 
-const typeToComponent = {
-    Panel,
-    Select,
-    ToggleSwitch,
-    Input,
-    Button,
-    Textarea,
-    Checkbox
-};
+type SchemaRendererProps = {
+    schema: UISchema | UISchemaItem;
+    basePath?: string;
+}
 
-const SchemaRenderer = ({schema, basePath = ""}) => {
+type EventEmitters = {
+    [emitterAction: string]: (value: any) => void;
+}
+
+const SchemaRenderer = (props: SchemaRendererProps) => {
+
+    const {schema, basePath = 'root'} = props;
     const {appState, getValue, setValue} = useApp();
     const {emit} = useEventBus();
 
-    return Object.entries(schema).map(([key, config]) => {
+    const workingSchema = schema.type ? {[basePath]: schema} : schema;
+    return Object.entries(workingSchema).map(([key, config]) => {
         if (!config) return null;
         const path = basePath ? `${basePath}.${key}` : key;
-        const Component = typeToComponent[config.type];
+        const Component = typeToComponent[config.type as keyof typeof typeToComponent];
         if (!Component) return null;
 
         if (config.conditions && !checkConditions(config.conditions, appState)) return null;
@@ -38,7 +33,7 @@ const SchemaRenderer = ({schema, basePath = ""}) => {
         const finalPath = bind || path;
         const value = getValue(finalPath);
 
-        const emitAction = (action, payload) => {
+        const emitAction = (action: string, payload: any) => {
             if (emits && emits[action]) {
                 const event = emits[action];
                 validateEventName(event);
@@ -46,15 +41,15 @@ const SchemaRenderer = ({schema, basePath = ""}) => {
             }
         };
 
-        const events = {
-            onChange: (val) => {
+        const events: EventEmitters = {
+            onChange: (val: any) => {
                 setValue(finalPath, val);
                 emitAction("onChange", val);
             }
         };
 
         if (emits) {
-            Object.keys(emits).forEach((action) => {
+            Object.keys(emits).forEach((action: string) => {
                 if (action !== "onChange" && !events[action]) {
                     events[action] = () => emitAction(action, value);
                 }
@@ -63,9 +58,9 @@ const SchemaRenderer = ({schema, basePath = ""}) => {
 
         let children = null;
         if (Array.isArray(config.children)) {
-            const newPath = path.split(".");
-            const childKey = newPath.pop();
-            children = config.children.map((child, i) => (
+            const newPath: string[] = path.split(".");
+            const childKey: string = newPath[ newPath.length - 1 ];
+            children = config.children.map((child: UISchemaItem, i: number) => (
                 <SchemaRenderer key={i} schema={{[childKey]: child}} basePath={newPath.join('.')}/>
             ));
         } else if (typeof config.children === "object" && config.children !== null) {

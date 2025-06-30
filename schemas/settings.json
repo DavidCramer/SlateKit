@@ -1,0 +1,99 @@
+{
+  "appearance": {
+    "type": "Panel",
+    "props": {
+      "title": "Appearance",
+      "description": "Configure the look and feel of the application"
+    },
+    "children": {
+      "colorScheme": {
+        "type": "Select",
+        "props": {
+          "label": "Color Scheme",
+          "options": [
+            { "label": "Light", "value": "light" },
+            { "label": "Dark", "value": "dark" }
+          ],
+          "description": "Choose your preferred color mode"
+        },
+        "bind": "settings.theme"
+      },
+      "fontSize": {
+        "type": "Select",
+        "props": {
+          "label": "Font Size",
+          "options": [
+            { "label": "Small", "value": "small" },
+            { "label": "Medium", "value": "medium" },
+            { "label": "Large", "value": "large" }
+          ],
+          "description": "Adjust the application font size"
+        }
+      }
+    }
+  },
+  "themeColors": {
+    "type": "Panel",
+    "props": {
+      "title": "Theme Settings",
+      "description": "Manage application themes"
+    },
+    "children": {
+      "primaryColor": {
+        "type": "Input",
+        "props": {
+          "label": "Primary Color",
+          "placeholder": "#1A202C",
+          "description": "Set the main theme color (hex or CSS color)"
+        }
+      },
+      "accentColor": {
+        "type": "Input",
+        "props": {
+          "label": "Accent Color",
+          "placeholder": "#38B2AC",
+          "description": "Set the accent color (hex or CSS color)"
+        }
+      },
+      "useCustomTheme": {
+        "type": "ToggleSwitch",
+        "props": {
+          "label": "Enable Custom Theme"
+        }
+      }
+    }
+  },
+  "remoteServer": {
+    "type": "Panel",
+    "props": {
+      "title": "Remote Server",
+      "description": "Configure your API or remote connection"
+    },
+    "children": {
+      "endpoint": {
+        "type": "Input",
+        "props": {
+          "label": "API Endpoint",
+          "placeholder": "https://api.example.com",
+          "description": "Base URL for the remote server"
+        }
+      },
+      "apiKey": {
+        "type": "Input",
+        "props": {
+          "label": "API Key",
+          "description": "Your authentication key for the server"
+        }
+      },
+      "testConnection": {
+        "type": "Button",
+        "props": {
+          "label": "Test Connection"
+        },
+        "emits": {
+          "onClick": "testConnection"
+        }
+      }
+    }
+  }
+}
