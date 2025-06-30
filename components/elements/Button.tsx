@@ -20,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
                                            children,
                                            className = '',
                                            label,
+    path,
                                            ...props
                                        }) => {
     const {themeClasses: {button: buttonThemeClasses}} = useApp(); // Added hook
@@ -70,7 +71,7 @@ const Button: React.FC<ButtonProps> = ({
             {...props}
         >
             {iconPosition === 'left' && iconMarkup}
-            {children ?? label}
+            {children ?? label} {path}
             {iconPosition === 'right' && iconMarkup}
         </button>
     );

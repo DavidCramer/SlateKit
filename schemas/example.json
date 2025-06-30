@@ -1,73 +1,38 @@
 {
-  "profilePanel": {
+  "profile": {
     "type": "Panel",
     "props": {
       "title": "User Profile",
       "description": "Manage your personal info",
       "variant": "main"
     },
-    "children": {
-      "nameField": {
-        "type": "Input",
-        "props": {
-          "label": "Full Name",
-          "description": "Enter your legal name"
-        }
-      },
-      "bioField": {
-        "type": "Textarea",
-        "props": {
-          "label": "About You",
-          "description": "A short bio"
-        }
-      },
-      "preferencesPanel": {
+    "children": [
+      {
         "type": "Panel",
         "props": {
-          "title": "Preferences",
-          "description": "Set your preferences"
+          "title": "Panel",
+          "variant": "card"
         },
         "children": {
-          "themeSelect": {
-            "type": "Select",
+          "action": {
+            "type": "Button",
             "props": {
-              "label": "Theme",
-              "description": "Choose your theme",
-              "options": [
-                { "value": "light", "label": "Light" },
-                { "value": "dark", "label": "Dark" }
-              ]
+              "label": "Save Changes"
+            },
+            "emits": {
+              "onClick": "profileSaved"
             }
-          },
-          "notifications": {
-            "type": "ToggleSwitch",
-            "props": {
-              "label": "Enable Notifications",
-              "description": "Receive app updates"
-            }
-          }
-        }
-      },
-      "submitButton": {
-        "type": "Button",
-        "props": {
-          "label": "Save Changes"
-        },
-        "emits": {
-          "onClick": "profileSaved"
-        }
-      },
-      "confirmation": {
-        "type": "Triggered",
-        "triggeredBy": "profileSaved",
-        "children": {
-          "type": "Panel",
-          "props": {
-            "title": "All Done!",
-            "description": "Your profile has been saved."
           }
         }
       }
-    }
+    ]
+  },
+  "additions": {
+    "type": "Panel",
+    "props": {
+      "title": "Inputs",
+      "variant": "card"
+    },
+    "children": {}
   }
 }
