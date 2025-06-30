@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from '../elements/Button';
-import type {ButtonVariant} from '../elements/Button';
+import { Button, type ButtonVariant } from '../ui';
 import type {ListItem} from './ListItem';
 import {useApp} from "@/contexts/AppContext.tsx";
 

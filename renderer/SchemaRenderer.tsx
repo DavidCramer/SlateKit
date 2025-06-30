@@ -1,25 +1,9 @@
 // SchemaRenderer.jsx
-import React, {useCallback} from "react";
 import {useApp} from "../contexts/AppContext.tsx";
 import {checkConditions} from "../utils/logicUtils";
 import {Panel} from "../components/panels";
-import Select from "../components/elements/Select";
-import Button from "../components/elements/Button";
-import ToggleSwitch from "../components/elements/ToggleSwitch";
-import Input from "../components/elements/Input";
-import Textarea from "../components/elements/Textarea";
-import Checkbox from "../components/elements/Checkbox";
+import * as typeToComponent from "../components/ui";
 import {useEventBus, validateEventName} from "../contexts/EventContext";
-
-const typeToComponent = {
-    Panel,
-    Select,
-    ToggleSwitch,
-    Input,
-    Button,
-    Textarea,
-    Checkbox
-};
 
 const SchemaRenderer = ({schema, basePath = ""}) => {
     const {appState, getValue, setValue} = useApp();

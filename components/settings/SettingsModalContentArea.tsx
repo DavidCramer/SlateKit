@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useApp} from '../../contexts/AppContext';
-import ToggleSwitch from '../elements/ToggleSwitch';
-import Input from '../elements/Input';
-import Button from '../elements/Button';
+import { ToggleSwitch, Input, Button } from '../ui';
 import {MdCloudSync, MdLink, MdErrorOutline, MdCheckCircleOutline} from 'react-icons/md';
 import {SettingsCategory} from './SettingsModalSidebar';
 import {colors} from "@/constants/constants.ts";

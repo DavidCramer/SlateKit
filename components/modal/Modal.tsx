@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, createContext, useContext, ReactNode, useId, ElementType} from 'react';
 import {MdClose} from 'react-icons/md';
-import Button from '../elements/Button';
+import { Button } from '../ui';
 import {useApp} from "@/contexts/AppContext.tsx";
 
 /**

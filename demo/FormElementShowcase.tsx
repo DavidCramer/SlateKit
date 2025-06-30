@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import {MdTune, MdCloud, MdComputer, MdLightbulb, MdInfoOutline} from 'react-icons/md';
-import Input from '../components/elements/Input';
-import Textarea from '../components/elements/Textarea';
-import Checkbox from '../components/elements/Checkbox';
-import ToggleSwitch from '../components/elements/ToggleSwitch';
-import Select, {SelectOption} from '../components/elements/Select';
+import {
+    Input,
+    Textarea,
+    Checkbox,
+    ToggleSwitch,
+    Select,
+    type SelectOption
+} from '../components/ui';
 import {Panel} from '../components/panels';
 
 /**

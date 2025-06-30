@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, KeyboardEvent, ElementType } from 'react';
 import { MdExpandMore, MdCheck } from 'react-icons/md';
 import FieldBase from './FieldBase';
-import { classConstants } from '../../constants/constants';
-import { useApp } from '../../contexts/AppContext'; // Added import
+import { classConstants } from '../../../constants/constants';
+import { useApp } from '../../../contexts/AppContext'; // Added import
 
 export interface SelectOption {
   value: string | number;

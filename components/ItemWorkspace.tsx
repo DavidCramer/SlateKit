@@ -3,7 +3,7 @@ import {useApp} from '../contexts/AppContext';
 import Sidebar from './Sidebar';
 import WorkArea from './WorkArea';
 import {SidebarLayout} from './layout';
-import Button from "@/components/elements/Button.tsx";
+import { Button } from "@/components/ui";
 import {MdInfo, MdLogout, MdWorkspaces} from "react-icons/md";
 import {SchemaProvider} from "@/contexts/SchemaContext"; // Import the new SidebarLayout
 
