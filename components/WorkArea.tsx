@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {useApp, ItemDetails} from '../contexts/AppContext';
-import {useSchema} from "@/contexts/SchemaContext";
+import {useSchema, useApp, ItemDetails} from '@/contexts';
 import FormElementShowcase from '../demo/FormElementShowcase';
 import SchemaRenderer from "../renderer/SchemaRenderer.tsx";
 import {useEventBus} from "@/contexts/EventContext.tsx";
@@ -21,7 +20,6 @@ const WorkArea: React.FC = () => {
 
     // Get the whole schema:
     const schema = getSchema();
-    const structure = getValue();
 
     // Get only the notifications block:
     const notificationsSchema = getSchema("profilePanel.preferencesPanel");

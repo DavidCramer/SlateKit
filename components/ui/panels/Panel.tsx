@@ -1,10 +1,12 @@
 import React, {ElementType, ReactNode} from 'react';
-import {useApp} from '../../contexts/AppContext';
+import {useApp} from '../../../contexts/AppContext.tsx';
+import Header from '../elements/Header.tsx';
 
 interface PanelProps {
     title?: string | ReactNode; // Title is optional, panel might just be a styled container
     icon?: ElementType;
     children?: ReactNode;
+    content?: string;
     variant?: 'default' | 'card' | 'main' | 'aside' | 'center';
     className?: string; // Applied to the main container div
     headerClassName?: string; // Applied to the header element
@@ -19,6 +21,7 @@ const Panel: React.FC<PanelProps> = ({
                                          title,
                                          icon: IconComponent,
                                          children,
+                                         content,
                                          variant = 'default',
                                          className = '',
                                          headerClassName = '',
@@ -39,13 +42,9 @@ const Panel: React.FC<PanelProps> = ({
     const contentBase = themePanelClasses.content;
     const footerBase = themePanelClasses.footer;
 
-    const HeadingTag = typeof title === 'string' ? (variant === 'card' ? 'h3' : 'h4') : 'div';
     const WrapperTag = variant === 'default' || variant === 'card' ? 'div' : variant;
 
     const effectiveContainerClassName = [containerBaseClass, className].filter(Boolean).join(' ');
-    const effectiveHeaderClassName = [headerBaseClass, headerClassName].filter(Boolean).join(' ');
-    const effectiveTitleClassName = [titleBaseClass, titleClassName].filter(Boolean).join(' ');
-    const effectiveIconClassName = [iconBaseClass, iconClassName].filter(Boolean).join(' ');
     const effectiveContentClassName = [contentBase, contentClassName].filter(Boolean).join(' ');
     const effectiveFooterClassName = [footerBase, contentClassName].filter(Boolean).join(' ');
 
@@ -54,14 +53,20 @@ const Panel: React.FC<PanelProps> = ({
         <WrapperTag className={`flex flex-col justify-between ${effectiveContainerClassName}`}>
             <div>
                 {title && (
-                    <header className={effectiveHeaderClassName}>
-                        {IconComponent && <IconComponent className={effectiveIconClassName} aria-hidden="true"/>}
-                        <HeadingTag id={titleId} className={effectiveTitleClassName}>
-                            {title}
-                        </HeadingTag>
-                    </header>
+                    <Header
+                        title={title}
+                        icon={IconComponent}
+                        variant={variant}
+                        headerClassName={headerClassName}
+                        titleClassName={titleClassName}
+                        iconClassName={iconClassName}
+                        titleId={titleId}
+                        headerBaseClass={headerBaseClass}
+                        titleBaseClass={titleBaseClass}
+                        iconBaseClass={iconBaseClass}
+                    />
                 )}
-                <div className={effectiveContentClassName}>{children}</div>
+                <div className={effectiveContentClassName}>{children} {content}</div>
             </div>
             {footer && <footer className={effectiveFooterClassName}>{footer}</footer>}
         </WrapperTag>

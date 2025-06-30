@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {AppProvider, useApp} from "@/contexts/AppContext.tsx";
 import SchemaRenderer from "../../../renderer/SchemaRenderer";
-import {Panel} from "@/components/panels";
+import {Panel} from "@/components/ui/panels";
 
 const Template = ({path, name, children, ...rest}) => {
     const {setValue} = useApp();

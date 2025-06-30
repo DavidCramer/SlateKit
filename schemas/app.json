@@ -1,0 +1,164 @@
+{
+  "Notebooks": {
+    "type": "Panel",
+    "props": {
+      "title": "My Notebooks",
+      "variant" : "main"
+    },
+    "children": {
+      "notebookList": {
+        "type": "SidebarLayout",
+        "props": {
+          "title": "Notebooks",
+          "schema": {
+            "notebook1": {
+              "type": "Panel",
+              "props": {
+                "title": "Notebook 1",
+                "date": "2025-06-25",
+                "content": "Notes about project planning."
+              }
+            },
+            "notebook2": {
+              "type": "Panel",
+              "props": {
+                "title": "Notebook 2",
+                "date": "2025-06-26",
+                "content": "Meeting minutes and action items."
+              }
+            },
+            "notebook3": {
+              "type": "Panel",
+              "props": {
+                "title": "Notebook 3",
+                "date": "2025-06-27",
+                "content": "Design ideas and sketches."
+              }
+            },
+            "notebook4": {
+              "type": "Panel",
+              "props": {
+                "title": "Notebook 4",
+                "date": "2025-06-28",
+                "content": "Research notes and references."
+              }
+            },
+            "notebook5": {
+              "type": "Panel",
+              "props": {
+                "title": "Notebook 5",
+                "date": "2025-06-29",
+                "content": "Personal journal entries."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "profile": {
+    "type": "Panel",
+    "props": {
+      "title": "User Profile",
+      "variant" : "main"
+    },
+    "children": {
+      "username": {
+        "type": "Input",
+        "props": {
+          "label": "Username",
+          "placeholder": "Enter username"
+        },
+        "bind": "profile.username"
+      },
+      "email": {
+        "type": "Input",
+        "props": {
+          "label": "Email",
+          "placeholder": "Enter email"
+        },
+        "bind": "profile.email"
+      },
+      "bio": {
+        "type": "Textarea",
+        "props": {
+          "label": "Bio",
+          "placeholder": "Tell us about yourself"
+        },
+        "bind": "profile.bio"
+      }
+    }
+  },
+  "accountSettings": {
+    "type": "Panel",
+    "props": {
+      "title": "Account Settings",
+      "variant" : "main"
+    },
+    "children": {
+      "password": {
+        "type": "Input",
+        "props": {
+          "label": "Password",
+          "type": "password",
+          "placeholder": "Enter new password"
+        },
+        "bind": "accountSettings.password"
+      },
+      "notifications": {
+        "type": "ToggleSwitch",
+        "props": {
+          "label": "Email Notifications"
+        },
+        "bind": "accountSettings.notifications"
+      },
+      "language": {
+        "type": "Select",
+        "props": {
+          "label": "Language",
+          "options": [
+            "English",
+            "Spanish",
+            "French"
+          ]
+        },
+        "bind": "accountSettings.language"
+      }
+    }
+  },
+  "privacy": {
+    "type": "Panel",
+    "props": {
+      "title": "Privacy Settings",
+      "variant" : "main"
+    },
+    "children": {
+      "profileVisibility": {
+        "type": "Select",
+        "props": {
+          "label": "Profile Visibility",
+          "options": [
+            "Public",
+            "Friends Only",
+            "Private"
+          ]
+        },
+        "bind": "privacy.profileVisibility"
+      },
+      "dataSharing": {
+        "type": "ToggleSwitch",
+        "props": {
+          "label": "Allow Data Sharing"
+        },
+        "bind": "privacy.dataSharing"
+      },
+      "adPreferences": {
+        "type": "Checkbox",
+        "props": {
+          "label": "Personalized Ads"
+        },
+        "bind": "privacy.adPreferences"
+      }
+    }
+  }
+}

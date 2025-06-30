@@ -8,7 +8,7 @@ import {
     Select,
     type SelectOption
 } from '../components/ui';
-import {Panel} from '../components/panels';
+import {Panel} from '../components/ui/panels';
 
 /**
  * FormElementShowcase component that demonstrates all form elements

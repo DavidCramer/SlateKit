@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useApp} from './contexts/AppContext';
+import {useApp, SettingsSchema, AppSchema} from '@/contexts';
 import ItemSelector from './components/ItemSelector.tsx';
 import ItemWorkspace from './components/ItemWorkspace.tsx';
 import SettingsModal from './components/settings/SettingsModal';
@@ -11,7 +11,11 @@ import SettingsModal from './components/settings/SettingsModal';
  * @returns {React.ReactElement} The rendered App component.
  */
 const App: React.FC = () => {
+
     const {appState} = useApp();
+    const {SchemaProvider: SettingsProvider} = SettingsSchema;
+    const {SchemaProvider: AppProvider} = AppSchema;
+
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
     const handleOpenSettingsModal = () => {
@@ -23,14 +27,16 @@ const App: React.FC = () => {
     };
 
     return (
-        <>
+        <SettingsProvider>
             {appState.currentItem ?
-                <ItemWorkspace onViewSettings={handleOpenSettingsModal}/>
+                <AppProvider>
+                    <ItemWorkspace onViewSettings={handleOpenSettingsModal}/>
+                </AppProvider>
                 :
                 <ItemSelector onViewSettings={handleOpenSettingsModal}/>
             }
             <SettingsModal isOpen={isSettingsModalOpen} onClose={handleCloseSettingsModal}/>
-        </>
+        </SettingsProvider>
     );
 };
 
