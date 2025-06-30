@@ -1,5 +1,5 @@
 import React, {ElementType, ReactNode} from 'react';
-import {useApp} from '../../contexts/AppContext'; // Added import
+import {useApp} from '../../../contexts/AppContext'; // Added import
 
 export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'item' | 'link';
 

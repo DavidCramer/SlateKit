@@ -1,13 +1,8 @@
 import React from 'react';
-import {useApp} from '../contexts/AppContext';
-import Sidebar from './Sidebar';
-import WorkArea from './WorkArea';
-import {SidebarLayout} from './layout';
-import Button from "@/components/elements/Button.tsx";
-import {MdInfo, MdLogout, MdWorkspaces} from "react-icons/md";
-import {SchemaProvider} from "@/contexts/SchemaContext"; // Import the new SidebarLayout
-
-import schema from '../schemas/example.json';
+import {Button, SidebarLayout} from "@/components/ui";
+import {MdInfo, MdLogout} from "react-icons/md";
+import {useApp, AppSchema} from '@/contexts';
+import SettingsModal from "@/components/settings/SettingsModal.tsx";
 
 /**
  * Props for AppWorkspace component.
@@ -25,38 +20,17 @@ interface AppWorkspaceProps {
  * @returns {React.ReactElement | null} The rendered AppWorkspace component, or null if no project is loaded.
  */
 const ItemWorkspace: React.FC<AppWorkspaceProps> = ({onViewSettings}) => {
-    const {appState, unloadItem} = useApp();
-
-    if (!appState.currentItem) {
+    const {appState: {currentItem}, unloadItem} = useApp();
+    const {useSchema} = AppSchema;
+    const {getSchema} = useSchema();
+    const schema = getSchema();
+    if (!currentItem) {
         return null;
-    }
-    const {currentItem, settings: {theme}} = appState;
-
-    const SidebarHeader = () => {
-        return (
-            <div className="flex items-center">
-                <MdWorkspaces className="w-8 h-8 text-sky-400 mr-2" aria-hidden="true"/>
-                <h1 className={`text-2xl font-bold ${theme === 'light' ? 'text-slate-700' : 'text-white'} truncate`}
-                    title={currentItem.name}>
-                    {currentItem.name}
-                </h1>
-            </div>
-        )
     }
 
     const SidebarFooter = () => {
         return (
             <div>
-                <Button
-                    variant="link"
-                    fullWidth
-                    icon={MdInfo}
-                    onClick={() => alert('SlateKit v1.0.0 - Your Awesome App Environment!')}
-                    aria-label="About SlateKit"
-                    className="text-xs text-slate-500 hover:text-slate-400 justify-start py-1! mb-2"
-                >
-                    About
-                </Button>
                 <Button
                     variant="danger"
                     fullWidth
@@ -71,18 +45,15 @@ const ItemWorkspace: React.FC<AppWorkspaceProps> = ({onViewSettings}) => {
     }
 
     return (
-        <SchemaProvider initialSchema={schema}>
+        <div className="h-screen">
             <SidebarLayout
-                containerClassName="h-screen" // Ensure it takes full screen height
-                sidebarContent={<Sidebar onViewSettings={onViewSettings}/>}
-                sidebarHeader={<SidebarHeader/>}
-                mainContent={<WorkArea/>}
+                schema={schema}
+                sidebarTitle={currentItem.name}
                 sidebarAriaLabel="App navigation and actions"
-                mainAriaLabel={`App workspace for ${appState.currentItem.name}`}
+                mainAriaLabel={`App workspace`}
                 sidebarFooter={<SidebarFooter/>}
-                mainContentHeading={'Demo'}
             />
-        </SchemaProvider>
+        </div>
     );
 };
 

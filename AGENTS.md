@@ -73,7 +73,13 @@ This directory houses reusable React components that form the building blocks of
 - **`Sidebar.tsx`**: A component representing a sidebar navigation or content panel, typically appearing on the left or right side of the layout.
 - **`WorkArea.tsx`**: A central area in the UI where main content is displayed or tasks are performed. It might host different views or tools depending on the application state.
 
-#### `components/elements/`
+#### `components/ui/`
+
+This directory provides a centralized location for all UI elements with easier imports.
+
+- **`index.ts`**: Main export file that exports all UI elements for easier imports (e.g., `import { Button, Input } from '../components/ui'`).
+
+#### `components/ui/elements/`
 
 This subdirectory contains fundamental UI elements, often wrappers around HTML elements or more complex atomic components.
 
@@ -81,7 +87,7 @@ This subdirectory contains fundamental UI elements, often wrappers around HTML e
 - **`Checkbox.tsx`**: A custom checkbox component.
 - **`FieldBase.tsx`**: A base component for form fields, possibly providing common layout, labeling, or error handling.
 - **`Input.tsx`**: A custom text input component.
-- **`Select.tsx`**: A custom dropdown/select component.
+- **`Select.tsx`**: A custom dropdown/select component with SelectOption type export.
 - **`Template.tsx`**: This could be a generic template component used for rendering dynamic content based on a template structure, or a base template for creating other components.
 - **`Textarea.tsx`**: A custom textarea component for multi-line text input.
 - **`ToggleSwitch.tsx`**: A component for a toggle switch (on/off).

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, KeyboardEvent, ElementType } from 'react';
 import { MdExpandMore, MdCheck } from 'react-icons/md';
 import FieldBase from './FieldBase';
-import { classConstants } from '../../constants/constants';
-import { useApp } from '../../contexts/AppContext'; // Added import
+import { classConstants } from '../../../constants/constants';
+import { useApp } from '../../../contexts/AppContext'; // Added import
 
 export interface SelectOption {
   value: string | number;
@@ -14,7 +14,7 @@ export interface SelectOption {
 interface SelectProps {
   id: string; 
   label?: string;
-  options: SelectOption[];
+  options: SelectOption[] | string[];
   value: string | number | null;
   onChange: (selectedValue: string | number | null) => void;
   placeholder?: string;
@@ -52,13 +52,20 @@ const Select: React.FC<SelectProps> = ({
   const theme = appState.settings.theme; // Get theme
   const selectThemeClasses = classConstants(theme).select; // Use themed classes
 
+  // Convert string[] to SelectOption[] if needed
+  const normalizedOptions: SelectOption[] = options.map(option => 
+    typeof option === 'string' 
+      ? { value: option, label: option }
+      : option
+  );
+
   const [isOpen, setIsOpen] = useState(false);
   const [focusedOptionIndex, setFocusedOptionIndex] = useState<number>(-1);
   const selectRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const optionsRef = useRef<(HTMLLIElement | null)[]>([]);
 
-  const selectedOption = options.find(opt => opt.value === value);
+  const selectedOption = normalizedOptions.find(opt => opt.value === value);
   const buttonId = `${id}-button`;
   const errorId = error ? `${id}-error` : undefined;
   
@@ -79,11 +86,11 @@ const Select: React.FC<SelectProps> = ({
   
   useEffect(() => {
     if (!isOpen) {
-      setFocusedOptionIndex(selectedOption ? options.findIndex(opt => opt.value === selectedOption.value) : -1);
+      setFocusedOptionIndex(selectedOption ? normalizedOptions.findIndex(opt => opt.value === selectedOption.value) : -1);
     } else {
-        optionsRef.current = optionsRef.current.slice(0, options.length);
+        optionsRef.current = optionsRef.current.slice(0, normalizedOptions.length);
     }
-  }, [isOpen, options, selectedOption]);
+  }, [isOpen, normalizedOptions, selectedOption]);
 
   useEffect(() => {
     if (isOpen && focusedOptionIndex >= 0 && optionsRef.current[focusedOptionIndex]) {
@@ -114,17 +121,17 @@ const Select: React.FC<SelectProps> = ({
         event.preventDefault();
         if (!isOpen) {
           setIsOpen(true);
-          const currentValIndex = options.findIndex(opt => opt.value === value);
-          setFocusedOptionIndex(currentValIndex !== -1 ? currentValIndex : (options.findIndex(opt => !opt.disabled) ?? -1));
+          const currentValIndex = normalizedOptions.findIndex(opt => opt.value === value);
+          setFocusedOptionIndex(currentValIndex !== -1 ? currentValIndex : (normalizedOptions.findIndex(opt => !opt.disabled) ?? -1));
         } else {
-          if (focusedOptionIndex >= 0 && focusedOptionIndex < options.length) {
-            const currentOption = options[focusedOptionIndex];
+          if (focusedOptionIndex >= 0 && focusedOptionIndex < normalizedOptions.length) {
+            const currentOption = normalizedOptions[focusedOptionIndex];
             if (currentOption && !currentOption.disabled) {
               handleOptionClick(currentOption);
             }
-          } else if (options.length > 0 && focusedOptionIndex === -1) { 
-            const firstEnabled = options.findIndex(opt => !opt.disabled);
-            if (firstEnabled !== -1) handleOptionClick(options[firstEnabled]);
+          } else if (normalizedOptions.length > 0 && focusedOptionIndex === -1) { 
+            const firstEnabled = normalizedOptions.findIndex(opt => !opt.disabled);
+            if (firstEnabled !== -1) handleOptionClick(normalizedOptions[firstEnabled]);
           }
         }
         break;
@@ -133,10 +140,10 @@ const Select: React.FC<SelectProps> = ({
         if (!isOpen) setIsOpen(true);
         setFocusedOptionIndex(prev => {
           let nextIndex = prev + 1;
-          while(nextIndex < options.length && options[nextIndex].disabled) {
+          while(nextIndex < normalizedOptions.length && normalizedOptions[nextIndex].disabled) {
             nextIndex++;
           }
-          return nextIndex >= options.length ? (options.map(o => !o.disabled).lastIndexOf(true)) : nextIndex;
+          return nextIndex >= normalizedOptions.length ? (normalizedOptions.map(o => !o.disabled).lastIndexOf(true)) : nextIndex;
         });
         break;
       case 'ArrowUp':
@@ -144,37 +151,37 @@ const Select: React.FC<SelectProps> = ({
         if (!isOpen) setIsOpen(true);
          setFocusedOptionIndex(prev => {
           let nextIndex = prev - 1;
-          while(nextIndex >= 0 && options[nextIndex].disabled) {
+          while(nextIndex >= 0 && normalizedOptions[nextIndex].disabled) {
             nextIndex--;
           }
-          return nextIndex < 0 ? (options.findIndex(o => !o.disabled)) : nextIndex;
+          return nextIndex < 0 ? (normalizedOptions.findIndex(o => !o.disabled)) : nextIndex;
         });
         break;
       case 'Home':
         event.preventDefault();
         if (!isOpen) setIsOpen(true);
-        setFocusedOptionIndex(options.findIndex(opt => !opt.disabled) ?? 0);
+        setFocusedOptionIndex(normalizedOptions.findIndex(opt => !opt.disabled) ?? 0);
         break;
       case 'End':
         event.preventDefault();
         if (!isOpen) setIsOpen(true);
-        setFocusedOptionIndex(options.map(opt => !opt.disabled).lastIndexOf(true) ?? options.length - 1);
+        setFocusedOptionIndex(normalizedOptions.map(opt => !opt.disabled).lastIndexOf(true) ?? normalizedOptions.length - 1);
         break;
       default:
         if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
             if (!isOpen) setIsOpen(true);
             const char = event.key.toLowerCase();
             const currentFocus = focusedOptionIndex === -1 ? -1 : focusedOptionIndex; 
-            let matchingIndex = options.findIndex(
+            let matchingIndex = normalizedOptions.findIndex(
                 (opt, idx) => idx > currentFocus && !opt.disabled && opt.label.toLowerCase().startsWith(char)
             );
             if (matchingIndex === -1 && currentFocus !== -1) { 
-                 matchingIndex = options.findIndex(
+                 matchingIndex = normalizedOptions.findIndex(
                     (opt, idx) => idx < currentFocus && !opt.disabled && opt.label.toLowerCase().startsWith(char)
                 );
             }
              if (matchingIndex === -1) { 
-                 matchingIndex = options.findIndex(
+                 matchingIndex = normalizedOptions.findIndex(
                     (opt) => !opt.disabled && opt.label.toLowerCase().startsWith(char)
                 );
             }
@@ -234,14 +241,14 @@ const Select: React.FC<SelectProps> = ({
           <ul
             role="listbox"
             aria-labelledby={label ? (htmlForOverride || id) : buttonId}
-            aria-activedescendant={focusedOptionIndex >=0 && options[focusedOptionIndex] ? `${id}-option-${options[focusedOptionIndex].value}` : undefined}
+            aria-activedescendant={focusedOptionIndex >=0 && normalizedOptions[focusedOptionIndex] ? `${id}-option-${normalizedOptions[focusedOptionIndex].value}` : undefined}
             tabIndex={-1}
             className={computedDropdownClasses}
           >
-            {options.length === 0 ? (
+            {normalizedOptions.length === 0 ? (
               <li className={`${selectThemeClasses.noOptionsLi} ${optionClassName}`}>No options available</li>
             ) : (
-              options.map((option, index) => {
+              normalizedOptions.map((option, index) => {
                 const optionLiClasses = [
                   selectThemeClasses.optionBase,
                   option.disabled ? selectThemeClasses.optionDisabled : selectThemeClasses.optionEnabled,

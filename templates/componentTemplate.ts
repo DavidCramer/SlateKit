@@ -38,10 +38,10 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             defaultLayout: 'justify-center',
             primary: `border border-transparent ${scheme.textInverted} ${scheme.bgPrimary} ${scheme.bgPrimaryHover}`,
             danger: `border border-transparent ${scheme.textInverted} ${scheme.bgDanger} ${scheme.bgDangerHover}`,
-            item: `justify-between ${scheme.bgComponent} ${scheme.bgComponentHover} ${scheme.textEmphasis} font-semibold shadow-none`,
-            link: `bg-transparent ${scheme.bgComponentAltHover} ${scheme.text} ${scheme.textHover} shadow-none ${sizes.button.linkPadding} font-normal justify-start`,
+            item: `justify-between ${scheme.bgComponentHover} ${scheme.textEmphasis} font-semibold shadow-none`,
+            link: `${scheme.bgComponentAltHover} ${scheme.text} ${scheme.textHover} shadow-none ${sizes.button.linkPadding} font-normal justify-start`,
             secondary: `border ${scheme.border} ${scheme.bgComponentAltHover} ${scheme.text}`,
-            active: `!${scheme.textInverted} !${scheme.bgPrimary} `,
+            active: `${scheme.textInverted} ${scheme.bgPrimary} `,
             iconBase: `${sizes.button.iconSize}`,
             iconMarginLeft: `${sizes.button.iconMargin}`,
             iconMarginRight: 'ml-2',
@@ -105,7 +105,7 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             optionSelectedCheckIcon: `${sizes.select.optionIconSize} ${scheme.textPrimary} flex-shrink-0`,
         },
         sidebarLayout: {
-            container: 'flex',
+            container: 'h-full flex',
             sidebar: `flex-shrink-0 ${scheme.bgAlt} ${scheme.textEmphasis}`,
             main: `flex-grow ${scheme.bg} ${scheme.textEmphasis} overflow-y-auto`,
         },
@@ -115,7 +115,7 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
                 header: `flex items-center border-b ${scheme.borderAlt} ${sizes.panel.default.headerPadding} ${sizes.panel.default.headerMargin}`,
                 title: `${sizes.panel.default.titleFontSize} font-medium ${scheme.textAlt}`,
                 icon: `${sizes.panel.default.iconSize} ${sizes.panel.default.iconMargin} ${scheme.textPrimary}`,
-                content: `${sizes.panel.default.contentSpacing}`,
+                content: `${sizes.panel.default.contentSpacing} ${scheme.text}`,
                 footer: ''
             },
             aside: {
@@ -123,7 +123,7 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
                 header: `flex items-center border-b ${scheme.borderAlt} ${sizes.panel.aside.headerPadding} ${sizes.panel.aside.headerMargin}`,
                 title: `${sizes.panel.aside.titleFontSize} font-bold ${scheme.textEmphasis} truncate`,
                 icon: `${sizes.panel.aside.iconSize} ${scheme.textPrimaryEmphasis} ${sizes.panel.aside.iconMargin}`,
-                content: `flex flex-col justify-between ${sizes.panel.aside.contentSpacing}`,
+                content: `flex flex-col justify-between ${sizes.panel.aside.contentSpacing} ${scheme.text}`,
                 footer: ''
             },
             card: {
@@ -131,7 +131,7 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
                 header: `flex items-center border-b ${scheme.borderAlt} ${sizes.panel.card.headerPadding} ${sizes.panel.card.headerMargin}`,
                 title: `${sizes.panel.card.titleFontSize} font-semibold ${scheme.textEmphasis}`,
                 icon: `${sizes.panel.card.iconSize} ${sizes.panel.card.iconMargin} ${scheme.textPrimary}`,
-                content: '',
+                content: ` ${scheme.text}`,
                 footer: ''
             },
             main: {
@@ -139,7 +139,7 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
                 header: `${sizes.panel.main.headerMargin}`,
                 title: `${sizes.panel.main.titleFontSize} font-extrabold ${scheme.textEmphasis} tracking-tight`,
                 icon: `${sizes.panel.main.iconSize} ${sizes.panel.main.iconMargin} ${scheme.textPrimaryEmphasis}`,
-                content: '',
+                content: ` ${scheme.text}`,
                 footer: ''
             }
         }

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {MdAddCircleOutline} from 'react-icons/md';
-import {Modal} from './Modal';
-import type {ActionButtonProps} from './Modal';
-import Input from '../elements/Input'; // Import the new Input component
-import {coreItem} from '../../constants/constants';
+import {Modal} from './Modal.tsx';
+import type {ActionButtonProps} from './Modal.tsx';
+import { Input } from '../index.ts'; // Import the new Input component
+import {coreItem} from '../../../constants/constants.ts';
 
 /**
  * Props for the CreateItemModal component.

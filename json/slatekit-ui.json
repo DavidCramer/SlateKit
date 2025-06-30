@@ -20,7 +20,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "description": "The React component to render. Must match a registered component name."
+          "description": "The React component to render. Must match a registered component name.(Button, Checkbox, FieldBase, Input, List, Modal, NavBar, Panel, PanelHeader, Select, Textarea, ToggleSwitch)"
         },
         "props": {
           "type": "object",

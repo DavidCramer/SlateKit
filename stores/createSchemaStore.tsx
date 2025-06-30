@@ -1,8 +1,9 @@
 import React, {useReducer, createContext, useContext} from "react";
 import _ from "lodash";
+import {UISchema, UISchemaItem} from "@/json/UISchema.ts";
 
 
-export function createSchemaStore() {
+export function createSchemaStore( initialSchema) {
 
     const SchemaContext = createContext(undefined);
 
@@ -37,7 +38,7 @@ export function createSchemaStore() {
     }
 
 
-    const SchemaProvider = ({initialSchema, children}) => {
+    const SchemaProvider = ({children}) => {
         const [schema, dispatch] = useReducer(schemaReducer, initialSchema);
 
         // Write-only
@@ -46,7 +47,7 @@ export function createSchemaStore() {
         };
 
         // Read-only
-        function getSchema(path) {
+        function getSchema(path:string) :UISchema | UISchemaItem {
             if (!path) return schema;
             const keys = path.split('.');
             const key = keys[keys.length - 1];

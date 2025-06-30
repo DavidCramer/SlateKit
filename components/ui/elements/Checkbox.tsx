@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 import { MdCheck } from 'react-icons/md';
 import FieldBase from './FieldBase';
-import { classConstants } from '../../constants/constants';
-import { useApp } from '../../contexts/AppContext'; // Added import
+import { classConstants } from '../../../constants/constants';
+import { useApp } from '../../../contexts/AppContext'; // Added import
 
 interface CheckboxProps {
   id: string;

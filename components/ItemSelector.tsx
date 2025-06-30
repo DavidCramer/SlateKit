@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useApp, AvailableItem } from '../contexts/AppContext';
-import CreateItemModal from './modal/CreateItemModal.tsx';
+import CreateItemModal from '@/components/ui/modal/CreateItemModal.tsx';
 import { MdOutlineWorkspaces, MdChevronRight, MdAddCircle, MdSettings } from 'react-icons/md';
-import Button from './elements/Button';
-import { List, ListItem } from './list';
+import { Button } from './ui';
+import { List, ListItem } from './ui/list';
 import {coreItem} from "../constants/constants.ts";
 
 /**
