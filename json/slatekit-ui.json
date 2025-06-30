@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://yourdomain.com/schemas/slatekit-ui-schema.json",
+  "title": "SlateKit UI Schema",
+  "description": "Schema definition for SlateKit dynamic UI schemas. Each node describes a UI component and its configuration.",
+  "type": "object",
+  "patternProperties": {
+    "^[a-zA-Z0-9_]+$": {
+      "$ref": "#/definitions/schemaNode"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "schemaNode": {
+      "type": "object",
+      "description": "A single UI schema node (component/block)",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "Panel",
+            "Select",
+            "ToggleSwitch",
+            "Input",
+            "Button",
+            "Textarea",
+            "Checkbox"
+          ],
+          "description": "The React component to render. Must match a registered component name."
+        },
+        "props": {
+          "type": "object",
+          "description": "Props for the rendered component.",
+          "additionalProperties": true
+        },
+        "children": {
+          "description": "Child schema nodes, as an object (named keys) or array (ordered blocks).",
+          "oneOf": [
+            {
+              "type": "object",
+              "patternProperties": {
+                "^[a-zA-Z0-9_]+$": {
+                  "$ref": "#/definitions/schemaNode"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/schemaNode"
+              }
+            }
+          ]
+        },
+        "bind": {
+          "type": "string",
+          "description": "Explicit data path to bind the value to. Overrides auto-path from schema position."
+        },
+        "emits": {
+          "type": "object",
+          "description": "Maps local event handlers (e.g. onClick) to event names for the event bus.",
+          "patternProperties": {
+            "^[a-zA-Z0-9_]+$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "conditions": {
+          "type": "object",
+          "description": "Conditional rendering logic.",
+          "properties": {
+            "showIf": {
+              "type": "object",
+              "description": "Display node only if the condition is met.",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "equals": {},
+                "notEquals": {},
+                "in": {
+                  "type": "array",
+                  "items": {}
+                },
+                "notIn": {
+                  "type": "array",
+                  "items": {}
+                }
+              },
+              "required": [
+                "path"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

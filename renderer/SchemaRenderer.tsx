@@ -9,7 +9,6 @@ import ToggleSwitch from "../components/elements/ToggleSwitch";
 import Input from "../components/elements/Input";
 import Textarea from "../components/elements/Textarea";
 import Checkbox from "../components/elements/Checkbox";
-import {Template} from "../components/elements/Template";
 import {useEventBus, validateEventName} from "../contexts/EventContext";
 
 const typeToComponent = {
@@ -19,8 +18,7 @@ const typeToComponent = {
     Input,
     Button,
     Textarea,
-    Checkbox,
-    Template
+    Checkbox
 };
 
 const SchemaRenderer = ({schema, basePath = ""}) => {
@@ -40,16 +38,13 @@ const SchemaRenderer = ({schema, basePath = ""}) => {
         const finalPath = bind || path;
         const value = getValue(finalPath);
 
-        const emitAction = useCallback(
-            (action, payload) => {
-                if (emits && emits[action]) {
-                    const event = emits[action];
-                    validateEventName(event);
-                    emit(`${path}.${event}`, payload);
-                }
-            },
-            [emits, path]
-        );
+        const emitAction = (action, payload) => {
+            if (emits && emits[action]) {
+                const event = emits[action];
+                validateEventName(event);
+                emit(`${path}.${event}`, payload);
+            }
+        };
 
         const events = {
             onChange: (val) => {
@@ -68,8 +63,10 @@ const SchemaRenderer = ({schema, basePath = ""}) => {
 
         let children = null;
         if (Array.isArray(config.children)) {
+            const newPath = path.split(".");
+            const childKey = newPath.pop();
             children = config.children.map((child, i) => (
-                <SchemaRenderer key={i} schema={{child}} basePath={basePath}/>
+                <SchemaRenderer key={i} schema={{[childKey]: child}} basePath={newPath.join('.')}/>
             ));
         } else if (typeof config.children === "object" && config.children !== null) {
             children = <SchemaRenderer schema={config.children} basePath={path}/>;
@@ -82,6 +79,7 @@ const SchemaRenderer = ({schema, basePath = ""}) => {
                 {...events}
                 path={finalPath}
                 emits={emits}
+                value={value}
             >
                 {children}
             </Component>

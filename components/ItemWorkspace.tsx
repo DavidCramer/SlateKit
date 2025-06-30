@@ -4,7 +4,10 @@ import Sidebar from './Sidebar';
 import WorkArea from './WorkArea';
 import {SidebarLayout} from './layout';
 import Button from "@/components/elements/Button.tsx";
-import {MdInfo, MdLogout, MdWorkspaces} from "react-icons/md"; // Import the new SidebarLayout
+import {MdInfo, MdLogout, MdWorkspaces} from "react-icons/md";
+import {SchemaProvider} from "@/contexts/SchemaContext"; // Import the new SidebarLayout
+
+import schema from '../schemas/example.json';
 
 /**
  * Props for AppWorkspace component.
@@ -33,7 +36,8 @@ const ItemWorkspace: React.FC<AppWorkspaceProps> = ({onViewSettings}) => {
         return (
             <div className="flex items-center">
                 <MdWorkspaces className="w-8 h-8 text-sky-400 mr-2" aria-hidden="true"/>
-                <h1 className={`text-2xl font-bold ${theme === 'light' ? 'text-slate-700' : 'text-white'} truncate`} title={currentItem.name}>
+                <h1 className={`text-2xl font-bold ${theme === 'light' ? 'text-slate-700' : 'text-white'} truncate`}
+                    title={currentItem.name}>
                     {currentItem.name}
                 </h1>
             </div>
@@ -67,16 +71,18 @@ const ItemWorkspace: React.FC<AppWorkspaceProps> = ({onViewSettings}) => {
     }
 
     return (
-        <SidebarLayout
-            containerClassName="h-screen" // Ensure it takes full screen height
-            sidebarContent={<Sidebar onViewSettings={onViewSettings}/>}
-            sidebarHeader={<SidebarHeader/>}
-            mainContent={<WorkArea/>}
-            sidebarAriaLabel="App navigation and actions"
-            mainAriaLabel={`App workspace for ${appState.currentItem.name}`}
-            sidebarFooter={<SidebarFooter/>}
-            mainContentHeading={'Demo'}
-        />
+        <SchemaProvider initialSchema={schema}>
+            <SidebarLayout
+                containerClassName="h-screen" // Ensure it takes full screen height
+                sidebarContent={<Sidebar onViewSettings={onViewSettings}/>}
+                sidebarHeader={<SidebarHeader/>}
+                mainContent={<WorkArea/>}
+                sidebarAriaLabel="App navigation and actions"
+                mainAriaLabel={`App workspace for ${appState.currentItem.name}`}
+                sidebarFooter={<SidebarFooter/>}
+                mainContentHeading={'Demo'}
+            />
+        </SchemaProvider>
     );
 };
 
