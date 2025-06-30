@@ -22,7 +22,7 @@ const WorkArea: React.FC = () => {
     // Get the whole schema:
     const schema = getSchema();
     const structure = getValue();
-    console.log( schema, structure );
+
     // Get only the notifications block:
     const notificationsSchema = getSchema("profilePanel.preferencesPanel");
 
