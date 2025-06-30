@@ -97,8 +97,8 @@ This subdirectory contains fundamental UI elements, often wrappers around HTML e
 
 This subdirectory is for components that define the overall structure and layout of the application's pages or views.
 
-- **`SidebarLayout.tsx`**: A layout component that likely includes a sidebar and a main content area, using the `Sidebar.tsx` and `WorkArea.tsx` components.
-- **`index.ts`**: Typically an export file (e.g., `export * from './SidebarLayout';`) that makes components from this directory easily importable from the parent directory (e.g., `import { SidebarLayout } from './layout';`).
+- **`Layout.tsx`**: A layout component that likely includes a sidebar and a main content area, using the `Sidebar.tsx` and `WorkArea.tsx` components.
+- **`index.ts`**: Typically an export file (e.g., `export * from './Layout';`) that makes components from this directory easily importable from the parent directory (e.g., `import { Layout } from './layout';`).
 
 #### `components/list/`
 

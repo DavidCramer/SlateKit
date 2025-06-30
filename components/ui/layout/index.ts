@@ -1,1 +1,1 @@
-export { default as SidebarLayout } from './SidebarLayout.tsx';
+export { default as Layout } from './Layout.tsx';

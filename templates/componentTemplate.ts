@@ -3,6 +3,7 @@ import {colors, sizes} from "../constants/constants";
 
 export interface TemplateSet {
     frontPanel: Record<string, string>;
+    workspace: Record<string, string>;
     modal: Record<string, string>;
     button: Record<string, string>;
     formField: Record<string, string>;
@@ -15,13 +16,16 @@ export interface TemplateSet {
 }
 
 export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): TemplateSet {
-    const scheme:ColorScheme = colors[theme];
+    const scheme: ColorScheme = colors[theme];
     return {
         frontPanel: {
             container: `min-h-screen flex flex-col items-center justify-center bg-gradient-to-br ${scheme.bgGradientFrom} ${scheme.bgGradientTo} ${scheme.text} ${sizes.frontPanel.padding} transition-all duration-500 ease-in-out`,
-            contentBox:`w-full ${sizes.frontPanel.maxWidth} ${sizes.frontPanel.contentPadding} ${scheme.bgAlt} ${sizes.frontPanel.borderRadius} ${sizes.frontPanel.shadow}`,
-            icon:`${sizes.frontPanel.iconSize} ${scheme.textPrimary} ${sizes.frontPanel.iconMargin}`,
-            title:`${sizes.frontPanel.titleFontSize} font-bold ${scheme.text}`
+            contentBox: `w-full ${sizes.frontPanel.maxWidth} ${sizes.frontPanel.contentPadding} ${scheme.bgAlt} ${sizes.frontPanel.borderRadius} ${sizes.frontPanel.shadow}`,
+            icon: `${sizes.frontPanel.iconSize} ${scheme.textPrimary} ${sizes.frontPanel.iconMargin}`,
+            title: `${sizes.frontPanel.titleFontSize} font-bold ${scheme.text}`
+        },
+        workspace: {
+            container: `${scheme.bg}`
         },
         modal: {
             header: `flex items-center justify-between ${sizes.modal.headerMargin}`,
@@ -105,7 +109,8 @@ export function makeComponentTemplates(theme: keyof typeof colors = 'dark'): Tem
             optionSelectedCheckIcon: `${sizes.select.optionIconSize} ${scheme.textPrimary} flex-shrink-0`,
         },
         sidebarLayout: {
-            container: 'h-full flex',
+            containerVertical: `h-full flex ${scheme.bg}`,
+            containerHorizontal: `w-full h-full flex-col ${scheme.bg} ${sizes.sidebarLayout.mainPadding}`,
             sidebar: `flex-shrink-0 ${scheme.bgAlt} ${scheme.textEmphasis}`,
             main: `flex-grow ${scheme.bg} ${scheme.textEmphasis} overflow-y-auto`,
         },

@@ -6,9 +6,10 @@
     },
     "children": {
       "notebookList": {
-        "type": "SidebarLayout",
+        "type": "Layout",
         "props": {
           "title": "Notebooks",
+          "variant" : "horizontal",
           "schema": {
             "notebook1": {
               "type": "Panel",

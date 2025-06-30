@@ -59,7 +59,7 @@ slatekit/
 ├── README.md            # This file
 ├── components/          # Reusable UI components
 │   ├── elements/        # Basic HTML element wrappers (Button, Input, etc.)
-│   ├── layout/          # Layout components (e.g., SidebarLayout)
+│   ├── layout/          # Layout components (e.g., Layout)
 │   ├── list/            # List-related components
 │   ├── modal/           # Modal dialog components
 │   ├── panels/          # Panel components

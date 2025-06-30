@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal} from '@/components/ui';
-import {SidebarLayout} from '../ui/layout'; // Import the new SidebarLayout
+import {Layout} from '../ui/layout'; // Import the new Layout
 import {MdSettings} from 'react-icons/md';
 
 import {SettingsSchema} from "@/contexts";
@@ -21,14 +21,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({isOpen, onClose}) => {
         return null;
     }
 
-    // Define the height classes for the SidebarLayout container within the modal
+    // Define the height classes for the Layout container within the modal
     const layoutHeightClasses = "p-0! mb-0! h-[500px] sm:h-[calc(80vh-100px)] md:h-[calc(70vh-80px)] max-h-[600px] min-h-[400px]";
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="5xl">
             <Modal.Header title="Application Settings" icon={MdSettings}/>
             <Modal.Content className={layoutHeightClasses}> {/* Override default padding and margin for Modal.Content */}
-                <SidebarLayout
+                <Layout
                     schema={settingsSchema}
                     sidebarAriaLabel="Settings categories"
                     mainAriaLabel="Settings content"
