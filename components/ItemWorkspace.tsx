@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, SidebarLayout} from "@/components/ui";
 import {MdInfo, MdLogout} from "react-icons/md";
 import {useApp, AppSchema} from '@/contexts';
+import SettingsModal from "@/components/settings/SettingsModal.tsx";
 
 /**
  * Props for AppWorkspace component.
@@ -30,16 +31,6 @@ const ItemWorkspace: React.FC<AppWorkspaceProps> = ({onViewSettings}) => {
     const SidebarFooter = () => {
         return (
             <div>
-                <Button
-                    variant="link"
-                    fullWidth
-                    icon={MdInfo}
-                    onClick={() => alert('SlateKit v1.0.0 - Your Awesome App Environment!')}
-                    aria-label="About SlateKit"
-                    className="text-xs text-slate-500 hover:text-slate-400 justify-start py-1! mb-2"
-                >
-                    About
-                </Button>
                 <Button
                     variant="danger"
                     fullWidth

@@ -1,6 +1,8 @@
 // UI Elements exports for easier imports
 export { default as Button } from './Button';
 export { default as Checkbox } from './Checkbox';
+export { default as Column } from './Column';
+export { default as Columns } from './Columns';
 export { default as FieldBase } from './FieldBase';
 export { default as Input } from './Input';
 export { default as PanelHeader } from './Header.tsx';

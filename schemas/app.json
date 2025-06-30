@@ -1,9 +1,8 @@
 {
-  "Notebooks": {
+  "notebooks": {
     "type": "Panel",
     "props": {
-      "title": "My Notebooks",
-      "variant" : "main"
+      "title": "My Notebooks"
     },
     "children": {
       "notebookList": {
@@ -59,8 +58,7 @@
   "profile": {
     "type": "Panel",
     "props": {
-      "title": "User Profile",
-      "variant" : "main"
+      "title": "User Profile"
     },
     "children": {
       "username": {
@@ -92,45 +90,70 @@
   "accountSettings": {
     "type": "Panel",
     "props": {
-      "title": "Account Settings",
-      "variant" : "main"
+      "title": "Account Settings"
     },
     "children": {
-      "password": {
-        "type": "Input",
-        "props": {
-          "label": "Password",
-          "type": "password",
-          "placeholder": "Enter new password"
-        },
-        "bind": "accountSettings.password"
-      },
-      "notifications": {
-        "type": "ToggleSwitch",
-        "props": {
-          "label": "Email Notifications"
-        },
-        "bind": "accountSettings.notifications"
-      },
-      "language": {
-        "type": "Select",
-        "props": {
-          "label": "Language",
-          "options": [
-            "English",
-            "Spanish",
-            "French"
-          ]
-        },
-        "bind": "accountSettings.language"
+      "mainColumns": {
+        "type": "Columns",
+        "children": {
+          "leftColumn": {
+            "type": "Column",
+            "children": {
+              "password": {
+                "type": "Input",
+                "props": {
+                  "label": "Password",
+                  "type": "password",
+                  "placeholder": "Enter new password"
+                },
+                "bind": "accountSettings.password"
+              },
+              "notifications": {
+                "type": "ToggleSwitch",
+                "props": {
+                  "label": "Email Notifications"
+                },
+                "bind": "accountSettings.notifications"
+              }
+            }
+          },
+          "rightColumn": {
+            "type": "Column",
+            "children": {
+              "language": {
+                "type": "Select",
+                "props": {
+                  "label": "Language",
+                  "options": [
+                    "English",
+                    "Spanish",
+                    "French"
+                  ]
+                },
+                "bind": "accountSettings.language"
+              },
+              "timezone": {
+                "type": "Select",
+                "props": {
+                  "label": "Time Zone",
+                  "options": [
+                    "UTC",
+                    "EST",
+                    "PST"
+                  ]
+                },
+                "bind": "accountSettings.timezone"
+              }
+            }
+          }
+        }
       }
     }
   },
   "privacy": {
     "type": "Panel",
     "props": {
-      "title": "Privacy Settings",
-      "variant" : "main"
+      "title": "Privacy Settings"
     },
     "children": {
       "profileVisibility": {
@@ -158,6 +181,81 @@
           "label": "Personalized Ads"
         },
         "bind": "privacy.adPreferences"
+      }
+    }
+  },
+  "columnExample": {
+    "type": "Panel",
+    "props": {
+      "title": "Columns"
+    },
+    "children": {
+      "stats": {
+        "type": "Columns",
+        "props": {
+          "autoFit": true
+        },
+        "children": {
+          "statsCard": {
+            "type": "Column",
+            "children": {
+              "title": {
+                "type": "Panel",
+                "props": {
+                  "title": "Panel Title",
+                  "variant" : "card",
+                  "bind": "stats.title"
+                }
+              },
+              "value": {
+                "type": "Panel",
+                "props": {
+                  "title": "Panel Title",
+                  "variant" : "card",
+                  "bind": "stats.value"
+                }
+              }
+            }
+          },
+          "chartCard": {
+            "type": "Column",
+            "children": {
+              "chartTitle": {
+                "type": "Panel",
+                "props": {
+                  "title": "Panel Title",
+                  "variant" : "card"
+                }
+              },
+              "chart": {
+                "type": "Panel",
+                "props": {
+                  "title": "Panel Title",
+                  "variant" : "card"
+                }
+              }
+            }
+          },
+          "anotherChart": {
+            "type": "Column",
+            "children": {
+              "chartTitle": {
+                "type": "Panel",
+                "props": {
+                  "title": "Panel Title",
+                  "variant" : "card"
+                }
+              },
+              "chart": {
+                "type": "Panel",
+                "props": {
+                  "title": "Panel Title",
+                  "variant" : "card"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

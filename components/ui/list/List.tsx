@@ -32,7 +32,7 @@ const List: React.FC<ListProps> = ({
     }
 
     const {themeClasses: {button}} = useApp();
-    console.log(button);
+
     return (
         <ul className={ulClassName} aria-labelledby={ariaLabelledby}>
             {items.map((item) => {
